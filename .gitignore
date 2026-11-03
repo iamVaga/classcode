@@ -4,3 +4,11 @@ node_modules/
 !.env.example
 *.tsbuildinfo
 __pycache__/
+
+# Local previews and one-off workspace artifacts
+*-preview.png
+file-dialog-fix.png
+scripts/finalize.mjs
+v.id
+'
+*.log

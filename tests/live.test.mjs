@@ -1,0 +1,9 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {validDraft,observerFor} from '../lib/live.ts';
+import {readFileSync} from 'node:fs';
+const draft={name:'Exercise',files:{'main.py':'print(1)'},sequence:1,session:'session-a'};
+test('valid live drafts require typed bounded content',()=>{assert.equal(validDraft(draft),true);for(const invalid of [null,{}, {...draft,sequence:-1},{...draft,files:{'../secret.py':'bad'}},{...draft,files:{'main.py':12}},{...draft,files:{'main.py':'x'.repeat(200001)}}])assert.equal(validDraft(invalid),false)});
+test('a non-owner cloud user is always an observer',()=>{const project={owner_id:'student-a'};assert.equal(observerFor(project,'student-a'),false);assert.equal(observerFor(project,'teacher-a'),true);assert.equal(observerFor(project,''),true);assert.equal(observerFor({},''),false)});
+test('private room policies restrict drafts to owner and presence to authorized members',()=>{const sql=readFileSync(new URL('../supabase/migrations/002_live_sessions.sql',import.meta.url),'utf8');assert.match(sql,/extension='broadcast' and public.owns_project_topic/);assert.match(sql,/extension='presence' and public.can_join_project_topic/);assert.match(sql,/ts.teacher_id=auth.uid\(\) and ts.student_id=p.owner_id/);assert.match(sql,/revoke all on function/)});
+test('teacher edits and autosave are guarded in the editor',()=>{const source=readFileSync(new URL('../components/ide.tsx',import.meta.url),'utf8');assert.match(source,/if\(observer\|\|saving.current/);assert.match(source,/readOnly:observer/);assert.match(source,/function update\(value:string\)\{if\(observer\)return/);const editor=readFileSync(new URL('../components/adaptive-editor.tsx',import.meta.url),'utf8');assert.match(editor,/readOnly=\{props.options\?\.readOnly\}/)});
