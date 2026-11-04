@@ -1,5 +1,6 @@
 import './globals.css';
 import './studio.css';
+import './auth.css';
 import './hero-polish.css';
 import './editor.css';
 import './motion.css';
