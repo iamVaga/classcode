@@ -1,0 +1,40 @@
+name: ClassCode quality
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci
+      - run: npm run lint
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      - run: npx playwright install --with-deps chromium
+      - name: Smoke, browser, accessibility, and Lighthouse checks
+        shell: bash
+        run: |
+          npx next start --port 3011 > /tmp/classcode.log 2>&1 &
+          SERVER_PID=$!
+          trap 'kill "$SERVER_PID" 2>/dev/null || true' EXIT
+          node scripts/ci-smoke.mjs
+          npm run test:e2e
+          export CHROME_PATH="$(node -e 'process.stdout.write(require("playwright").chromium.executablePath())')"
+          mkdir -p artifacts
+          npm run lighthouse
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: classcode-lighthouse-report
+          path: artifacts/lighthouse-mobile.json
+          if-no-files-found: ignore

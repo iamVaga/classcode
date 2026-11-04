@@ -7,7 +7,19 @@ import './motion.css';
 import './classroom.css';
 import './assignments.css';
 import './snippets.css';
+import './product-polish.css';
 import AvatarPointer from '@/components/avatar-pointer';
 import ConnectionProvider from '@/components/connection-provider';
-export const metadata = {title:'ClassCode — Your classroom, connected.',description:'A thoughtful coding workspace for teachers and curious minds.',icons:{icon:'/classcode-mark.svg'}};
-export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body><ConnectionProvider>{children}<AvatarPointer/></ConnectionProvider></body></html>}
+import type {Metadata} from 'next';
+const promise='Students make. Teachers guide.';
+export const metadata:Metadata={
+ metadataBase:new URL('https://classcode-sand.vercel.app'),
+ title:{default:`ClassCode — ${promise}`,template:'%s | ClassCode'},
+ description:`${promise} A browser-based coding workspace for Python, Turtle graphics, web projects, and classroom assignments.`,
+ alternates:{canonical:'/'},
+ icons:{icon:'/classcode-mark.svg',shortcut:'/classcode-mark.svg'},
+ openGraph:{type:'website',siteName:'ClassCode',title:`ClassCode — ${promise}`,description:`${promise} A browser-based coding workspace for students and teachers.`,url:'/',images:[{url:'/opengraph-image',width:1200,height:630,alt:'ClassCode: Students make. Teachers guide.'}]},
+ twitter:{card:'summary_large_image',title:`ClassCode — ${promise}`,description:`${promise} A browser-based coding workspace for students and teachers.`,images:['/opengraph-image']}
+};
+const softwareSchema={'@context':'https://schema.org','@type':'SoftwareApplication',name:'ClassCode',applicationCategory:'EducationalApplication',operatingSystem:'Web',url:'https://classcode-sand.vercel.app',description:promise};
+export default function Layout({children}:{children:React.ReactNode}){return <html lang="en"><body><ConnectionProvider>{children}<AvatarPointer/><script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(softwareSchema)}}/></ConnectionProvider></body></html>}
