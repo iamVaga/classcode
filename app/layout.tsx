@@ -3,6 +3,7 @@ import './studio.css';
 import './editor.css';
 import './motion.css';
 import './classroom.css';
+import './assignments.css';
 import './snippets.css';
 import AvatarPointer from '@/components/avatar-pointer';
 import ConnectionProvider from '@/components/connection-provider';

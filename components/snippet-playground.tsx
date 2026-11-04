@@ -1,8 +1,53 @@
 'use client';
-import {useState} from 'react';
-import {ArrowUpRight,Check} from 'lucide-react';
-import CodePreview from './code-preview';
-import {Starter,starters} from '@/lib/starters';
-const examples=[{id:'python',label:'Python',file:'hello.py',code:'# A little code. A big hello.\nname = "future builder"\n\nfor step in range(1, 4):\n    print(f"Hello, {name}! ✦")',output:'Hello, future builder! ✦'},{id:'turtle',label:'Turtle',file:'artwork.py',code:'import turtle\n\nartist = turtle.Turtle()\nartist.color("coral")\nfor side in range(5):\n    artist.forward(100)\n    artist.right(144)',output:'Five turns. One brilliant star.'},{id:'web',label:'Web',file:'index.html',code:'<main>\n  <h1>Hello, possibility.</h1>\n  <p>Made with a little curiosity.</p>\n  <button>Let’s build something ↗</button>\n</main>',output:'Your little corner of the internet.'}];
-export default function SnippetPlayground({onOpen}:{onOpen:(s:Starter)=>void}){const [active,setActive]=useState(0),example=examples[active];return <div className="snippet-playground"><div className="snippet-playground-top"><span className="snippet-window-dots"><i/><i/><i/></span><span>THE IDEA LAB</span><span className="snippet-lab-dot"/></div><div className="snippet-language-tabs" role="tablist" aria-label="Explore code examples">{examples.map((e,i)=><button key={e.id} role="tab" aria-selected={i===active} onClick={()=>setActive(i)}>{e.label}<span/></button>)}</div><div className="snippet-editor" role="tabpanel" aria-label={example.label+' code example'} key={example.id}><span className="snippet-file-name">{example.file}</span><div className="snippet-lines" aria-hidden="true">{example.code.split('\n').map((_,i)=><span key={i}>{i+1}</span>)}</div><pre><CodePreview code={example.code}/></pre></div><div className="snippet-example-output"><span><Check size={11}/> Example outcome</span><strong>{example.output}</strong></div><button className="snippet-open" onClick={()=>(()=>{const starter=starters.find(s=>s.id===example.id)!;onOpen({...starter,files:starter.type==='web'?{...starter.files,'index.html':example.code}:{[example.file]:example.code}})})()}>Make it yours <ArrowUpRight size={14}/></button></div>}
 
+import {useState} from 'react';
+import {ArrowUpRight} from 'lucide-react';
+import CodePreview from './code-preview';
+import {Starter, starters} from '@/lib/starters';
+
+const activities = [
+  {id:'python', label:'Say hello', file:'hello.py', prompt:'Who gets a hello?', choices:['Fox', 'Robot', 'Dragon']},
+  {id:'turtle', label:'Draw a star', file:'artwork.py', prompt:'Pick a pen color', choices:['coral', 'gold', 'turquoise']},
+  {id:'web', label:'Make a page', file:'index.html', prompt:'Name your planet', choices:['Moonberry', 'Starfall', 'Bubble']},
+] as const;
+
+function sample(id:string, choice:string) {
+  if (id==='python') return `friend = "${choice}"\nprint(f"Hello, {friend}!")`;
+  if (id==='web') return `<main>\n  <h1>Planet ${choice}</h1>\n  <p>Welcome, explorer!</p>\n</main>`;
+  return `import turtle\n\npen = turtle.Turtle()\npen.color("${choice}")\nfor side in range(5):\n    pen.forward(100)\n    pen.right(144)`;
+}
+
+export default function SnippetPlayground({onOpen}:{onOpen:(starter:Starter)=>void}) {
+  const [active,setActive]=useState(0);
+  const [picks,setPicks]=useState([0,0,0]);
+  const activity=activities[active];
+  const choice=activity.choices[picks[active]];
+  const code=sample(activity.id, choice);
+
+  function openEditor() {
+    const starter=starters.find(item=>item.id===activity.id)!;
+    const files=starter.type==='web'?{...starter.files,[activity.file]:code}:{[activity.file]:code};
+    onOpen({...starter,files});
+  }
+
+  return <div className="snippet-playground">
+    <div className="snippet-playground-top"><span>TRY A TINY EXPERIMENT</span><span className="snippet-lab-dot"/></div>
+    <div className="snippet-language-tabs" role="group" aria-label="Choose an experiment">
+      {activities.map((item,index)=><button type="button" key={item.id} aria-pressed={active===index} onClick={()=>setActive(index)}>{item.label}</button>)}
+    </div>
+    <div className="experiment-choices" role="group" aria-label={activity.prompt}>
+      <strong>{activity.prompt}</strong>
+      <div>{activity.choices.map((option,index)=><button key={option} type="button" aria-pressed={choice===option}
+        onClick={()=>setPicks(previous=>previous.map((value,i)=>i===active?index:value))}>{option}</button>)}</div>
+    </div>
+    <div className="snippet-editor" aria-label="Example code"><span className="snippet-file-name">{activity.file}</span>
+      <div className="snippet-lines" aria-hidden="true">{code.split('\n').map((_,i)=><span key={i}>{i+1}</span>)}</div>
+      <pre><CodePreview code={code}/></pre>
+    </div>
+    <div className="snippet-example-output" aria-live="polite"><span>Preview</span>
+      {activity.id==='turtle'?<svg width="66" height="52" viewBox="0 0 105 95" role="img" aria-label={choice+' star'}><path d="M3 36 H101 L21 94 L52 1 L83 94 Z" fill="none" stroke={choice} strokeWidth="3"/></svg>
+        :<strong>{activity.id==='python'?`Hello, ${choice}!`:`Planet ${choice} · Welcome, explorer!`}</strong>}
+    </div>
+    <button className="snippet-open" onClick={openEditor}>Open my code <ArrowUpRight size={14}/></button>
+  </div>;
+}
