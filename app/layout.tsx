@@ -1,5 +1,6 @@
 import './globals.css';
 import './studio.css';
+import './hero-polish.css';
 import './editor.css';
 import './motion.css';
 import './classroom.css';

@@ -1,0 +1,19 @@
+/* Keep the split hero intentional on compact laptop and tablet widths. */
+@media (min-width: 601px) and (max-width: 850px) {
+  .studio-main { padding-right: 24px; padding-left: 24px; }
+  .discovery-hero {
+    min-height: 0;
+    padding: 28px 0 26px;
+    gap: 14px;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 260px);
+  }
+  .hero-copy h1 { margin-top: 14px; }
+  .hero-copy > p { margin-top: 14px; line-height: 1.7; }
+  .hero-buttons { margin-top: 20px; }
+  .hero-capabilities { margin-top: 14px; }
+  .hero-visual {
+    height: 260px;
+    scale: .76;
+    transform-origin: right center;
+  }
+}
