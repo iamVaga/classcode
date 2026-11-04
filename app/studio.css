@@ -17,3 +17,6 @@ body{font-family:'DM Sans',Arial,sans-serif;background:var(--bg);color:var(--ink
 [data-theme=light] .category-tabs button{color:#7e6c88}[data-theme=light] .category-tabs button.active{color:#6c487f}[data-theme=light] .studio-search input::placeholder{color:#8d7d97}[data-theme=light] .studio-notebook textarea::placeholder{color:#9a88a7}
 @media(pointer:coarse){.avatar-pointer,.pointer-toggle{display:none}.avatar-pointer-on,.avatar-pointer-on *{cursor:auto!important}}
 @media(prefers-reduced-motion:reduce){.character-eyes,.character-avatar{animation:none!important}.avatar-pointer>.character-avatar,.avatar-pointer{transition:none}}
+/* Keep the account entry visible on compact headers; this is the only way to reach sign-in there. */
+@media(max-width:850px){.account-link{display:flex!important;align-items:center;gap:5px;border:1px solid var(--line);border-radius:8px;padding:7px 9px;font-size:10px}.studio-header-actions{gap:8px}}
+@media(max-width:560px){.studio-header{padding:0 11px;gap:7px}.studio-logo{font-size:20px;gap:4px}.studio-logo>span:first-child{width:28px;height:28px}.studio-header nav{gap:7px;margin-left:3px}.studio-header nav button{font-size:9px}.studio-header-actions{gap:5px}.account-link{padding:6px 7px;font-size:9px}.account-link svg{width:11px}.profile-avatar{padding-left:6px}}
