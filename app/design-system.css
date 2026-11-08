@@ -244,6 +244,20 @@ a:hover { color: var(--primary-hover); text-decoration: underline; text-decorati
 .friendly-analysis details { border-top: 1px solid var(--border); padding-top: 8px; color: var(--ink-muted); font-size: 12px; }
 .friendly-analysis summary { width: fit-content; cursor: pointer; }
 .friendly-analysis details pre { max-height: 180px; overflow: auto; white-space: pre-wrap; color: var(--ink-muted); }
+.accessibility-menu { position: relative; z-index: 30; }
+.accessibility-menu>.icon-button { width: 42px; height: 42px; display: grid; place-items: center; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); color: var(--ink-muted); }
+.accessibility-panel { position: absolute; top: calc(100% + 10px); right: 0; z-index: 50; display: grid; width: min(340px,calc(100vw - 24px)); gap: 13px; padding: 16px; border: 1px solid var(--border); border-radius: var(--radius-panel); background: var(--surface); color: var(--ink); box-shadow: var(--shadow-menu); animation: dialog-enter var(--motion-base) var(--ease-enter) both; }
+.accessibility-panel>header { display: flex; align-items: center; justify-content: space-between; font-weight: 600; }
+.accessibility-panel>header>span,.accessibility-check strong { display: flex; align-items: center; gap: 8px; }
+.accessibility-panel>label:not(.accessibility-check) { display: grid; gap: 6px; color: var(--ink-muted); font-size: var(--text-caption); }
+.accessibility-panel select { min-height: 42px; padding: 8px; border: 1px solid var(--border); border-radius: var(--radius-control); background: var(--surface); color: var(--ink); }
+.accessibility-check { display: grid; grid-template-columns: 20px 1fr 16px; align-items: start; gap: 9px; cursor: pointer; }
+.accessibility-check>input { width: 18px; height: 18px; margin: 2px 0 0; accent-color: var(--primary); }
+.accessibility-check strong { font-size: var(--text-small); }
+.accessibility-check small,.accessibility-note { display: block; margin-top: 3px; color: var(--ink-muted); font-size: var(--text-caption); line-height: 1.45; }
+:root[data-age="junior"] button:not(.icon-button) { min-height: 44px; }
+:root[data-contrast="high"] :focus-visible { outline: 3px solid var(--primary)!important; outline-offset: 3px!important; }
+:root[data-contrast="high"] .student-safety a,:root[data-contrast="high"] .hero-copy .studio-kicker { color: var(--accent); }
 .color-code { color: #EAF0F4; }
 .syntax-keyword { color: #50CFCC; }
 .syntax-string { color: #FF9A7E; }

@@ -24,7 +24,7 @@ test('starter list has a real entry and a unique outcome tagline for each card',
 test('the landing page includes teacher workflows and leaves the native cursor alone',()=>{
  const home=source('../components/workspace-home.tsx');
  assert.match(home,/Students make\. Teachers guide\./);
- assert.match(home,/A teacher can join your live session/i);
+ assert.match(home,/A teacher can join live|Your teacher can join/i);
  assert.match(home,/teacher-signup/);
  assert.match(home,/teacher-live-demo/);
  assert.match(home,/AutoAnalyserPreview/);

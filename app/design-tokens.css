@@ -26,9 +26,9 @@
   --track-web: #8A5B00;
   --track-games: #526A86;
 
-  --font-display: var(--font-brand), "Bricolage Grotesque", "Figtree", "Segoe UI", sans-serif;
-  --font-ui: var(--font-figtree), "Figtree", "Segoe UI", sans-serif;
-  --font-code: var(--font-jetbrains), "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  --font-display: var(--font-lexend), "Lexend", "Segoe UI", sans-serif;
+  --font-ui: var(--font-lexend), "Lexend", "Segoe UI", sans-serif;
+  --font-code: var(--font-atkinson-mono), "Atkinson Hyperlegible Mono", "Cascadia Code", Consolas, monospace;
   --text-display: clamp(48px, 6.4vw, 72px);
   --text-h1: clamp(36px, 4.6vw, 48px);
   --text-h2: clamp(28px, 3.2vw, 36px);
@@ -114,6 +114,13 @@
   --shadow-card: 0 1px 2px rgb(0 0 0 / 22%), 0 8px 24px rgb(0 0 0 / 16%);
   --shadow-menu: 0 16px 38px rgb(0 0 0 / 36%);
 }
+
+:root[data-age="junior"] { --text-body: clamp(18px,1.3vw,19px); --text-small: 16px; --text-caption: 14px; --leading-body: 1.7; }
+:root[data-age="adult-teacher"] { --text-body: 16px; --text-small: 14px; --text-caption: 13px; }
+:root[data-readable="on"] { --leading-body: 1.8; --tracking-tight: -.01em; }
+:root[data-readable="on"] body, :root[data-readable="on"] button, :root[data-readable="on"] input, :root[data-readable="on"] textarea, :root[data-readable="on"] select { letter-spacing: .035em; }
+:root[data-contrast="high"] { --ink: #080B10; --ink-muted: #303846; --border: #626B78; --primary: #005B5D; --primary-hover: #00494B; --primary-soft: #D3F2F0; --accent: #A9361C; --accent-soft: #FFE0D6; --focus-ring: 0 0 0 2px #FFFFFF, 0 0 0 5px #005B5D; }
+:root[data-theme="dark"][data-contrast="high"] { --ink: #FFFFFF; --ink-muted: #E0E6EF; --border: #8895A5; --primary: #70F1F0; --primary-hover: #A0FFFF; --primary-soft: #12363A; --accent: #FFB19A; --accent-soft: #48251C; --focus-ring: 0 0 0 2px #0E1217, 0 0 0 5px #70F1F0; }
 
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme]) {
