@@ -42,21 +42,37 @@ test('layout fits a 320px viewport without horizontal overflow',async({page})=>{
  expect(layout.document<=layout.viewport,JSON.stringify(layout)).toBe(true);
 });
 
+test('a successful Python run can be restored after editing', async ({page}) => {
+ await page.addInitScript(() => localStorage.setItem('classcode-bandwidth', 'saver'));
+ await page.route('**/python-worker.js', route => route.fulfill({
+  contentType: 'application/javascript',
+  body: 'self.onmessage = () => { postMessage({ready:true}); postMessage({done:true}); };',
+ }));
+ await page.goto('/');
+ await page.locator('.starter-python').click();
+ const editor = page.locator('.light-editor textarea');
+ const original = await editor.inputValue();
+ await page.getByRole('button', {name:'Run', exact:true}).click();
+ await expect(page.getByText('Execution finished.')).toBeVisible();
+ await editor.fill('print("Changed")');
+ await page.getByRole('button', {name:'Project revision history'}).click();
+ await page.getByRole('button', {name:'Restore last successful run'}).click();
+ await page.getByRole('button', {name:'Replace files'}).click();
+ await expect(editor).toHaveValue(original);
+});
+
 test('a student can open a Python project, run it, and stop a loop',async({page})=>{
  test.setTimeout(180_000);
+ await page.addInitScript(() => localStorage.setItem('classcode-bandwidth', 'saver'));
  await page.goto('/');
- await page.getByRole('button',{name:/Open Hello, Python/}).click();
+ await page.locator('.starter-python').click();
  await expect(page.getByText('Python 3')).toBeVisible();
- const editor=page.locator('.monaco-editor').first();
- await editor.click();
- await page.keyboard.press('ControlOrMeta+A');
- await page.keyboard.insertText('print("ClassCode is ready")');
- await page.getByRole('button',{name:/Run/}).click();
+ const editor=page.locator('.light-editor textarea');
+ await editor.fill('print("ClassCode is ready")');
+ await page.getByRole('button',{name:'Run',exact:true}).click();
  await expect(page.getByText('ClassCode is ready')).toBeVisible({timeout:120_000});
- await editor.click();
- await page.keyboard.press('ControlOrMeta+A');
- await page.keyboard.insertText('while True:\n    pass');
- await page.getByRole('button',{name:/Run/}).click();
+ await editor.fill('while True:\n    pass');
+ await page.getByRole('button',{name:'Run',exact:true}).click();
  await page.getByRole('button',{name:/Stop/}).click();
  await expect(page.getByText(/Stopped/)).toBeVisible();
 });
