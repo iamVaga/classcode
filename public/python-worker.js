@@ -14,6 +14,8 @@ onmessage=async({data})=>{try{
  postMessage({ready:true});
  const scope=runtime.toPy({__name__:'__main__'});
  try{
+  const inputQueue=Array.isArray(data.inputs)?data.inputs.slice(0,8).map(value=>String(value).slice(0,1000)):[];
+  runtime.setStdin({stdin:()=>inputQueue.length?inputQueue.shift():undefined,isatty:true});
   runtime.globals.set('_cc_source',data.code);
   const findings=runtime.runPython(`
 import ast, builtins, symtable

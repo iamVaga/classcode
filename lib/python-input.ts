@@ -1,0 +1,1 @@
+export function inputPrompts(source:string){const prompts:string[]=[];for(const match of source.matchAll(/\binput\s*\(\s*(?:"([^"]*)"|'([^']*)')?\s*\)/g)){prompts.push((match[1]??match[2]??'Type your answer').replace(/\\n/g,' ').slice(0,120));if(prompts.length===8)break}return prompts}

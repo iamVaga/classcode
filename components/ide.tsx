@@ -15,13 +15,14 @@ import AccessibilityMenu from './accessibility-menu';
 import {observerFor,LiveDraft} from '@/lib/live';
 import {analyzePythonError} from '@/lib/analyser';
 import type {HintLevel,PythonAnalysis} from '@/lib/analyser';
+import {inputPrompts} from '@/lib/python-input';
 function persistWorkspaceTheme(next:'light'|'dark'){document.documentElement.dataset.theme=next;try{localStorage.setItem('classcode-theme',next)}catch{}}
 export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar}:{onAvatar:()=>void;initial:Project;onBack:()=>void;onSave:(p:Project)=>Promise<void>;avatar:number;color:string;userId:string}){
  const {conserve,online}=useConnection();
  const observer=observerFor(initial,userId);
  const [teacherEditing,setTeacherEditing]=useState(false);
  const canEdit=!observer||teacherEditing;
- const [project,setProject]=useState(initial),[file,setFile]=useState(Object.keys(initial.files)[0]),[status,setStatus]=useState('Saved'),[output,setOutput]=useState<string[]>([]),[running,setRunning]=useState(false),[src,setSrc]=useState(''),[sidebar,setSidebar]=useState(true),[auto,setAuto]=useState(true),[mobile,setMobile]=useState(false),[full,setFull]=useState(false),[retry,setRetry]=useState(0),[errorAnalysis,setErrorAnalysis]=useState<PythonAnalysis|null>(null),[hintLevel,setHintLevel]=useState<HintLevel>(1);
+ const [project,setProject]=useState(initial),[file,setFile]=useState(Object.keys(initial.files)[0]),[status,setStatus]=useState('Saved'),[output,setOutput]=useState<string[]>([]),[running,setRunning]=useState(false),[src,setSrc]=useState(''),[sidebar,setSidebar]=useState(true),[auto,setAuto]=useState(true),[mobile,setMobile]=useState(false),[full,setFull]=useState(false),[retry,setRetry]=useState(0),[errorAnalysis,setErrorAnalysis]=useState<PythonAnalysis|null>(null),[hintLevel,setHintLevel]=useState<HintLevel>(1),[inputRequests,setInputRequests]=useState<string[]>([]),[inputValues,setInputValues]=useState<string[]>([]),[inputDialog,setInputDialog]=useState(false);
  const [split,setSplit]=useState(42),[outputSplit,setOutputSplit]=useState(68),[view,setView]=useState('split'),[fontSize,setFontSize]=useState(16),[editorDark,setEditorDark]=useState(false),[outputView,setOutputView]=useState('result'),[commandOpen,setCommandOpen]=useState(false),[shortcutOpen,setShortcutOpen]=useState(false),[commandQuery,setCommandQuery]=useState('');
  const [dialog,setDialog]=useState<FileAction|null>(null);
  const runtimeName=project.type==='web'?'Web preview':project.type==='python'?'Python 3':project.type==='cpp'?'C++':project.type.toUpperCase();
@@ -46,6 +47,11 @@ export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar}
  function run(){
   if(project.type==='web'){refresh();return}
   if(project.type!=='python'){setOutput([`${project.type==='cpp'?'C++':project.type.toUpperCase()} is edit-only right now. You can keep editing and download the project; running it is not available yet.`]);return}
+  const requests=inputPrompts(project.files[file]||'');
+  if(requests.length){setInputRequests(requests);setInputValues(requests.map(()=>''));setInputDialog(true);return}
+  runPython([]);
+ }
+ function runPython(inputs:string[]){
   if(running)stop();
   if(!online&&!worker.current){setOutput(['You are offline. Python needs a connection for its first load. Your code remains editable.']);return}
   setDrawing([]);setErrorAnalysis(null);setHintLevel(1);setRunning(true);setOutput(['Preparing Python…']);
@@ -62,7 +68,7 @@ export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar}
    if(data.done){if(!data.error){setOutput(v=>[...v,'Execution finished.']);if(!successSeen.current){successSeen.current=true;setFirstRunSuccess(true);successTimer.current=setTimeout(()=>setFirstRunSuccess(false),700)}}if(timer.current)clearTimeout(timer.current);setRunning(false)}
   };
   activeWorker.onerror=()=>{setOutput(v=>[...v,'Python could not load. Check your connection and press Run to retry.']);stop()};
-  activeWorker.postMessage({files:project.files,code:project.files[file]});
+  activeWorker.postMessage({files:project.files,code:project.files[file],inputs});
   timer.current=setTimeout(()=>{stop();setOutput(v=>[...v,'Python is taking too long to download. Check your connection and press Run to retry.'])},conserve?180000:90000);
  }
  useEffect(()=>{const reconnect=()=>setRetry(v=>v+1);window.addEventListener('online',reconnect);return()=>window.removeEventListener('online',reconnect)},[]);
@@ -102,6 +108,7 @@ export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar}
    {[{id:'run',label:running?'Stop running code':'Run code',hint:'Ctrl + Enter',icon:running?<Square size={16}/>:<Play size={16}/>},{id:'files',label:sidebar?'Hide file explorer':'Show file explorer',hint:'Ctrl + B',icon:<PanelLeft size={16}/>},{id:'theme',label:'Switch light or dark theme',hint:'',icon:editorDark?<Sun size={16}/>:<Moon size={16}/>},{id:'shortcuts',label:'Show keyboard shortcuts',hint:'?',icon:<Keyboard size={16}/>},{id:'projects',label:'Return to projects',hint:'',icon:<FolderCode size={16}/>}].filter(item=>(item.id!=='run'||canRun||running)&&item.label.toLowerCase().includes(commandQuery.toLowerCase())).map(item=><button key={item.id} role="menuitem" onClick={()=>{executeCommand(item.id);setCommandOpen(false)}}>{item.icon}<span>{item.label}</span><kbd>{item.hint||<ArrowRight size={13}/>}</kbd></button>)}
   </div><footer>Type to filter. Use Tab and Enter to choose.</footer></section></div>}
   {shortcutOpen&&<div className="command-backdrop" onMouseDown={event=>{if(event.target===event.currentTarget)setShortcutOpen(false)}}><section className="shortcuts-dialog" role="dialog" aria-modal="true" aria-label="Keyboard shortcuts"><button className="shortcut-close" aria-label="Close shortcuts" onClick={()=>setShortcutOpen(false)}><X size={18}/></button><span className="guide-badge"><Keyboard size={14}/>KEYBOARD SHORTCUTS</span><h2>Keep your hands on the code.</h2><dl><div><dt>Run or stop</dt><dd><kbd>Ctrl</kbd><kbd>Enter</kbd></dd></div><div><dt>Open command palette</dt><dd><kbd>Ctrl</kbd><kbd>K</kbd></dd></div><div><dt>Show or hide files</dt><dd><kbd>Ctrl</kbd><kbd>B</kbd></dd></div><div><dt>Save now</dt><dd><kbd>Ctrl</kbd><kbd>S</kbd></dd></div><div><dt>Resize a pane</dt><dd><kbd>Arrow keys</kbd></dd></div></dl><button className="studio-primary" onClick={()=>setShortcutOpen(false)}>Done</button></section></div>}
+  {inputDialog&&<div className="command-backdrop" onMouseDown={event=>{if(event.target===event.currentTarget)setInputDialog(false)}}><section className="shortcuts-dialog program-input-dialog" role="dialog" aria-modal="true" aria-labelledby="program-input-title"><button className="shortcut-close" aria-label="Cancel input" onClick={()=>setInputDialog(false)}><X size={18}/></button><span className="guide-badge"><TerminalIcon/>PROGRAM INPUT</span><h2 id="program-input-title">What should your program ask?</h2><p>Enter a value for each input line, then run your code.</p>{inputRequests.map((prompt,index)=><label className="program-input-field" key={`${prompt}-${index}`}><span>{prompt||`Input ${index+1}`}</span><input id={`program-input-${index}`} autoFocus={index===0} value={inputValues[index]||''} maxLength={1000} onChange={event=>setInputValues(values=>values.map((value,i)=>i===index?event.target.value:value))} onKeyDown={event=>{if(event.key==='Enter'){event.preventDefault();if(index<inputRequests.length-1)document.getElementById(`program-input-${index+1}`)?.focus();else{setInputDialog(false);runPython(inputValues)}}}}/></label>)}<div className="program-input-actions"><button className="studio-secondary" onClick={()=>setInputDialog(false)}>Cancel</button><button className="studio-primary" onClick={()=>{setInputDialog(false);runPython(inputValues)}}><Play size={15}/>Run with these values</button></div></section></div>}
   {dialog&&<FileActionDialog key={dialog.kind+('file' in dialog?dialog.file:'')} action={dialog} files={project.files} type={project.type} onCancel={()=>setDialog(null)} onCreate={name=>{setProject(p=>({...p,files:{...p.files,[name]:''}}));setFile(name);setDialog(null)}} onConfirm={confirmFileAction}/>}
  </div>
 }
