@@ -66,11 +66,12 @@ test('a student can open a Python project, run it, and stop a loop',async({page}
  await page.addInitScript(() => localStorage.setItem('classcode-bandwidth', 'saver'));
  await page.goto('/');
  await page.locator('.starter-python').click();
- await expect(page.getByText('Python 3')).toBeVisible();
+ await expect(page.getByText('Python 3',{exact:true})).toBeVisible();
  const editor=page.locator('.light-editor textarea');
  await editor.fill('print("ClassCode is ready")');
  await page.getByRole('button',{name:'Run',exact:true}).click();
- await expect(page.getByText('ClassCode is ready')).toBeVisible({timeout:120_000});
+ await expect(page.getByText('ClassCode is ready',{exact:true})).toBeVisible({timeout:120_000});
+ await expect(page.getByText('Execution finished.',{exact:true})).toBeVisible();
  await editor.fill('while True:\n    pass');
  await page.getByRole('button',{name:'Run',exact:true}).click();
  await page.getByRole('button',{name:/Stop/}).click();

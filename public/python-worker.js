@@ -23,12 +23,21 @@ _cc_findings=[]
 try:
     _cc_tree=ast.parse(_cc_source, filename='main.py')
     _cc_table=symtable.symtable(_cc_source, 'main.py', 'exec')
-    _cc_defined={s.get_name() for s in _cc_table.get_symbols() if s.is_assigned()}
-    _cc_known=set(dir(builtins)) | _cc_defined
     _cc_pending=[_cc_table]
+    _cc_scopes=[]
     while _cc_pending:
         _cc_current=_cc_pending.pop()
+        _cc_scopes.append(_cc_current)
         _cc_pending.extend(_cc_current.get_children())
+    _cc_known=set(dir(builtins))
+    _cc_known.update({'__name__', '__file__', '__doc__', '__package__', '__spec__', '__loader__'})
+    for _cc_current in _cc_scopes:
+        _cc_known.update(s.get_name() for s in _cc_current.get_symbols()
+                         if s.is_global() and (s.is_assigned() or s.is_imported()))
+    _cc_has_star_import=any(isinstance(node, ast.ImportFrom) and
+                            any(alias.name == '*' for alias in node.names)
+                            for node in _cc_tree.body)
+    for _cc_current in ([] if _cc_has_star_import else _cc_scopes):
         for _cc_symbol in _cc_current.get_symbols():
             _cc_name=_cc_symbol.get_name()
             if _cc_symbol.is_referenced() and _cc_symbol.is_global() and not _cc_symbol.is_assigned() and _cc_name not in _cc_known:
