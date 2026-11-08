@@ -257,7 +257,13 @@ a:hover { color: var(--primary-hover); text-decoration: underline; text-decorati
 .accessibility-check small,.accessibility-note { display: block; margin-top: 3px; color: var(--ink-muted); font-size: var(--text-caption); line-height: 1.45; }
 :root[data-age="junior"] button:not(.icon-button) { min-height: 44px; }
 :root[data-contrast="high"] :focus-visible { outline: 3px solid var(--primary)!important; outline-offset: 3px!important; }
-:root[data-contrast="high"] .student-safety a,:root[data-contrast="high"] .hero-copy .studio-kicker { color: var(--accent); }
+.starter-bottom .starter-action,.teacher-icon,.student-safety>a,.studio-footer nav a:hover,.trust-section a,.guide-avatar-secondary { color: var(--accent-ink)!important; }
+.student-safety>a { font-size: var(--text-small); }
+.guide-badge.success { color: var(--success); }
+.guide-badge.warning { color: var(--warning); }
+.guide-badge.error { color: var(--error); }
+.guide-badge.info { color: var(--info); }
+:root[data-contrast="high"] .student-safety a,:root[data-contrast="high"] .hero-copy .studio-kicker { color: var(--accent-ink); }
 .color-code { color: #EAF0F4; }
 .syntax-keyword { color: #50CFCC; }
 .syntax-string { color: #FF9A7E; }

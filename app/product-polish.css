@@ -23,7 +23,7 @@
 .starter-grid{grid-template-columns:repeat(auto-fit,minmax(min(100%,260px),1fr));gap:17px}
 .starter-card{min-width:0;overflow:hidden;transition:transform .18s ease,box-shadow .18s ease,border-color .18s ease}
 .starter-card:hover{transform:translateY(-3px);box-shadow:0 14px 36px #382a4b16}
-.starter-card:focus-visible,.teacher-overview button:focus-visible,.studio-settings>summary:focus-visible{outline:3px solid #765293;outline-offset:3px}
+.starter-card:focus-visible,.teacher-overview button:focus-visible,.studio-settings>summary:focus-visible{outline:3px solid var(--primary);outline-offset:3px}
 .starter-bottom{gap:12px;flex-wrap:wrap}
 .starter-bottom>span{min-height:24px;display:inline-flex;align-items:center;gap:5px}
 .starter-bottom .starter-action{margin-left:auto;color:var(--accent);font-weight:700}
