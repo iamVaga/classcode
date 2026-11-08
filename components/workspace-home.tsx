@@ -61,7 +61,7 @@ export default function WorkspaceHome({page,onPage,projects,onOpen,onTemplate,on
    </>}
    {page==='My students'&&<ClassroomPanel onOpen={onOpen} onSignIn={()=>onModal('account')}/>}
    {page==='Lesson notes'&&<StudioNotebook/>}
-   <footer className="studio-footer"><button className="studio-logo" onClick={()=>onPage('Overview')}><span><BrandMark size={25}/></span>classcode<span className="logo-period">.</span></button><p>Students make. Teachers guide.</p><nav aria-label="Product and policy links"><a href="#tracks">Tracks</a><button onClick={()=>onPage('My students')}>For teachers</button><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/safety">Safety</a><a href="/about">About and contact</a></nav></footer>
+   <footer className="studio-footer"><button className="studio-logo" onClick={()=>onPage('Overview')}><span><BrandMark size={25}/></span>classcode<span className="logo-period">.</span></button><p>Students make. Teachers guide.</p><nav aria-label="Product and policy links"><a href="#tracks">Tracks</a><button onClick={()=>onPage('My students')}>For teachers</button><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/safety">Safety</a><a href="/about">About and contact</a><a href="/school-it">School IT</a></nav></footer>
   </main>
  </div>
 }

@@ -13,6 +13,7 @@ These decisions need the product owner or the relevant school/operator. The curr
 
 - Configure the real Google OAuth client, callback URLs, verified application name, and allowed redirect origins before advertising Google sign-in.
 - Decide whether younger students can use a teacher-provisioned identity without personal email.
+- The current classroom invitation flow is account-based; a verified class-code-plus-nickname path for students without email is not implemented. Set a minimal-data identity and consent design before adding it.
 - Confirm Supabase project region, Auth settings, rate limits, redirect allowlist, row-level security on every student/classroom table, invitation expiry/revocation, and account deletion behavior.
 - Review whether auth refresh tokens must be HttpOnly in the deployment architecture. The browser Supabase client/realtime model can require readable session state; use a server facade if HttpOnly cookies are a hard requirement.
 - Complete two-account tests (teacher and student) against deployed policies: invite, join, edit, submit, revoke, and verify a different class cannot read or modify data.
@@ -27,6 +28,7 @@ These decisions need the product owner or the relevant school/operator. The curr
 
 - Choose and configure a production support/error-monitoring destination; no monitoring vendor or alert route is assumed here.
 - Confirm the canonical public domain and update metadata, sitemap, OAuth redirect URLs, and provider allowlists together.
+- Publish a named operator, monitored support and privacy address, a safety contact with a response commitment, and a school/guardian reporting route only after those channels have an assigned owner and are monitored.
 - Review privacy/data flow and security headers against the final domain, embeds, and integrations.
 - Test on real school-managed devices, touch screens, assistive technology, low-bandwidth connections, and the oldest supported browser.
 - Set a named owner and review date for these decisions before inviting real students.

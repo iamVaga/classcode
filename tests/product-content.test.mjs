@@ -46,7 +46,9 @@ test('the experiment tabs support accessible selection and the avatar cursor is 
  assert.match(avatar,/prefers-reduced-motion: reduce/);
 });
 
-test('trust pages disclose review items rather than promising legal compliance',()=>{
- for(const route of ['privacy','terms','safety','about'])assert.ok(source(`../app/${route}/page.tsx`).includes('TODO'));
- assert.match(source('../components/trust-page.tsx'),/Owner review required/);
+test('trust pages disclose draft status without public TODOs or compliance claims',()=>{
+ for(const route of ['privacy','terms','safety','about'])assert.doesNotMatch(source(`../app/${route}/page.tsx`),/TODO/);
+ assert.match(source('../components/trust-page.tsx'),/Working draft/);
+ assert.match(source('../components/trust-page.tsx'),/qualified lawyer/);
+ assert.match(source('../app/school-it/page.tsx'),/cdn\.jsdelivr\.net/);
 });
