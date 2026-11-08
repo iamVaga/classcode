@@ -13,7 +13,6 @@ export type Starter={
  files:Record<string,string>;
 };
 
-export function starterRunsHere(starter:Starter){return starter.type==='web'||starter.type==='python'}
 
 export const starters:Starter[]=[
  {id:'turtle',name:'Draw outside the lines',type:'python',category:'Turtle graphics',description:'Turn a few lines of Python into your own generative artwork.',level:'First steps',time:'15 min',tagline:'Turn a loop into a five-point star.',files:{'main.py':turtleStarter}},

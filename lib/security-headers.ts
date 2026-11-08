@@ -14,7 +14,7 @@ export function buildContentSecurityPolicy(nonce:string,isDevelopment:boolean,su
   "style-src 'self' 'unsafe-inline'",
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
-  `connect-src 'self' ${supabaseOrigin} ${supabaseSocket} https://cdn.jsdelivr.net`,
+  `connect-src 'self' ${supabaseOrigin} ${supabaseSocket} https://cdn.jsdelivr.net https://wandbox.org/api/compile.json`,
   "worker-src 'self' blob:",
   "frame-src 'self' blob:",
   "object-src 'none'",

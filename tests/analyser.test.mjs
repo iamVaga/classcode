@@ -9,3 +9,9 @@ test('a misspelled variable gets an actionable but answer-safe first three hints
 test('the reviewed beginner mistake set contains at least 50 examples with measured accuracy and leak rate',()=>{assert.ok(beginnerMistakes.length>=50);let correct=0,leaks=0;for(const mistake of beginnerMistakes){const result=analyzePythonError(mistake.traceback,mistake.source);if(result.kind===mistake.kind)correct++;for(const level of [1,2,3])if(result.hints[level].toLowerCase().includes(mistake.secret.toLowerCase()))leaks++}assert.ok(correct/beginnerMistakes.length>=.9);assert.ok(leaks/(beginnerMistakes.length*3)<=.02)});
 test('raw traceback text remains available as expandable detail',()=>{const result=analyzePythonError('Traceback (most recent call last):\nNameError: name \'x\' is not defined');assert.match(result.original,/Traceback/);assert.equal(result.kind,'name');const ide=readFileSync(new URL('../components/ide.tsx',import.meta.url),'utf8');assert.match(ide,/details><summary>See the original Python error/);assert.match(ide,/Not yet\. Here’s a clue\./)});
 test('an exhausted input sequence gets a specific explanation',()=>{const result=analyzePythonError('EOFError: EOF when reading a line','name = input("Name")');assert.equal(result.kind,'input');assert.match(result.hints[3],/repeating loop/)});
+
+test('Pyodide wrapper frames do not override the user error line',()=>{
+ const result=analyzePythonError('Traceback (most recent call last):\n  File "/lib/python312.zip/_pyodide/_base.py", line 597, in eval_code_async\n  File "<exec>", line 2, in <module>\nZeroDivisionError: division by zero');
+ assert.equal(result.line,2);
+ assert.equal(result.kind,'zero-division');
+});
