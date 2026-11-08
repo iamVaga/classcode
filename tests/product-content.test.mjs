@@ -15,14 +15,19 @@ test('starter list has a real entry and a unique outcome tagline for each card',
  for(const stale of ['fan-made','blocky world','obby course','brick-bot'])assert.ok(!starters.toLowerCase().includes(stale));
 });
 
-test('the landing page has one teacher overview with setup, assignment, and progress steps',()=>{
+test('the landing page includes teacher workflows and leaves the native cursor alone',()=>{
  const home=source('../components/workspace-home.tsx');
- assert.match(home,/FOR TEACHERS/);
+ assert.match(home,/Students make\. Teachers guide\./);
+ assert.match(home,/A teacher can join your live session/i);
+ assert.match(home,/teacher-signup/);
+ assert.match(home,/teacher-live-demo/);
+ assert.match(home,/AutoAnalyserPreview/);
  assert.match(home,/Create a class/);
- assert.match(home,/Give a challenge/);
- assert.match(home,/See progress/);
+ assert.match(home,/Teacher suggestion/);
+ assert.doesNotMatch(home,/what still needs an owner decision/i);
+ assert.match(home,/Lesson notes/);
  assert.doesNotMatch(home,/game-inspiration|fan-made|Build a world from your favorite kinds of games/i);
- assert.match(home,/classcode-avatar-pointer/);
+ assert.doesNotMatch(source('../app/layout.tsx'),/<AvatarPointer/);
 });
 
 test('the experiment tabs support accessible selection and the avatar cursor is opt-in',()=>{

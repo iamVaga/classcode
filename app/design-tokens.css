@@ -1,0 +1,132 @@
+/* ClassCode design tokens. Keep visual decisions here, not scattered through components. */
+:root {
+  color-scheme: light;
+  --bg: #FAF8F4;
+  --surface: #FFFFFF;
+  --surface-2: #F3F0EA;
+  --border: #E6E1D8;
+  --ink: #14181F;
+  --ink-muted: #5B6472;
+  --primary: #0B7A7C;
+  --primary-hover: #096466;
+  --primary-soft: #E3F3F3;
+  --accent: #FF6B4A;
+  --accent-soft: #FFE9E3;
+  --sun: #FFC857;
+  --success: #1F9D6B;
+  --success-soft: #E5F5ED;
+  --warning: #9A6900;
+  --warning-soft: #FFF3D3;
+  --error: #D9453D;
+  --error-soft: #FCEAE8;
+  --info: #3B82F6;
+  --info-soft: #EAF1FE;
+  --track-python: var(--primary);
+  --track-turtle: var(--accent);
+  --track-web: #8A5B00;
+  --track-games: #526A86;
+
+  --font-display: var(--font-brand), "Bricolage Grotesque", "Figtree", "Segoe UI", sans-serif;
+  --font-ui: var(--font-figtree), "Figtree", "Segoe UI", sans-serif;
+  --font-code: var(--font-jetbrains), "JetBrains Mono", "Cascadia Code", Consolas, monospace;
+  --text-display: clamp(48px, 6.4vw, 72px);
+  --text-h1: clamp(36px, 4.6vw, 48px);
+  --text-h2: clamp(28px, 3.2vw, 36px);
+  --text-h3: clamp(20px, 2.2vw, 24px);
+  --text-body: clamp(16px, 1.15vw, 17px);
+  --text-small: 14px;
+  --text-caption: 12px;
+  --leading-tight: 1.1;
+  --leading-body: 1.6;
+  --tracking-tight: -0.02em;
+  --tracking-code: 0;
+
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  --radius-control: 8px;
+  --radius-card: 12px;
+  --radius-panel: 20px;
+  --radius-pill: 999px;
+  --shadow-card: 0 1px 2px rgb(20 24 31 / 6%), 0 8px 24px rgb(20 24 31 / 6%);
+  --shadow-menu: 0 12px 36px rgb(20 24 31 / 12%);
+  --focus-ring: 0 0 0 2px var(--bg), 0 0 0 4px var(--primary);
+
+  --motion-instant: 90ms;
+  --motion-fast: 160ms;
+  --motion-base: 240ms;
+  --motion-slow: 400ms;
+  --motion-hero: 700ms;
+  --ease-standard: cubic-bezier(.2, 0, 0, 1);
+  --ease-enter: cubic-bezier(0, 0, 0, 1);
+  --ease-exit: cubic-bezier(.3, 0, 1, 1);
+  --ease-reward: cubic-bezier(.34, 1.56, .64, 1);
+
+  /* Existing app surfaces map to the canonical tokens during migration. */
+  --panel: var(--surface);
+  --soft: var(--surface-2);
+  --line: var(--border);
+  --muted: var(--ink-muted);
+  --green: var(--primary);
+  --side: var(--surface-2);
+}
+
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --bg: #0E1217;
+  --surface: #161C24;
+  --surface-2: #1E2630;
+  --border: #2A3340;
+  --ink: #EEF1F5;
+  --ink-muted: #9AA5B4;
+  --primary: #3CC4C6;
+  --primary-hover: #65D4D5;
+  --primary-soft: #12363A;
+  --accent: #FF8A6B;
+  --accent-soft: #3A211D;
+  --sun: #FFC857;
+  --success: #52C894;
+  --success-soft: #183328;
+  --warning: #F0BC52;
+  --warning-soft: #382D17;
+  --error: #FF756D;
+  --error-soft: #3B201F;
+  --info: #79A8FF;
+  --info-soft: #1E2D46;
+  --track-python: var(--primary);
+  --track-turtle: var(--accent);
+  --track-web: #FFC857;
+  --track-games: #A7BED8;
+  --panel: var(--surface);
+  --soft: var(--surface-2);
+  --line: var(--border);
+  --muted: var(--ink-muted);
+  --green: var(--primary);
+  --side: var(--surface-2);
+  --shadow-card: 0 1px 2px rgb(0 0 0 / 22%), 0 8px 24px rgb(0 0 0 / 16%);
+  --shadow-menu: 0 16px 38px rgb(0 0 0 / 36%);
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme]) {
+    color-scheme: dark;
+    --bg: #0E1217; --surface: #161C24; --surface-2: #1E2630; --border: #2A3340;
+    --ink: #EEF1F5; --ink-muted: #9AA5B4; --primary: #3CC4C6; --primary-hover: #65D4D5;
+    --primary-soft: #12363A; --accent: #FF8A6B; --accent-soft: #3A211D;
+    --success: #52C894; --success-soft: #183328; --warning: #F0BC52; --warning-soft: #382D17;
+    --error: #FF756D; --error-soft: #3B201F; --info: #79A8FF; --info-soft: #1E2D46;
+    --track-python: var(--primary); --track-turtle: var(--accent); --track-web: #FFC857; --track-games: #A7BED8;
+    --panel: var(--surface); --soft: var(--surface-2); --line: var(--border); --muted: var(--ink-muted);
+    --green: var(--primary); --side: var(--surface-2);
+    --shadow-card: 0 1px 2px rgb(0 0 0 / 22%), 0 8px 24px rgb(0 0 0 / 16%);
+    --shadow-menu: 0 16px 38px rgb(0 0 0 / 36%);
+  }
+}
