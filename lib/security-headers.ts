@@ -1,3 +1,10 @@
+export const pythonWorkerContentSecurityPolicy = [
+ "default-src 'none'",
+ "script-src 'wasm-unsafe-eval' https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
+ "connect-src 'self' https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
+ "frame-ancestors 'none'",
+].join('; ');
+
 export function buildContentSecurityPolicy(nonce:string,isDevelopment:boolean,supabaseUrl:string){
  const supabaseOrigin=supabaseUrl?new URL(supabaseUrl).origin:"'self'";
  const supabaseSocket=supabaseUrl?supabaseOrigin.replace(/^https:/,'wss:').replace(/^http:/,'ws:'):"'self'";

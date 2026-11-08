@@ -1,9 +1,15 @@
 import {test} from 'node:test';
 import assert from 'node:assert/strict';
 import {readFileSync} from 'node:fs';
-import {buildContentSecurityPolicy} from '../lib/security-headers.ts';
+import {buildContentSecurityPolicy,pythonWorkerContentSecurityPolicy} from '../lib/security-headers.ts';
 
 const source=(path)=>readFileSync(new URL(path,import.meta.url),'utf8');
+
+test('WebAssembly compilation is allowed only by the Python worker policy',()=>{
+ assert.match(pythonWorkerContentSecurityPolicy, /'wasm-unsafe-eval'/);
+ assert.doesNotMatch(pythonWorkerContentSecurityPolicy, /'unsafe-eval'/);
+ assert.doesNotMatch(buildContentSecurityPolicy('nonce-test',false,''), /wasm-unsafe-eval/);
+});
 
 test('the app response policy uses a request nonce and restrictive resource directives',()=>{
  const policy=buildContentSecurityPolicy('nonce-test',false,'https://classcode.supabase.co');
