@@ -13,6 +13,33 @@ onmessage=async({data})=>{try{
  previousFiles=Object.keys(data.files);
  postMessage({ready:true});
  const scope=runtime.toPy({__name__:'__main__'});
- try{await runtime.runPythonAsync(data.code,{globals:scope});}finally{try{await runtime.runPythonAsync("import sys\nif 'turtle' in sys.modules:\n    sys.modules['turtle']._flush()",{globals:scope});}finally{scope.destroy()}}
+ try{
+  runtime.globals.set('_cc_source',data.code);
+  const findings=runtime.runPython(`
+import ast, builtins, symtable
+_cc_findings=[]
+try:
+    _cc_tree=ast.parse(_cc_source, filename='main.py')
+    _cc_table=symtable.symtable(_cc_source, 'main.py', 'exec')
+    _cc_defined={s.get_name() for s in _cc_table.get_symbols() if s.is_assigned()}
+    _cc_known=set(dir(builtins)) | _cc_defined
+    _cc_pending=[_cc_table]
+    while _cc_pending:
+        _cc_current=_cc_pending.pop()
+        _cc_pending.extend(_cc_current.get_children())
+        for _cc_symbol in _cc_current.get_symbols():
+            _cc_name=_cc_symbol.get_name()
+            if _cc_symbol.is_referenced() and _cc_symbol.is_global() and not _cc_symbol.is_assigned() and _cc_name not in _cc_known:
+                _cc_node=next((n for n in ast.walk(_cc_tree) if isinstance(n, ast.Name) and n.id==_cc_name and isinstance(n.ctx, ast.Load)), None)
+                _cc_findings.append((f"NameError: name '{_cc_name}' is not defined", getattr(_cc_node, 'lineno', 1)))
+                _cc_known.add(_cc_name)
+except SyntaxError as _cc_error:
+    _cc_findings.append((f"SyntaxError: {_cc_error.msg}", _cc_error.lineno or 1))
+_cc_findings[:20]
+`);
+  if(findings&&typeof findings.toJs==='function'){const values=findings.toJs();if(values?.length)postMessage({analysis:Array.from(values,row=>({traceback:row[0],line:row[1]}))});findings.destroy?.()}
+  runtime.globals.delete('_cc_source');
+  await runtime.runPythonAsync(data.code,{globals:scope});
+ }finally{try{runtime.globals.delete('_cc_source');await runtime.runPythonAsync("import sys\nif 'turtle' in sys.modules:\n    sys.modules['turtle']._flush()",{globals:scope});}finally{scope.destroy()}}
  postMessage({done:true});
 }catch(error){postMessage({text:String(error),done:true,error:true});}};

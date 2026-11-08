@@ -235,6 +235,15 @@ a:hover { color: var(--primary-hover); text-decoration: underline; text-decorati
 .studio-search,.form-label input,.form-label select { min-height: 44px; }
 .studio-app :is(button,a,input,select,textarea,summary) { touch-action: manipulation; }
 .snippet-live-indicator i { background: var(--success); box-shadow: none; }
+.friendly-analysis { display: grid; gap: 9px; margin: 0 0 14px; padding: 16px; border: 1px solid var(--border); border-left: 3px solid var(--primary); border-radius: var(--radius-card); background: var(--surface-2); color: var(--ink); }
+.friendly-analysis .analysis-kicker { color: var(--primary); font-size: var(--text-caption); font-weight: 600; }
+.friendly-analysis>strong { font-size: 15px; }
+.friendly-analysis p { margin: 0; color: var(--ink); line-height: 1.5; }
+.friendly-analysis small { color: var(--ink-muted); }
+.friendly-analysis .analysis-next-hint { justify-self: start; min-height: 36px; padding: 6px 10px; border: 1px solid var(--border); border-radius: 8px; background: var(--surface); color: var(--primary); font: inherit; cursor: pointer; }
+.friendly-analysis details { border-top: 1px solid var(--border); padding-top: 8px; color: var(--ink-muted); font-size: 12px; }
+.friendly-analysis summary { width: fit-content; cursor: pointer; }
+.friendly-analysis details pre { max-height: 180px; overflow: auto; white-space: pre-wrap; color: var(--ink-muted); }
 .color-code { color: #EAF0F4; }
 .syntax-keyword { color: #50CFCC; }
 .syntax-string { color: #FF9A7E; }

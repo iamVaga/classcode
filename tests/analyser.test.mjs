@@ -1,0 +1,10 @@
+import {test} from 'node:test';
+import assert from 'node:assert/strict';
+import {readFileSync} from 'node:fs';
+import {analyzePythonError} from '../lib/analyser.ts';
+import {beginnerMistakes} from './analyser-eval-set.mjs';
+
+test('the analyser identifies beginner Python error families and builds four safe, ordered hints',()=>{for(const kind of ['name','syntax','indentation','type','index','key','attribute','zero-division','import','value']){const result=analyzePythonError(beginnerMistakes.find(item=>item.kind===kind).traceback);assert.equal(result.kind,kind);assert.ok(result.hints[1]&&result.hints[2]&&result.hints[3]&&result.hints[4]);assert.equal(result.line,null)}});
+test('a misspelled variable gets an actionable but answer-safe first three hints',()=>{const result=analyzePythonError("NameError: name 'totla' is not defined",'total = 0\nprint(totla)');assert.equal(result.line,null);assert.ok(![1,2,3].some(level=>result.hints[level].includes('total')));assert.match(result.hints[4],/total/)});
+test('the reviewed beginner mistake set contains at least 50 examples with measured accuracy and leak rate',()=>{assert.ok(beginnerMistakes.length>=50);let correct=0,leaks=0;for(const mistake of beginnerMistakes){const result=analyzePythonError(mistake.traceback,mistake.source);if(result.kind===mistake.kind)correct++;for(const level of [1,2,3])if(result.hints[level].toLowerCase().includes(mistake.secret.toLowerCase()))leaks++}assert.ok(correct/beginnerMistakes.length>=.9);assert.ok(leaks/(beginnerMistakes.length*3)<=.02)});
+test('raw traceback text remains available as expandable detail',()=>{const result=analyzePythonError('Traceback (most recent call last):\nNameError: name \'x\' is not defined');assert.match(result.original,/Traceback/);assert.equal(result.kind,'name');const ide=readFileSync(new URL('../components/ide.tsx',import.meta.url),'utf8');assert.match(ide,/details><summary>See the original Python error/);assert.match(ide,/Not yet\. Here’s a clue\./)});

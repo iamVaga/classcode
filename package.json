@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "eval:hints": "node --experimental-strip-types scripts/evaluate-hints.mjs",
     "test:e2e": "playwright test",
     "lighthouse": "lighthouse http://127.0.0.1:3011 --output=json --output-path=artifacts/lighthouse-mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags=\"--headless --no-sandbox\" && node scripts/check-lighthouse.mjs"
   },
