@@ -13,6 +13,12 @@ test('starter list has a real entry and a unique outcome tagline for each card',
  assert.equal(new Set(taglines).size,taglines.length);
  for(const language of ['Java','C++','C'])assert.ok(starters.includes(`category:'${language}'`));
  for(const stale of ['fan-made','blocky world','obby course','brick-bot'])assert.ok(!starters.toLowerCase().includes(stale));
+ assert.match(starters,/starterRunsHere\(starter:Starter\).*starter\.type==='web'\|\|starter\.type==='python'/);
+ assert.match(source('../components/workspace-home.tsx'),/runtime-badge .*starterRunsHere\(s\)/);
+ assert.match(source('../components/classroom.tsx'),/Edit only · compiler coming soon/);
+ const ide=source('../components/ide.tsx');
+ assert.match(ide,/disabled=\{!canRun&&!running\}/);
+ assert.match(ide,/Edit only · coming soon/);
 });
 
 test('the landing page includes teacher workflows and leaves the native cursor alone',()=>{

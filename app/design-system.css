@@ -102,6 +102,13 @@ a:hover { color: var(--primary-hover); text-decoration: underline; text-decorati
 .starter-code-window { width: 88%; border-color: #3B4A57; border-radius: var(--radius-control); box-shadow: 0 1px 2px rgb(20 24 31 / 8%); transform: none; }
 .starter-card:hover .starter-code-window { transform: scale(1.02); }
 .starter-info { padding: var(--space-4); }
+.starter-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 7px; }
+.runtime-badge { display: inline-flex; width: fit-content; min-height: 24px; align-items: center; padding: 3px 8px; border: 1px solid transparent; border-radius: 7px; font-size: 11px; font-style: normal; font-weight: 600; line-height: 1.25; }
+.runtime-badge.runs { border-color: color-mix(in srgb,var(--success) 28%,var(--border)); background: var(--success-soft); color: var(--success); }
+.runtime-badge.edit-only { border-color: color-mix(in srgb,var(--warning) 30%,var(--border)); background: var(--warning-soft); color: var(--warning); }
+.starter-meta .starter-category { flex: 0 0 100%; }
+.language-options .runtime-badge { grid-column: 1 / -1; }
+.runtime-label+.runtime-badge { min-height: 23px; padding-inline: 7px; font-size: 10px; }
 .starter-category { color: var(--ink-muted); font-size: var(--text-caption); }
 .starter-info h3 { min-height: 0; margin-top: var(--space-2); font-size: 19px; }
 .starter-info p { min-height: 0; margin: var(--space-2) 0 var(--space-4); color: var(--ink-muted); font-size: var(--text-small); line-height: var(--leading-body); }
