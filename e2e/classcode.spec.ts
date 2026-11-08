@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('the experiment tabs work with arrow keys and update the result',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{name:'Students make. Teachers guide.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Make an idea come to life.'})).toBeVisible();
  const hello=page.getByRole('tab',{name:'Say hello'});
  await hello.focus();
  await page.keyboard.press('ArrowRight');
@@ -37,7 +37,7 @@ test('the landing page has no serious axe violations',async({page})=>{
 test('layout fits a 320px viewport without horizontal overflow',async({page})=>{
  await page.setViewportSize({width:320,height:740});
  await page.goto('/');
- await expect(page.getByRole('heading',{name:'Students make. Teachers guide.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:'Make an idea come to life.'})).toBeVisible();
  const layout=await page.evaluate(()=>({viewport:window.innerWidth,document:document.documentElement.scrollWidth,header:(()=>{const h=document.querySelector('.studio-header')!,n=h.querySelector('nav')!,c=document.querySelector('.connection-control')!;return {rect:[h.getBoundingClientRect().left,h.getBoundingClientRect().right,h.getBoundingClientRect().width],css:{width:getComputedStyle(h).width,maxWidth:getComputedStyle(h).maxWidth,boxSizing:getComputedStyle(h).boxSizing},nav:[n.getBoundingClientRect().left,n.getBoundingClientRect().right],connection:[c.getBoundingClientRect().left,c.getBoundingClientRect().right],settingsOpen:!!h.querySelector('details[open]')}})(),offenders:[...document.querySelectorAll('body *')].map(el=>({tag:el.tagName,className:typeof el.className==='string'?el.className:'',left:Math.round(el.getBoundingClientRect().left),right:Math.round(el.getBoundingClientRect().right),scroll:el.scrollWidth,client:el.clientWidth})).filter(el=>el.left< -1||el.right>window.innerWidth+1).slice(0,12)}));
  expect(layout.document<=layout.viewport,JSON.stringify(layout)).toBe(true);
 });

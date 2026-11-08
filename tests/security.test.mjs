@@ -11,6 +11,8 @@ test('the app response policy uses a request nonce and restrictive resource dire
  assert.ok(!policy.includes("'unsafe-eval'"));
 });
 
+test('nonce CSP pages render dynamically so Next can attach the nonce to inline bootstrap scripts',()=>{const layout=readFileSync(new URL('../app/layout.tsx',import.meta.url),'utf8');assert.match(layout,/await connection\(\)/);const proxy=readFileSync(new URL('../proxy.ts',import.meta.url),'utf8');assert.match(proxy,/requestHeaders\.set\('Content-Security-Policy',policy\)/);assert.match(proxy,/response\.headers\.set\('Content-Security-Policy',policy\)/)});
+
 test('the sandbox preview runs scripts without inheriting the app origin',()=>{
  const editor=source('../components/ide.tsx');
  assert.match(editor,/<iframe[^>]*sandbox="allow-scripts"/);

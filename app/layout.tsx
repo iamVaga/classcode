@@ -11,6 +11,7 @@ import './product-polish.css';
 import './design-tokens.css';
 import './design-system.css';
 import ConnectionProvider from '@/components/connection-provider';
+import {connection} from 'next/server';
 import type {Metadata} from 'next';
 import {Atkinson_Hyperlegible_Mono,Lexend} from 'next/font/google';
 const ui=Lexend({subsets:['latin'],display:'swap',variable:'--font-lexend',weight:['400','500','600','700'],preload:true});
@@ -26,4 +27,4 @@ export const metadata:Metadata={
  twitter:{card:'summary_large_image',title:`ClassCode — ${promise}`,description:`${promise} A browser-based coding workspace for students and teachers.`,images:['/opengraph-image']}
 };
 const softwareSchema={'@context':'https://schema.org','@type':'SoftwareApplication',name:'ClassCode',applicationCategory:'EducationalApplication',operatingSystem:'Web',url:'https://classcode-sand.vercel.app',description:promise};
-export default function Layout({children}:{children:React.ReactNode}){return <html lang="en" data-scroll-behavior="smooth" className={`${ui.variable} ${code.variable}`}><body><ConnectionProvider>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(softwareSchema)}}/></ConnectionProvider></body></html>}
+export default async function Layout({children}:{children:React.ReactNode}){await connection();return <html lang="en" data-scroll-behavior="smooth" className={`${ui.variable} ${code.variable}`}><body><ConnectionProvider>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(softwareSchema)}}/></ConnectionProvider></body></html>}
