@@ -1,8 +1,18 @@
 let runtime;
 let previousFiles=[];
 let turtleSource='';
+const pyodideBaseUrl='https://cdn.jsdelivr.net/pyodide/v0.27.7/full/';
 onmessage=async({data})=>{try{
- if(!runtime){postMessage({phase:'Loading Python runtime… First load depends on your connection.'});importScripts('https://cdn.jsdelivr.net/pyodide/v0.27.7/full/pyodide.js');const candidate=await loadPyodide();postMessage({phase:'Preparing Turtle graphics…'});const response=await fetch('/turtle.py');if(!response.ok)throw Error('Could not load browser Turtle');turtleSource=await response.text();runtime=candidate;}
+ if(!runtime){
+  postMessage({phase:'Loading Python runtime… First load depends on your connection.'});
+  importScripts(pyodideBaseUrl+'pyodide.js');
+  const candidate=await loadPyodide({indexURL:pyodideBaseUrl});
+  postMessage({phase:'Preparing Turtle graphics…'});
+  const response=await fetch('/turtle.py');
+  if(!response.ok)throw Error('Could not load browser Turtle');
+  turtleSource=await response.text();
+  runtime=candidate;
+ }
  runtime.FS.writeFile('/home/pyodide/turtle.py',turtleSource);
  runtime.setStdout({batched:text=>postMessage({text})});runtime.setStderr({batched:text=>postMessage({text})});
  for(const name of previousFiles){try{runtime.FS.unlink('/home/pyodide/'+name)}catch{}}
@@ -49,7 +59,6 @@ except SyntaxError as _cc_error:
 _cc_findings[:20]
 `);
   if(findings&&typeof findings.toJs==='function'){const values=findings.toJs();if(values?.length)postMessage({analysis:Array.from(values,row=>({traceback:row[0],line:row[1]}))});findings.destroy?.()}
-  runtime.globals.delete('_cc_source');
   await runtime.runPythonAsync(data.code,{globals:scope});
  }finally{try{runtime.globals.delete('_cc_source');await runtime.runPythonAsync("import sys\nif 'turtle' in sys.modules:\n    sys.modules['turtle']._flush()",{globals:scope});}finally{scope.destroy()}}
  postMessage({done:true});
