@@ -1,23 +1,23 @@
 'use client';
 import {FormEvent,useEffect,useState} from 'react';
 import {ArrowLeft,ArrowRight,CheckCircle2,Eye,EyeOff,LoaderCircle,LockKeyhole,LogOut,Mail,ShieldCheck} from 'lucide-react';
-import {configured,db,googleSignInEnabled} from '@/lib/supabase';
+import {configured,db,googleSignInEnabled,passwordResetRedirect} from '@/lib/supabase';
 
 type Mode='signin'|'signup'|'forgot'|'recovery';
-export default function AuthForm({user,recovery,teacherMode=false,onAuthenticated,onSignOut,onClose,onRecoveryComplete}:{user:string;recovery:boolean;teacherMode?:boolean;onAuthenticated:(id:string,email:string)=>Promise<void>;onSignOut:()=>Promise<void>;onClose:()=>void;onRecoveryComplete:()=>void}){
- const [mode,setMode]=useState<Mode>(recovery?'recovery':teacherMode?'signup':'signin');
+export default function AuthForm({user,recovery,authLinkError,teacherMode=false,onAuthenticated,onSignOut,onClose,onRecoveryComplete}:{user:string;recovery:boolean;authLinkError?:string;teacherMode?:boolean;onAuthenticated:(id:string,email:string)=>Promise<void>;onSignOut:()=>Promise<void>;onClose:()=>void;onRecoveryComplete:()=>void}){
+ const [mode,setMode]=useState<Mode>(recovery?'recovery':authLinkError?'forgot':teacherMode?'signup':'signin');
  const [email,setEmail]=useState('');
  const [password,setPassword]=useState('');
  const [visible,setVisible]=useState(false);
  const [googleEnabled,setGoogleEnabled]=useState<boolean|null>(null);
  useEffect(()=>{const controller=new AbortController();void googleSignInEnabled(controller.signal).then(setGoogleEnabled).catch(()=>{});return()=>controller.abort()},[]);
  const [busy,setBusy]=useState(false);
- const [error,setError]=useState('');
+ const [error,setError]=useState(authLinkError||'');
  const [message,setMessage]=useState('');
  useEffect(()=>{if(recovery){setMode('recovery');setError('');setMessage('Choose a new password for your account.')}},[recovery]);
  async function submit(e:FormEvent<HTMLFormElement>){e.preventDefault();setError('');setMessage('');if(!configured||!db){setError('Accounts are temporarily unavailable. Your saved projects on this device are safe.');return}setBusy(true);try{
   if(mode==='forgot'){
-   const {error}=await db.auth.resetPasswordForEmail(email.trim(),{redirectTo:window.location.origin});if(error)throw error;setMessage(`Password reset link sent to ${email.trim()}. Check your inbox, then return here to choose a new password.`);return;
+   const {error}=await db.auth.resetPasswordForEmail(email.trim(),{redirectTo:passwordResetRedirect});if(error)throw error;setMessage('If an account exists for this email, you’ll receive a reset link. Open the newest email.');return;
   }
   if(mode==='recovery'){
    const {data,error}=await db.auth.updateUser({password});if(error)throw error;if(!data.user)throw new Error('Your reset session expired. Request a fresh password reset link.');onRecoveryComplete();await onAuthenticated(data.user.id,data.user.email||email.trim());return;
@@ -26,11 +26,15 @@ export default function AuthForm({user,recovery,teacherMode=false,onAuthenticate
    const {data,error}=await db.auth.signUp({email:email.trim(),password,options:{emailRedirectTo:window.location.origin}});if(error)throw error;if(data.session&&data.user){await onAuthenticated(data.user.id,data.user.email||email.trim());return;}setMode('signin');setPassword('');setMessage(`Account started. Check ${email.trim()} for the confirmation link, then sign in.`);return;
   }
   const {data,error}=await db.auth.signInWithPassword({email:email.trim(),password});if(error)throw error;if(!data.session||!data.user)throw new Error('We couldn’t start your session. Please try again.');await onAuthenticated(data.user.id,data.user.email||email.trim());
- }catch(e){setError(e instanceof Error?e.message:'Something went wrong. Please try again.')}finally{setBusy(false)}}
+ }catch(e){const code=typeof e==='object'&&e!==null&&'code' in e?e.code:null;
+  if(code==='email_not_confirmed')setError('Confirm your email before signing in. Check your inbox.');
+  else if(code==='invalid_credentials')setError('Email or password did not match. Check your details or use Forgot password.');
+  else if(code==='over_email_send_rate_limit'||code==='over_request_rate_limit')setError('Too many attempts. Wait a few minutes and try again.');
+  else setError(e instanceof Error?e.message:'Something went wrong. Please try again.')}finally{setBusy(false)}}
  async function googleSignIn(){setError('');setMessage('');if(!configured||!db){setError('Accounts are temporarily unavailable. Your saved projects on this device are safe.');return}setBusy(true);try{if(!(await googleSignInEnabled(AbortSignal.timeout(8000)))){setGoogleEnabled(false);setError('Google sign-in is unavailable. Continue with email.');setBusy(false);return}const {error}=await db.auth.signInWithOAuth({provider:'google',options:{redirectTo:window.location.origin,queryParams:{prompt:'select_account'}}});if(error)throw error}catch(e){const reason=e instanceof Error?e.message:'';setError(/provider.*not enabled|unsupported provider/i.test(reason)?'Google sign-in needs to be enabled in the ClassCode account settings. You can sign in with email below.':reason||'Google sign-in could not start. Please try again.');setBusy(false)}}
  const title=mode==='signup'?(teacherMode?'Create your teacher account':'Create your account'):mode==='forgot'?'Reset your password':mode==='recovery'?'Choose a new password':'Welcome back';
  const description=mode==='signup'?(teacherMode?'Set up a classroom, invite students, and guide their work as they code.':'Save projects across devices and bring your classroom together.'):mode==='forgot'?'We’ll email you a secure link to get back into your account.':mode==='recovery'?'Use a new password you haven’t used before.':'Sign in to open your projects and classroom.';
- if(user&&!recovery)return <div className="auth-content"><div className="auth-icon signed"><CheckCircle2 size={22}/></div><h2>You’re signed in</h2><p>Your classroom is ready whenever you are.</p><div className="auth-account"><span className="auth-account-mark">{user.charAt(0).toUpperCase()}</span><span><strong>{user}</strong><small>ClassCode account</small></span><ShieldCheck size={18}/></div><button className="primary full auth-submit" onClick={onClose}>Continue to ClassCode <ArrowRight size={16}/></button><button className="auth-signout" disabled={busy} onClick={()=>void onSignOut()}><LogOut size={15}/>Sign out</button></div>;
+ if(user&&!recovery&&mode!=='forgot')return <div className="auth-content"><div className="auth-icon signed"><CheckCircle2 size={22}/></div><h2>You’re signed in</h2><p>Your classroom is ready whenever you are.</p><div className="auth-account"><span className="auth-account-mark">{user.charAt(0).toUpperCase()}</span><span><strong>{user}</strong><small>ClassCode account</small></span><ShieldCheck size={18}/></div><button className="primary full auth-submit" onClick={onClose}>Continue to ClassCode <ArrowRight size={16}/></button><button className="auth-signout" disabled={busy} onClick={()=>void onSignOut()}><LogOut size={15}/>Sign out</button></div>;
  return <div className="auth-content"><h2>{title}</h2><p>{description}</p>
   {mode!=='forgot'&&mode!=='recovery'&&<div className="auth-tabs" role="tablist" aria-label="Account action"><button type="button" role="tab" aria-selected={mode==='signin'} className={mode==='signin'?'active':''} onClick={()=>{setMode('signin');setError('');setMessage('')}}>Sign in</button><button type="button" role="tab" aria-selected={mode==='signup'} className={mode==='signup'?'active':''} onClick={()=>{setMode('signup');setError('');setMessage('')}}>Create account</button></div>}
   {(mode==='signin'||mode==='signup')&&<><button type="button" className="auth-google" onClick={()=>void googleSignIn()} disabled={busy||!configured||googleEnabled===false}><GoogleMark/><span>{googleEnabled===false?'Google sign-in unavailable':'Continue with Google'}</span>{busy&&<LoaderCircle size={15} className="auth-spinner"/>}</button><div className="auth-divider"><span>or continue with email</span></div></>}
