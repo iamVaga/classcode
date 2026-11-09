@@ -49,6 +49,13 @@ export default function WorkspaceHome({page,onPage,projects,onOpen,onTemplate,on
   <main className="studio-main">
    {page==='Overview'?<>
     <section className="discovery-hero"><div className="hero-copy"><span className="studio-kicker"><span aria-hidden="true"/> Students make. Teachers guide.</span><h1>{ageBand==='junior'?<>Make a fun<br/><span>project today.</span></>:ageBand==='adult-teacher'?<>Help students<br/><span>make it real.</span></>:<>Make an idea<br/><span>come to life.</span></>}</h1><p>{ageBand==='junior'?'Pick a project and try it. Your teacher can join, spot a mistake, and give you a small clue.':ageBand==='adult-teacher'?'Join a student’s live workspace, spot mistakes, suggest a fix, and review automatic code feedback.':'Build with Python, Turtle, or the web. A teacher can join live, spot mistakes, suggest fixes, and review automatic code feedback.'}</p><div className="hero-buttons"><button className="studio-primary" onClick={()=>onModal('create')}>Start a project <ArrowRight size={17}/></button><button className="studio-secondary teacher-hero-cta" onClick={()=>user?onPage('My students'):onModal('teacher-signup')}>Create a class <Users size={16}/></button></div><a className="hero-secondary-link" href="#pyblock">Explore PyBlock <ArrowRight size={16}/></a><div className="hero-capabilities"><span><Check size={16}/>Runs in your browser</span><span><Check size={16}/>Guest projects need no account</span></div></div><div className="hero-visual"><div className="hero-disc" aria-hidden="true"/><SnippetPlayground onOpen={onTemplate}/><div className="hero-character" aria-hidden="true"><Avatar kind={avatar} color={color} size={105}/><span>Ready when you are.</span></div></div></section>
+    <section className="pyblock-feature" aria-labelledby="pygame-title">
+     <div>
+      <h2 id="pygame-title">Pygame Studio</h2>
+      <p>Write a Python game, upload your own sprites, and play it in the browser.</p>
+      <Link className="studio-primary" href="/pygame">Open Pygame Studio <ArrowRight size={16}/></Link>
+     </div>
+    </section>
     <section id="pyblock" className="pyblock-feature" aria-labelledby="pyblock-title">
      <div>
       <h2 id="pyblock-title">PyBlock</h2>

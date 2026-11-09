@@ -1,5 +1,5 @@
 import {NextResponse,type NextRequest} from 'next/server';
-import {buildContentSecurityPolicy,pythonWorkerContentSecurityPolicy} from '@/lib/security-headers';
+import {buildContentSecurityPolicy,pygameWorkerContentSecurityPolicy,pythonWorkerContentSecurityPolicy} from '@/lib/security-headers';
 
 export function proxy(request:NextRequest){
  const nonce=btoa(crypto.randomUUID());
@@ -11,6 +11,9 @@ export function proxy(request:NextRequest){
  response.headers.set('Content-Security-Policy',policy);
  if(request.nextUrl.pathname==='/python-worker.js'){
   response.headers.set('Content-Security-Policy',pythonWorkerContentSecurityPolicy);
+ }
+ if(request.nextUrl.pathname==='/pygame-worker.js'){
+  response.headers.set('Content-Security-Policy',pygameWorkerContentSecurityPolicy);
  }
  response.headers.set('Referrer-Policy','strict-origin-when-cross-origin');
  response.headers.set('Permissions-Policy','camera=(), microphone=(), geolocation=(), payment=(), usb=()');

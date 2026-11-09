@@ -7,6 +7,14 @@ export const pythonWorkerContentSecurityPolicy = [
  "frame-ancestors 'none'",
 ].join('; ');
 
+export const pygameWorkerContentSecurityPolicy = [
+ "default-src 'none'",
+ // Emscripten uses JavaScript evaluation when dynamically linking Pygame.
+ "script-src 'unsafe-eval' https://cdn.jsdelivr.net/pyodide/v0.29.4/full/",
+ "connect-src https://cdn.jsdelivr.net/pyodide/v0.29.4/full/",
+ "frame-ancestors 'none'",
+].join('; ');
+
 export function buildContentSecurityPolicy(nonce:string,isDevelopment:boolean,supabaseUrl:string){
  const supabaseOrigin=supabaseUrl?new URL(supabaseUrl).origin:"'self'";
  const supabaseSocket=supabaseUrl?supabaseOrigin.replace(/^https:/,'wss:').replace(/^http:/,'ws:'):"'self'";

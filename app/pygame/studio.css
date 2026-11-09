@@ -1,0 +1,37 @@
+.game-studio {
+  min-height: 100dvh;
+  padding: clamp(12px, 3vw, 32px);
+  background: var(--bg);
+  color: var(--ink);
+}
+.game-toolbar { display: flex; align-items: center; gap: 12px; margin-bottom: 16px; }
+.game-toolbar a { display: grid; place-items: center; width: 44px; height: 44px; color: var(--primary); }
+.game-toolbar h1 { margin: 0; font-size: clamp(20px, 4vw, 30px); }
+.game-toolbar button { margin-left: auto; }
+.game-layout { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+.game-results { display: grid; gap: 12px; }
+.game-panel { min-width: 0; padding: 14px; border: 1px solid var(--border); border-radius: 12px; background: var(--surface); }
+.game-panel h2 { margin: 0 0 10px; font-size: 16px; }
+.game-panel p { margin: 8px 0; color: var(--ink-muted); font-size: 14px; }
+.game-code textarea, .game-panel pre {
+  width: 100%;
+  padding: 14px;
+  border: 0;
+  border-radius: 8px;
+  background: #202833;
+  color: #edf4ff;
+  font: 14px/1.65 var(--font-atkinson-mono), monospace;
+}
+.game-code textarea { min-height: min(68dvh, 690px); resize: vertical; tab-size: 4; white-space: pre; }
+.game-panel pre { max-height: 210px; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+.game-panel canvas { display: block; width: 100%; height: auto; max-height: 60dvh; object-fit: contain; border-radius: 8px; background: #172436; }
+.game-upload { display: inline-flex; align-items: center; position: relative; gap: 8px; min-height: 44px; color: var(--primary); cursor: pointer; }
+.game-upload input { position: absolute; inset: 0; width: 100%; opacity: 0; cursor: pointer; }
+.game-upload:focus-within, .game-panel :focus-visible { outline: 2px solid var(--primary); outline-offset: 2px; }
+.game-panel ul { padding: 0; margin: 8px 0 0; }
+.game-panel li { display: flex; align-items: center; justify-content: space-between; gap: 8px; padding-block: 4px; overflow-wrap: anywhere; }
+.game-panel li button { display: grid; place-items: center; width: 36px; min-height: 36px; flex-shrink: 0; }
+@media (max-width: 760px) {
+  .game-layout { grid-template-columns: minmax(0, 1fr); }
+  .game-code textarea { min-height: 44dvh; }
+}
