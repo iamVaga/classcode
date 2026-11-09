@@ -1,3 +1,5 @@
+import {monacoStylesheet} from './monaco-assets.mjs';
+
 export const pythonWorkerContentSecurityPolicy = [
  "default-src 'none'",
  "script-src 'wasm-unsafe-eval' https://cdn.jsdelivr.net/pyodide/v0.27.7/full/",
@@ -11,7 +13,7 @@ export function buildContentSecurityPolicy(nonce:string,isDevelopment:boolean,su
  return [
   "default-src 'self'",
   `script-src 'self' 'nonce-${nonce}' https://cdn.jsdelivr.net${isDevelopment?" 'unsafe-eval'":""}`,
-  "style-src 'self' 'unsafe-inline'",
+  `style-src 'self' 'unsafe-inline' ${monacoStylesheet}`,
   "img-src 'self' data: blob:",
   "font-src 'self' data:",
   `connect-src 'self' ${supabaseOrigin} ${supabaseSocket} https://cdn.jsdelivr.net https://wandbox.org/api/compile.json`,

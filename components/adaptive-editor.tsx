@@ -3,8 +3,13 @@ import {useEffect,useRef,useState} from 'react';
 import CodePreview from './code-preview';
 import dynamic from 'next/dynamic';
 import type {EditorProps} from '@monaco-editor/react';
+import {monacoAssetBase} from '@/lib/monaco-assets.mjs';
 import {useConnection} from './connection-provider';
-const Monaco=dynamic(()=>import('@monaco-editor/react'),{
+const Monaco=dynamic(async()=>{
+ const {default:Editor,loader}=await import('@monaco-editor/react');
+ loader.config({paths:{vs:monacoAssetBase}});
+ return Editor;
+},{
  ssr:false,
  loading:()=> <div className="editor-loading" role="status"><span className="loading-orbit"/><strong>Opening your editor…</strong></div>,
 });
