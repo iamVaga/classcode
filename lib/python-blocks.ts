@@ -33,8 +33,10 @@ for (const {name, label, input, value} of commands) {
 }
 
 const numberBlock = (value: number) => ({type: 'math_number', fields: {NUM: value}});
+const categoryIcon = (name: string) => ({icon: `pyblock-icon-${name.toLowerCase()}`});
 const category = (name: string, colour: string, types: string[]) => ({
-  kind: 'category', name, colour, contents: types.map(type => ({kind: 'block', type})),
+  kind: 'category', name, colour, cssconfig: categoryIcon(name),
+  contents: types.map(type => ({kind: 'block', type})),
 });
 
 export function mountPythonBlocks(element: HTMLElement, onChange: (code: string, saveError: boolean) => void) {
@@ -45,7 +47,7 @@ export function mountPythonBlocks(element: HTMLElement, onChange: (code: string,
       kind: 'categoryToolbox',
       contents: [
         {
-          kind: 'category', name: 'Turtle', colour: '#14796d',
+          kind: 'category', name: 'Turtle', colour: '#14796d', cssconfig: categoryIcon('Turtle'),
           contents: commands.map(({name, value}) => ({
             kind: 'block', type: `classcode_turtle_${name}`,
             inputs: typeof value === 'number' ? {VALUE: {shadow: numberBlock(value)}} :
@@ -55,11 +57,12 @@ export function mountPythonBlocks(element: HTMLElement, onChange: (code: string,
         category('Loops', '#725096', ['controls_repeat_ext', 'controls_whileUntil', 'controls_for']),
         category('Logic', '#3c6596', ['controls_if', 'logic_compare', 'logic_operation', 'logic_boolean', 'logic_negate']),
         category('Math', '#455fa0', ['math_number', 'math_arithmetic', 'math_random_int']),
-        category('Text', '#967024', ['text_print', 'text', 'text_join', 'text_length']),
-        {kind: 'category', name: 'Variables', custom: 'VARIABLE', colour: '#a1465d'},
+        category('Text', '#964ab8', ['text_print', 'text', 'text_join', 'text_length']),
+        category('Lists', '#08788b', ['lists_create_with', 'lists_length', 'lists_getIndex', 'lists_setIndex']),
+        {kind: 'category', name: 'Variables', custom: 'VARIABLE', colour: '#a1465d', cssconfig: categoryIcon('Variables')},
+        {kind: 'category', name: 'Functions', custom: 'PROCEDURE', colour: '#8c551f', cssconfig: categoryIcon('Functions')},
       ],
     },
-    grid: {spacing: 24, length: 2, colour: '#c2cccf'},
     trashcan: true,
     zoom: {controls: true, pinch: true, minScale: 0.4, maxScale: 2},
     move: {scrollbars: true, drag: true, wheel: true},

@@ -1,8 +1,9 @@
 'use client';
 
 import Link from 'next/link';
-import {ArrowLeft, Play, Square} from 'lucide-react';
+import {ArrowLeft, Blocks, Check, Play, Square} from 'lucide-react';
 import {useEffect, useRef, useState} from 'react';
+import {highlight} from '@/lib/highlight';
 import TurtleCanvas, {type TurtleCommand} from './turtle-canvas';
 
 export default function BlockStudio() {
@@ -17,6 +18,7 @@ export default function BlockStudio() {
   const [drawing, setDrawing] = useState<TurtleCommand[]>([]);
   const [output, setOutput] = useState<string[]>([]);
   const [status, setStatus] = useState('Ready to run');
+  const [view, setView] = useState<'Code' | 'Turtle' | 'Output'>('Code');
 
   useEffect(() => {
     let cancelled = false;
@@ -55,6 +57,7 @@ export default function BlockStudio() {
     setDrawing([]);
     setOutput([]);
     setRunning(true);
+    setView(code.startsWith('import turtle\n') ? 'Turtle' : 'Output');
     setStatus('Starting Python…');
     timer.current = setTimeout(() => stop('Python took too long to load. Try again.'), 90000);
     active.onmessage = ({data}) => {
@@ -69,7 +72,10 @@ export default function BlockStudio() {
         setDrawing(previous => [...previous, ...data.turtle.slice(0, 25000 - previous.length)]);
       }
       if (data.text) setOutput(previous => [...previous.slice(-199), String(data.text).slice(0, 5000)]);
-      if (data.done) stop(data.error ? 'Check the message below and try again.' : 'Run finished.');
+      if (data.done) {
+        if (data.error) setView('Output');
+        stop(data.error ? 'Check the message below and try again.' : 'Run finished.');
+      }
     };
     active.onerror = () => stop('Python could not load. Check your connection and try again.');
     active.postMessage({files: {'main.py': code}, code, inputs: []});
@@ -78,39 +84,39 @@ export default function BlockStudio() {
   return (
     <main className="block-studio">
       <header className="block-toolbar">
-        <Link href="/" aria-label="Back to ClassCode"><ArrowLeft size={20}/> ClassCode</Link>
-        <h1>PyBlock</h1>
+        <Link href="/" aria-label="Back to ClassCode"><ArrowLeft size={18}/></Link>
+        <h1><Blocks size={18} aria-hidden="true"/> PyBlock</h1>
         <div className="block-actions">
-          <span role="status">{loading ? '' : saveError ? 'Could not save blocks' : 'Saved on this device'}</span>
+          {!loading && <span className="block-save" role="status">{!saveError && <Check size={15} aria-hidden="true"/>}{saveError ? 'Could not save blocks' : 'Saved on this device'}</span>}
           {running
             ? <button type="button" className="studio-primary" onClick={() => stop('Run stopped.')}><Square size={16}/> Stop</button>
             : <button type="button" className="studio-primary" disabled={loading || !code.trim()} onClick={run}><Play size={16}/> Run</button>}
         </div>
       </header>
-      <p className="block-instruction">Run the starter to draw a square. Then change the steps or snap on another block.</p>
       <div className="block-layout">
-        <section className="block-panel" aria-label="Block editor">
-          <h2>Blocks</h2>
-          <div className="block-editor-shell">
-            <div className="block-editor-host" ref={host}/>
-            {loading && <p role="status" className="block-loading">{loadError ? 'The editor could not load. Refresh to try again.' : 'Loading blocks…'}</p>}
-          </div>
+        <section className="block-editor-shell" aria-label="Block editor">
+          <div className="block-editor-host" ref={host}/>
+          {loading && <p role="status" className="block-loading">{loadError ? 'The editor could not load. Refresh to try again.' : 'Loading blocks…'}</p>}
         </section>
-        <div className="block-results">
-          <section className="block-panel" aria-label="Turtle preview">
-            <h2>Turtle preview</h2>
-            {drawing.length > 0 ? <TurtleCanvas commands={drawing}/> : <p className="block-empty">Your drawing will appear here.</p>}
-          </section>
-          <section className="block-panel" aria-label="Python output">
-            <h2>Output</h2>
-            <p className="block-empty" role="status">{status}</p>
-            {output.length > 0 && <pre tabIndex={0}>{output.join('\n')}</pre>}
-          </section>
-          <details className="block-panel block-source">
-            <summary>Generated Python</summary>
-            <pre tabIndex={0}>{code || '# Add a block to generate Python'}</pre>
-          </details>
-        </div>
+        <aside className="block-results" aria-label="Program results">
+          <div className="block-views" role="group" aria-label="Result view">
+            {(['Code', 'Turtle', 'Output'] as const).map(name => (
+              <button type="button" key={name} aria-pressed={name === view} onClick={() => setView(name)}>{name}</button>
+            ))}
+          </div>
+          {view === 'Code' && (
+            <pre className="block-source" tabIndex={0} aria-label="Generated Python">
+              <code>{(code.trimEnd() || '# Snap blocks together to start').split('\n').map((line, index) => (
+                <span className="block-code-line" key={index}><span className="block-line-number" aria-hidden="true">{index + 1}</span>{highlight(line).map((token, i) => <span key={i} className={`block-token-${token.kind}`}>{token.text}</span>)}</span>
+              ))}</code>
+            </pre>
+          )}
+          {view === 'Turtle' && (drawing.length > 0
+            ? <TurtleCanvas commands={drawing}/>
+            : <p className="block-empty">Press Run to draw with Turtle.</p>)}
+          {view === 'Output' && <pre className="block-console" tabIndex={0} aria-label="Python output">{output.join('\n') || 'Printed text appears here.'}</pre>}
+          <p className="block-status" role="status">{status}</p>
+        </aside>
       </div>
     </main>
   );
