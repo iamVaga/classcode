@@ -3,3 +3,27 @@
 @keyframes auth-spin{to{transform:rotate(360deg)}}
 @media(max-width:600px){.modal:has(.auth-content){width:min(440px,100%);padding:25px 22px 22px;border-radius:16px}.auth-content h2{font-size:23px}}
 @media(prefers-reduced-motion:reduce){.auth-spinner{animation:none!important}.auth-input-wrap{transition:none}}
+
+/* Keep the account heading and close control visible on short screens. */
+.modal-backdrop:has(.auth-content) { padding: 12px; }
+.modal:has(.auth-content) { width: min(440px,100%); max-height: calc(100dvh - 24px); min-height: 0; padding: 22px clamp(16px,5vw,28px); overscroll-behavior: contain; border-color: var(--border); }
+.modal:has(.auth-content)>.modal-close { display: grid; place-items: center; color: var(--ink-muted); }
+.modal .auth-content h2 { margin: 0 38px 5px 0; font-size: clamp(22px,5vw,28px); line-height: 1.2; }
+.modal .auth-content>p { margin-bottom: 12px; font-size: 13px; line-height: 1.45; }
+.auth-tabs { margin-bottom: 10px; background: var(--surface-2); border-color: var(--border); }
+.auth-tabs button { font-size: 12px; color: var(--ink-muted); }
+.auth-tabs button.active { color: var(--ink); background: var(--surface); }
+.auth-google { background: var(--surface-2); color: var(--ink); border-color: var(--border); font-size: 13px; }
+.auth-google:hover:not(:disabled) { color: var(--ink); background: var(--surface); border-color: var(--primary); }
+.auth-google:disabled { color: var(--ink-muted); opacity: 1; }
+.auth-divider { margin-block: 10px; color: var(--ink-muted); font-size: 11px; }
+.auth-divider::before,.auth-divider::after { background: var(--border); }
+.modal .auth-content .form-label { margin-bottom: 10px; font-size: 12px; color: var(--ink); }
+.auth-input-wrap { background: var(--surface-2); border-color: var(--border); color: var(--ink-muted); margin-top: 4px; }
+.auth-input-wrap:focus-within { border-color: var(--primary); }
+.modal .auth-input-wrap input { font-size: 16px; color: var(--ink); }
+.modal .auth-input-wrap input::placeholder,.password-toggle { color: var(--ink-muted); }
+.password-toggle:hover { color: var(--ink); background: var(--surface); }
+.modal .auth-submit { color: var(--surface); background: var(--primary); font-size: 13px; }
+.auth-feedback { font-size: 12px; }
+.auth-forgot,.auth-back,.auth-signout { color: var(--primary); font-size: 12px; }
