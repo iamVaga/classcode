@@ -1,0 +1,642 @@
+[
+  {
+    "viewport": 360,
+    "document": 360,
+    "shifts": [],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 138,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgb(248, 250, 246)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 16,
+      "y": 138,
+      "width": 328,
+      "height": 1056.734375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "24px",
+      "columns": "328px"
+    },
+    "h1": {
+      "x": 16,
+      "y": 208.390625,
+      "width": 328,
+      "height": 158.375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "36px",
+      "lineHeight": "39.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 16,
+      "y": 386.765625,
+      "width": 328,
+      "height": 76.78125,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(69, 91, 84)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 16,
+      "y": 649.9375,
+      "width": 328,
+      "height": 504.796875,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(219, 233, 239)",
+      "background": "rgb(16, 29, 38)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 16,
+      "y": 3153.59375,
+      "width": 328,
+      "height": 1081.9375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "8px",
+      "columns": "160px 160px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ],
+      [
+        "Geist",
+        "100 900"
+      ],
+      [
+        "Geist Fallback",
+        "normal"
+      ]
+    ],
+    "preload": 3
+  },
+  {
+    "viewport": 390,
+    "document": 390,
+    "shifts": [],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 94,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgb(248, 250, 246)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 16,
+      "y": 94,
+      "width": 358,
+      "height": 975.9375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "24px",
+      "columns": "358px"
+    },
+    "h1": {
+      "x": 16,
+      "y": 164.390625,
+      "width": 358,
+      "height": 158.375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "36px",
+      "lineHeight": "39.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 16,
+      "y": 342.765625,
+      "width": 358,
+      "height": 76.78125,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(69, 91, 84)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 16,
+      "y": 549.9375,
+      "width": 358,
+      "height": 480,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(219, 233, 239)",
+      "background": "rgb(16, 29, 38)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 16,
+      "y": 3003.203125,
+      "width": 358,
+      "height": 992.375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "8px",
+      "columns": "175px 175px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ],
+      [
+        "Geist",
+        "100 900"
+      ],
+      [
+        "Geist Fallback",
+        "normal"
+      ]
+    ],
+    "preload": 3,
+    "axe": []
+  },
+  {
+    "viewport": 768,
+    "document": 768,
+    "shifts": [],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 768,
+      "height": 94,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgb(248, 250, 246)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 30.71875,
+      "y": 94,
+      "width": 706.546875,
+      "height": 620.546875,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "38.4px",
+      "columns": "374.156px 294px"
+    },
+    "h1": {
+      "x": 30.71875,
+      "y": 247.6875,
+      "width": 348.3125,
+      "height": 162.125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "36.864px",
+      "lineHeight": "40.5504px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 30.71875,
+      "y": 429.8125,
+      "width": 374.15625,
+      "height": 76.78125,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(69, 91, 84)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 443.265625,
+      "y": 147.75,
+      "width": 294,
+      "height": 526.796875,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(219, 233, 239)",
+      "background": "rgb(16, 29, 38)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 30.71875,
+      "y": 2453.546875,
+      "width": 706.546875,
+      "height": 739.703125,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "224.844px 224.844px 224.844px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ],
+      [
+        "Geist",
+        "100 900"
+      ],
+      [
+        "Geist Fallback",
+        "normal"
+      ]
+    ],
+    "preload": 3
+  },
+  {
+    "viewport": 1024,
+    "document": 1024,
+    "shifts": [
+      0.0010353666543960571
+    ],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 73,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgb(248, 250, 246)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 40.953125,
+      "y": 73,
+      "width": 942.078125,
+      "height": 624.859375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "51.2px",
+      "columns": "498.891px 392px"
+    },
+    "h1": {
+      "x": 40.953125,
+      "y": 217.953125,
+      "width": 464.453125,
+      "height": 216.25,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "49.152px",
+      "lineHeight": "54.0672px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 40.953125,
+      "y": 454.203125,
+      "width": 498.890625,
+      "height": 51.1875,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(69, 91, 84)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 591.03125,
+      "y": 144.671875,
+      "width": 392,
+      "height": 502,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(219, 233, 239)",
+      "background": "rgb(16, 29, 38)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 40.953125,
+      "y": 2072.859375,
+      "width": 942.078125,
+      "height": 672.40625,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "303.359px 303.359px 303.359px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ],
+      [
+        "Geist",
+        "100 900"
+      ],
+      [
+        "Geist Fallback",
+        "normal"
+      ]
+    ],
+    "preload": 3
+  },
+  {
+    "viewport": 1440,
+    "document": 1440,
+    "shifts": [
+      0.0005002703028549382
+    ],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 1440,
+      "height": 73,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgb(248, 250, 246)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 80,
+      "y": 73,
+      "width": 1280,
+      "height": 699.296875,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "72px",
+      "columns": "676.469px 531.531px"
+    },
+    "h1": {
+      "x": 80,
+      "y": 212.1875,
+      "width": 653.171875,
+      "height": 304.125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "69.12px",
+      "lineHeight": "76.032px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 80,
+      "y": 536.3125,
+      "width": 608.625,
+      "height": 57.59375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(69, 91, 84)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 828.46875,
+      "y": 186.046875,
+      "width": 531.53125,
+      "height": 502,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(219, 233, 239)",
+      "background": "rgb(16, 29, 38)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 80,
+      "y": 2407.9375,
+      "width": 1280,
+      "height": 442.9375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "308px 308px 308px 308px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ],
+      [
+        "Geist",
+        "100 900"
+      ],
+      [
+        "Geist Fallback",
+        "normal"
+      ]
+    ],
+    "preload": 3,
+    "axe": []
+  },
+  {
+    "viewport": 1920,
+    "document": 1920,
+    "shifts": [
+      0.0002810689629448785
+    ],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 1920,
+      "height": 73,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgb(248, 250, 246)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 320,
+      "y": 73,
+      "width": 1280,
+      "height": 723.9375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "76px",
+      "columns": "674.234px 529.766px"
+    },
+    "h1": {
+      "x": 320,
+      "y": 215.390625,
+      "width": 674.234375,
+      "height": 325.5625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "74px",
+      "lineHeight": "81.4px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 320,
+      "y": 560.953125,
+      "width": 608.625,
+      "height": 57.59375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(69, 91, 84)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 1070.234375,
+      "y": 199.96875,
+      "width": 529.765625,
+      "height": 502,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(219, 233, 239)",
+      "background": "rgb(16, 29, 38)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 320,
+      "y": 2457.953125,
+      "width": 1280,
+      "height": 442.9375,
+      "font": "Geist, \"Geist Fallback\", \"Segoe UI\", sans-serif",
+      "size": "18px",
+      "lineHeight": "28.8px",
+      "foreground": "rgb(16, 37, 32)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "308px 308px 308px 308px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ],
+      [
+        "Geist",
+        "100 900"
+      ],
+      [
+        "Geist Fallback",
+        "normal"
+      ]
+    ],
+    "preload": 3
+  }
+]

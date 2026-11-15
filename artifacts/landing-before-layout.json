@@ -1,0 +1,687 @@
+[
+  {
+    "viewport": 360,
+    "document": 360,
+    "shifts": [],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 360,
+      "height": 111,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "color(srgb 0.980392 0.972549 0.956863 / 0.96)",
+      "gap": "8px 0px",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 16,
+      "y": 111,
+      "width": 328,
+      "height": 1243.640625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "28px",
+      "columns": "minmax(0px, 7fr) minmax(0px, 5fr)"
+    },
+    "h1": {
+      "x": 16,
+      "y": 186.1875,
+      "width": 283.5,
+      "height": 85.65625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "42px",
+      "lineHeight": "42.84px",
+      "foreground": "rgb(39, 32, 52)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 16,
+      "y": 295.84375,
+      "width": 328,
+      "height": 108.75,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(119, 107, 128)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 16,
+      "y": 748.96875,
+      "width": 315,
+      "height": 533.671875,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgb(23, 33, 42)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 16,
+      "y": 2528.140625,
+      "width": 328,
+      "height": 2376.09375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "12px",
+      "columns": "328px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "400"
+      ],
+      [
+        "Lexend",
+        "500"
+      ],
+      [
+        "Lexend",
+        "600"
+      ],
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ]
+    ],
+    "preload": 2
+  },
+  {
+    "viewport": 390,
+    "document": 390,
+    "shifts": [],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 390,
+      "height": 111,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "color(srgb 0.980392 0.972549 0.956863 / 0.96)",
+      "gap": "8px 0px",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 16,
+      "y": 111,
+      "width": 358,
+      "height": 1245.484375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "28px",
+      "columns": "minmax(0px, 7fr) minmax(0px, 5fr)"
+    },
+    "h1": {
+      "x": 16,
+      "y": 186.1875,
+      "width": 289.5625,
+      "height": 87.5,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "42.9px",
+      "lineHeight": "43.758px",
+      "foreground": "rgb(39, 32, 52)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 16,
+      "y": 297.6875,
+      "width": 358,
+      "height": 108.75,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(119, 107, 128)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 16,
+      "y": 750.8125,
+      "width": 345,
+      "height": 533.671875,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgb(23, 33, 42)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 16,
+      "y": 2478.796875,
+      "width": 358,
+      "height": 2331.3125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "12px",
+      "columns": "358px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "400"
+      ],
+      [
+        "Lexend",
+        "500"
+      ],
+      [
+        "Lexend",
+        "600"
+      ],
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ]
+    ],
+    "preload": 2,
+    "axe": [
+      {
+        "id": "aria-prohibited-attr",
+        "nodes": [
+          {
+            "target": [
+              ".pyblock-example"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on \"div\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "viewport": 768,
+    "document": 969,
+    "shifts": [
+      0.00008719816080729168,
+      4.720052083333333e-7
+    ],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 768,
+      "height": 78,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "color(srgb 0.980392 0.972549 0.956863 / 0.96)",
+      "gap": "14px",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 24,
+      "y": 78,
+      "width": 720,
+      "height": 652.0625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "28px",
+      "columns": "403.656px 288.344px"
+    },
+    "h1": {
+      "x": 24,
+      "y": 232.453125,
+      "width": 311.03125,
+      "height": 93.96875,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "46.08px",
+      "lineHeight": "47.0016px",
+      "foreground": "rgb(39, 32, 52)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 24,
+      "y": 350.421875,
+      "width": 403.65625,
+      "height": 81.5625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(119, 107, 128)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 478,
+      "y": 200.43124389648438,
+      "width": 266,
+      "height": 405.5906066894531,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgb(23, 33, 42)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 24,
+      "y": 1624.484375,
+      "width": 720,
+      "height": 953.890625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "229.328px 229.328px 229.328px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "400"
+      ],
+      [
+        "Lexend",
+        "500"
+      ],
+      [
+        "Lexend",
+        "600"
+      ],
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ]
+    ],
+    "preload": 2
+  },
+  {
+    "viewport": 1024,
+    "document": 1024,
+    "shifts": [
+      0.00006386584043502808
+    ],
+    "header": {
+      "x": 0,
+      "y": 0,
+      "width": 1024,
+      "height": 89,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "color(srgb 0.980392 0.972549 0.956863 / 0.96)",
+      "gap": "20px",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 24,
+      "y": 89,
+      "width": 976,
+      "height": 650.265625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "48px",
+      "columns": "541.328px 386.672px"
+    },
+    "h1": {
+      "x": 24,
+      "y": 242.703125,
+      "width": 442.3125,
+      "height": 133.65625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "65.536px",
+      "lineHeight": "66.8467px",
+      "foreground": "rgb(39, 32, 52)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 24,
+      "y": 400.359375,
+      "width": 541.328125,
+      "height": 54.375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(119, 107, 128)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 651.995361328125,
+      "y": 186.14141845703125,
+      "width": 348.004638671875,
+      "height": 467.1702880859375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgb(23, 33, 42)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 24,
+      "y": 1609.109375,
+      "width": 976,
+      "height": 833.109375,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16px",
+      "lineHeight": "25.6px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "314.656px 314.672px 314.656px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "400"
+      ],
+      [
+        "Lexend",
+        "500"
+      ],
+      [
+        "Lexend",
+        "600"
+      ],
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ]
+    ],
+    "preload": 2
+  },
+  {
+    "viewport": 1440,
+    "document": 1440,
+    "shifts": [
+      0.00003229561511381173
+    ],
+    "header": {
+      "x": 120,
+      "y": 0,
+      "width": 1200,
+      "height": 89,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16.56px",
+      "lineHeight": "26.496px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "color(srgb 0.980392 0.972549 0.956863 / 0.96)",
+      "gap": "30px",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 120,
+      "y": 89,
+      "width": 1200,
+      "height": 664.890625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16.56px",
+      "lineHeight": "26.496px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "48px",
+      "columns": "672px 480px"
+    },
+    "h1": {
+      "x": 120,
+      "y": 246.609375,
+      "width": 486,
+      "height": 146.875,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "72px",
+      "lineHeight": "73.44px",
+      "foreground": "rgb(39, 32, 52)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 120,
+      "y": 417.484375,
+      "width": 634.3125,
+      "height": 60.78125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "19px",
+      "lineHeight": "30.4px",
+      "foreground": "rgb(119, 107, 128)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 850,
+      "y": 173,
+      "width": 460,
+      "height": 520.890625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16.56px",
+      "lineHeight": "26.496px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgb(23, 33, 42)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 120,
+      "y": 1677.59375,
+      "width": 1200,
+      "height": 780.328125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "16.56px",
+      "lineHeight": "26.496px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "389.328px 389.328px 389.344px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "400"
+      ],
+      [
+        "Lexend",
+        "500"
+      ],
+      [
+        "Lexend",
+        "600"
+      ],
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Lexend Fallback",
+        "normal"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ]
+    ],
+    "preload": 2,
+    "axe": [
+      {
+        "id": "aria-prohibited-attr",
+        "nodes": [
+          {
+            "target": [
+              ".pyblock-example"
+            ],
+            "summary": "Fix all of the following:\n  aria-label attribute cannot be used on \"div\" elements with no valid role attribute."
+          }
+        ]
+      }
+    ]
+  },
+  {
+    "viewport": 1920,
+    "document": 1920,
+    "shifts": [],
+    "header": {
+      "x": 360,
+      "y": 0,
+      "width": 1200,
+      "height": 89,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "color(srgb 0.980392 0.972549 0.956863 / 0.96)",
+      "gap": "30px",
+      "columns": "none"
+    },
+    "hero": {
+      "x": 360,
+      "y": 89,
+      "width": 1200,
+      "height": 666.265625,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "48px",
+      "columns": "672px 480px"
+    },
+    "h1": {
+      "x": 360,
+      "y": 247.296875,
+      "width": 486,
+      "height": 146.875,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "72px",
+      "lineHeight": "73.44px",
+      "foreground": "rgb(39, 32, 52)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "description": {
+      "x": 360,
+      "y": 418.171875,
+      "width": 634.3125,
+      "height": 60.78125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "19px",
+      "lineHeight": "30.4px",
+      "foreground": "rgb(119, 107, 128)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "demo": {
+      "x": 1067,
+      "y": 146.88671875,
+      "width": 506,
+      "height": 574.4921875,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgb(23, 33, 42)",
+      "gap": "normal",
+      "columns": "none"
+    },
+    "tracks": {
+      "x": 360,
+      "y": 1683.84375,
+      "width": 1200,
+      "height": 780.328125,
+      "font": "Lexend, \"Lexend Fallback\", Lexend, \"Segoe UI\", sans-serif",
+      "size": "17px",
+      "lineHeight": "27.2px",
+      "foreground": "rgb(20, 24, 31)",
+      "background": "rgba(0, 0, 0, 0)",
+      "gap": "16px",
+      "columns": "389.328px 389.328px 389.344px"
+    },
+    "fonts": [
+      [
+        "Lexend",
+        "400"
+      ],
+      [
+        "Lexend",
+        "500"
+      ],
+      [
+        "Lexend",
+        "600"
+      ],
+      [
+        "Lexend",
+        "700"
+      ],
+      [
+        "Atkinson Hyperlegible Mono",
+        "400"
+      ]
+    ],
+    "preload": 2
+  }
+]

@@ -1,0 +1,474 @@
+{
+  "states": [
+    {
+      "selector": "button:focus-visible",
+      "context": "",
+      "css": "outline-offset: 4px; outline: rgb(120, 156, 88) solid 2px;"
+    },
+    {
+      "selector": "a:focus-visible",
+      "context": "",
+      "css": "outline-offset: 4px; outline: rgb(120, 156, 88) solid 2px;"
+    },
+    {
+      "selector": ".icon-button:hover",
+      "context": "",
+      "css": "background: var(--soft);"
+    },
+    {
+      "selector": "button:focus-visible",
+      "context": "",
+      "css": "outline: 2px solid var(--accent); outline-offset: 4px;"
+    },
+    {
+      "selector": "a:focus-visible",
+      "context": "",
+      "css": "outline: 2px solid var(--accent); outline-offset: 4px;"
+    },
+    {
+      "selector": ".studio-header nav button.active",
+      "context": "",
+      "css": "color: rgb(94, 61, 129); font-weight: 700;"
+    },
+    {
+      "selector": ".studio-header nav button.active::after",
+      "context": "",
+      "css": "content: \"\"; background: rgb(139, 104, 170); height: 2px; position: absolute; bottom: -1px; left: 0px; right: 0px;"
+    },
+    {
+      "selector": ".studio-header nav button:hover",
+      "context": "",
+      "css": "color: rgb(94, 61, 129);"
+    },
+    {
+      "selector": ".studio-icon:hover",
+      "context": "",
+      "css": "background: var(--soft);"
+    },
+    {
+      "selector": ".studio-primary:hover",
+      "context": "",
+      "css": "background: rgb(96, 64, 118); transform: translateY(-1px);"
+    },
+    {
+      "selector": ".studio-secondary:hover",
+      "context": "",
+      "css": "background: rgb(241, 234, 245); border-color: rgb(161, 135, 176);"
+    },
+    {
+      "selector": ".studio-search:focus-within",
+      "context": "",
+      "css": "border-color: rgb(178, 149, 196); box-shadow: rgba(161, 135, 176, 0.047) 0px 0px 0px 3px;"
+    },
+    {
+      "selector": ".category-tabs button.active",
+      "context": "",
+      "css": "color: rgb(135, 98, 157); background: rgb(242, 237, 246); border-color: rgb(232, 223, 238); font-weight: 600;"
+    },
+    {
+      "selector": ".category-tabs button:hover",
+      "context": "",
+      "css": "color: rgb(128, 96, 143); background: rgb(247, 244, 250);"
+    },
+    {
+      "selector": ".starter-card:hover",
+      "context": "",
+      "css": "border-color: rgb(198, 174, 214); transform: translateY(-5px); box-shadow: rgba(107, 78, 127, 0.043) 0px 7px 24px;"
+    },
+    {
+      "selector": ".icon-button:hover",
+      "context": "",
+      "css": "background: var(--soft);"
+    },
+    {
+      "selector": ".character-eyes",
+      "context": "",
+      "css": "transform-origin: 40px 36px; animation: 6s ease 0s infinite normal none running companion-blink;"
+    },
+    {
+      "selector": "[data-theme=\"light\"] .category-tabs button.active",
+      "context": "",
+      "css": "color: rgb(108, 72, 127);"
+    },
+    {
+      "selector": ".character-eyes",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "animation: auto ease 0s 1 normal none running none !important;"
+    },
+    {
+      "selector": ".character-avatar",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "animation: auto ease 0s 1 normal none running none !important;"
+    },
+    {
+      "selector": ".studio-primary:hover > svg",
+      "context": "",
+      "css": "transition: transform var(--motion-fast); transform: translate(2px, -1px);"
+    },
+    {
+      "selector": ".studio-primary:active",
+      "context": "",
+      "css": "transform: scale(0.985);"
+    },
+    {
+      "selector": ".studio-secondary:active",
+      "context": "",
+      "css": "transform: scale(0.985);"
+    },
+    {
+      "selector": ".starter-card:active",
+      "context": "",
+      "css": "transform: scale(0.985);"
+    },
+    {
+      "selector": ".jump-back",
+      "context": "",
+      "css": "animation: surface-enter var(--motion-medium) var(--ease-out) both;"
+    },
+    {
+      "selector": ".discovery-section",
+      "context": "",
+      "css": "animation: surface-enter var(--motion-medium) var(--ease-out) both;"
+    },
+    {
+      "selector": ".starter-card",
+      "context": "",
+      "css": "animation: surface-enter .26s var(--ease-out) both;"
+    },
+    {
+      "selector": ".category-tabs button.active",
+      "context": "",
+      "css": "box-shadow: rgba(91, 55, 120, 0.027) 0px 2px 5px;"
+    },
+    {
+      "selector": ".connection-badge:hover",
+      "context": "",
+      "css": "border-color: rgb(186, 163, 200);"
+    },
+    {
+      "selector": "*",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "scroll-behavior: auto !important; transition: none !important; animation: auto ease 0s 1 normal none running none !important;"
+    },
+    {
+      "selector": ".snippet-language-tabs > button[aria-selected=\"true\"]",
+      "context": "",
+      "css": "color: rgb(223, 204, 255); background: rgb(23, 33, 54); border-color: rgb(55, 69, 97);"
+    },
+    {
+      "selector": ".snippet-language-tabs > button:hover",
+      "context": "",
+      "css": "color: rgb(255, 255, 255);"
+    },
+    {
+      "selector": ".snippet-editor",
+      "context": "",
+      "css": "min-height: 165px; padding: 28px 13px 14px 39px; animation: 0.16s ease-out 0s 1 normal none running surface-enter; position: relative; overflow: auto;"
+    },
+    {
+      "selector": ".snippet-open:hover",
+      "context": "",
+      "css": "color: rgb(238, 226, 255); background: rgb(44, 54, 81);"
+    },
+    {
+      "selector": ".starter-card:hover .starter-code-window",
+      "context": "",
+      "css": "transition: transform 0.17s ease-out; transform: rotate(-1deg) translateY(-2px);"
+    },
+    {
+      "selector": ".snippet-editor",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "animation: auto ease 0s 1 normal none running none;"
+    },
+    {
+      "selector": ".starter-card:hover .starter-code-window",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "transition: none; transform: none;"
+    },
+    {
+      "selector": ".experiment-choices button[aria-pressed=\"true\"]",
+      "context": "",
+      "css": "color: rgb(39, 28, 66); background: rgb(216, 202, 255);"
+    },
+    {
+      "selector": ".snippet-playground button:focus-visible",
+      "context": "",
+      "css": "outline-offset: -3px; outline: rgb(252, 202, 116) solid 3px;"
+    },
+    {
+      "selector": ".starter-card:hover",
+      "context": "",
+      "css": "transform: translateY(-3px); box-shadow: rgba(56, 42, 75, 0.086) 0px 14px 36px;"
+    },
+    {
+      "selector": ".starter-card:focus-visible",
+      "context": "",
+      "css": "outline: 3px solid var(--primary); outline-offset: 3px;"
+    },
+    {
+      "selector": ".teacher-overview button:focus-visible",
+      "context": "",
+      "css": "outline: 3px solid var(--primary); outline-offset: 3px;"
+    },
+    {
+      "selector": ".student-safety > a:hover",
+      "context": "",
+      "css": "text-underline-offset: 4px; text-decoration: underline;"
+    },
+    {
+      "selector": ".studio-footer nav a:hover",
+      "context": "",
+      "css": "color: var(--accent); text-underline-offset: 4px; text-decoration: underline;"
+    },
+    {
+      "selector": ".starter-card:hover",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "transform: none;"
+    },
+    {
+      "selector": "button:focus-visible",
+      "context": "",
+      "css": "box-shadow: var(--focus-ring); outline: 0px;"
+    },
+    {
+      "selector": "a:focus-visible",
+      "context": "",
+      "css": "box-shadow: var(--focus-ring); outline: 0px;"
+    },
+    {
+      "selector": "input:focus-visible",
+      "context": "",
+      "css": "box-shadow: var(--focus-ring); outline: 0px;"
+    },
+    {
+      "selector": "[tabindex]:focus-visible",
+      "context": "",
+      "css": "box-shadow: var(--focus-ring); outline: 0px;"
+    },
+    {
+      "selector": "a:hover",
+      "context": "",
+      "css": "color: var(--primary-hover); text-decoration: underline;"
+    },
+    {
+      "selector": ".studio-header nav button.active",
+      "context": "",
+      "css": "background: var(--primary-soft); font-weight: 600; color: var(--primary) !important;"
+    },
+    {
+      "selector": ".studio-header nav button.active::after",
+      "context": "",
+      "css": "display: none;"
+    },
+    {
+      "selector": ".studio-primary:hover",
+      "context": "",
+      "css": "border-color: var(--primary-hover); background: var(--primary-hover); box-shadow: var(--shadow-card);"
+    },
+    {
+      "selector": ".studio-secondary:hover",
+      "context": "",
+      "css": "border-color: color-mix(in srgb,var(--primary) 42%,var(--border)); background: var(--surface-2);"
+    },
+    {
+      "selector": ".snippet-language-tabs > button[aria-selected=\"true\"]",
+      "context": "",
+      "css": "color: rgb(230, 247, 246); background: rgb(32, 44, 53); border-color: rgb(54, 70, 80);"
+    },
+    {
+      "selector": ".experiment-choices button[aria-pressed=\"true\"]",
+      "context": "",
+      "css": "color: rgb(232, 251, 250); background: rgb(39, 64, 68); border-color: rgb(154, 221, 221);"
+    },
+    {
+      "selector": ".category-tabs button.active",
+      "context": "",
+      "css": "border-color: color-mix(in srgb,var(--primary) 20%,var(--border)); background: var(--primary-soft); color: var(--primary);"
+    },
+    {
+      "selector": ".starter-card:hover",
+      "context": "",
+      "css": "border-color: color-mix(in srgb,var(--primary) 40%,var(--border)); box-shadow: var(--shadow-card); transform: translateY(-2px);"
+    },
+    {
+      "selector": ".starter-card:hover .starter-code-window",
+      "context": "",
+      "css": "transform: scale(1.02);"
+    },
+    {
+      "selector": ".demo-teacher-note",
+      "context": "",
+      "css": "animation: hint-enter .4s var(--ease-enter) both; background: rgb(32, 47, 53); border: 1px solid rgb(71, 96, 95); border-radius: 10px; padding: 12px;"
+    },
+    {
+      "selector": ".demo-teacher-note",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "animation: auto ease 0s 1 normal none running none;"
+    },
+    {
+      "selector": ".studio-footer nav a:hover",
+      "context": "",
+      "css": "color: var(--accent-ink) !important;"
+    },
+    {
+      "selector": ".snippet-playground .snippet-editor pre::after",
+      "context": "",
+      "css": "content: \"\"; vertical-align: -0.15em; background: rgb(217, 244, 241); width: 1px; height: 1em; margin-left: 2px; animation: 1.1s steps(2) 0s infinite normal none running caret-blink; display: inline-block;"
+    },
+    {
+      "selector": ".snippet-playground .snippet-editor",
+      "context": "",
+      "css": "animation: reveal-in var(--motion-fast) var(--ease-enter) both;"
+    },
+    {
+      "selector": ".snippet-playground .snippet-example-output",
+      "context": "",
+      "css": "animation: card-in var(--motion-fast) var(--ease-enter) both;"
+    },
+    {
+      "selector": ".starter-card:hover .starter-action svg",
+      "context": "",
+      "css": "transform: translate(3px);"
+    },
+    {
+      "selector": ".studio-footer nav button:hover",
+      "context": "",
+      "css": "color: var(--primary); text-underline-offset: 4px; text-decoration: underline;"
+    },
+    {
+      "selector": ".how-file-shape",
+      "context": "",
+      "css": "border: 1px solid color-mix(in srgb,var(--primary) 35%,var(--border)); background: var(--surface); width: 58px; height: 62px; animation: step-arrive .6s var(--ease-enter) both; border-radius: 10px; place-items: center; display: grid; position: relative;"
+    },
+    {
+      "selector": ".how-code-lines i:first-child",
+      "context": "",
+      "css": "background: var(--primary); width: 26px; animation: code-progress 1.8s var(--ease-standard) infinite;"
+    },
+    {
+      "selector": ".how-art-share > div svg:nth-child(2)",
+      "context": "",
+      "css": "color: var(--primary); animation: share-flow 1.8s var(--ease-standard) infinite;"
+    },
+    {
+      "selector": ".studio-app [data-reveal].is-visible",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "animation: auto ease 0s 1 normal none running none;"
+    },
+    {
+      "selector": ".starter-card:hover",
+      "context": "(prefers-reduced-motion: reduce)",
+      "css": "transform: none;"
+    }
+  ],
+  "animations": [
+    {
+      "name": "companion-blink",
+      "css": "@keyframes companion-blink { \n  0%, 43%, 47%, 100% { transform: scaleY(1); }\n  45% { transform: scaleY(0.12); }\n}"
+    },
+    {
+      "name": "companion-float",
+      "css": "@keyframes companion-float { \n  0%, 100% { transform: translateY(0px) rotate(-3deg); }\n  50% { transform: translateY(-5px) rotate(3deg); }\n}"
+    },
+    {
+      "name": "auth-spin",
+      "css": "@keyframes auth-spin { \n  100% { transform: rotate(360deg); }\n}"
+    },
+    {
+      "name": "surface-enter",
+      "css": "@keyframes surface-enter { \n  0% { opacity: 0; transform: translateY(5px); }\n  100% { opacity: 1; transform: translateY(0px); }\n}"
+    },
+    {
+      "name": "dialog-enter",
+      "css": "@keyframes dialog-enter { \n  0% { opacity: 0; transform: translateY(7px) scale(0.985); }\n  100% { opacity: 1; transform: translateY(0px) scale(1); }\n}"
+    },
+    {
+      "name": "backdrop-enter",
+      "css": "@keyframes backdrop-enter { \n  0% { opacity: 0; }\n  100% { opacity: 1; }\n}"
+    },
+    {
+      "name": "run-breathe",
+      "css": "@keyframes run-breathe { \n  0%, 100% { opacity: 1; }\n  50% { opacity: 0.45; }\n}"
+    },
+    {
+      "name": "loading-turn",
+      "css": "@keyframes loading-turn { \n  100% { transform: rotate(360deg); }\n}"
+    },
+    {
+      "name": "live-pulse",
+      "css": "@keyframes live-pulse { \n  0%, 100% { opacity: 1; }\n  50% { opacity: 0.5; }\n}"
+    },
+    {
+      "name": "hint-enter",
+      "css": "@keyframes hint-enter { \n  0% { opacity: 0; transform: translateY(5px); }\n  100% { opacity: 1; transform: translateY(0px); }\n}"
+    },
+    {
+      "name": "toast-enter",
+      "css": "@keyframes toast-enter { \n  0% { opacity: 0; transform: translateY(12px); }\n  100% { opacity: 1; transform: translateY(0px); }\n}"
+    },
+    {
+      "name": "overlay-in",
+      "css": "@keyframes overlay-in { \n  0% { opacity: 0; }\n  100% { opacity: 1; }\n}"
+    },
+    {
+      "name": "modal-in",
+      "css": "@keyframes modal-in { \n  0% { opacity: 0; transform: scale(0.96); }\n  100% { opacity: 1; transform: scale(1); }\n}"
+    },
+    {
+      "name": "card-in",
+      "css": "@keyframes card-in { \n  0% { opacity: 0; }\n  100% { opacity: 1; }\n}"
+    },
+    {
+      "name": "reveal-in",
+      "css": "@keyframes reveal-in { \n  0% { opacity: 0; transform: translateY(12px); }\n  100% { opacity: 1; transform: translateY(0px); }\n}"
+    },
+    {
+      "name": "caret-blink",
+      "css": "@keyframes caret-blink { \n  50% { opacity: 0; }\n}"
+    },
+    {
+      "name": "scan-line",
+      "css": "@keyframes scan-line { \n  0% { opacity: 0; transform: translateY(-100%); }\n  18% { opacity: 0.85; }\n  100% { opacity: 0; transform: translateY(100%); }\n}"
+    },
+    {
+      "name": "check-draw",
+      "css": "@keyframes check-draw { \n  100% { stroke-dashoffset: 0; }\n}"
+    },
+    {
+      "name": "token-highlight",
+      "css": "@keyframes token-highlight { \n  0% { background-position: 100% 0px; }\n  100% { background-position: 0px 0px; }\n}"
+    },
+    {
+      "name": "skeleton-wash",
+      "css": "@keyframes skeleton-wash { \n  100% { background-position: -220% 0px; }\n}"
+    },
+    {
+      "name": "spin",
+      "css": "@keyframes spin { \n  100% { transform: rotate(360deg); }\n}"
+    },
+    {
+      "name": "step-arrive",
+      "css": "@keyframes step-arrive { \n  0% { opacity: 0; transform: translateY(8px); }\n  100% { opacity: 1; transform: translateY(0px); }\n}"
+    },
+    {
+      "name": "code-progress",
+      "css": "@keyframes code-progress { \n  0%, 100% { opacity: 0.55; }\n  50% { opacity: 1; }\n}"
+    },
+    {
+      "name": "share-flow",
+      "css": "@keyframes share-flow { \n  0%, 100% { opacity: 0.55; }\n  50% { opacity: 1; }\n}"
+    },
+    {
+      "name": "particle-burst",
+      "css": "@keyframes particle-burst { \n  0% { opacity: 0.9; transform: rotate(var(--particle-angle)) translateY(0) scale(.2); }\n  100% { opacity: 0; transform: rotate(var(--particle-angle)) translateY(-16px) scale(1); }\n}"
+    },
+    {
+      "name": "fade-in",
+      "css": "@keyframes fade-in { \n  0% { opacity: 0; }\n  100% { opacity: 1; }\n}"
+    },
+    {
+      "name": "dialog-enter",
+      "css": "@keyframes dialog-enter { \n  0% { opacity: 0; transform: scale(0.96); }\n  100% { opacity: 1; transform: scale(1); }\n}"
+    }
+  ]
+}
