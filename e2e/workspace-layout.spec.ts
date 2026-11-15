@@ -25,11 +25,12 @@ for(const viewport of viewports){
      files:{'main.py':'print(1)'},version:1,updated:new Date().toISOString(),
     }])));
     await page.reload();
-    await expect(page.getByText('Your latest project is right where you left it.')).toBeVisible();
    }
+   await page.getByRole('button',{name:'Workspace',exact:true}).click();
+   if(saved)await expect(page.getByText('Your latest project is right where you left it.')).toBeVisible();
    await page.locator('footer.studio-footer').scrollIntoViewIfNeeded();
    const measurements=await page.evaluate(()=>{
-    const sections=Array.from(document.querySelectorAll<HTMLElement>('.discovery-hero,.jump-back,.discovery-section,.teacher-overview,.analyser-preview,.how-it-works,.student-safety,.final-project-cta,.studio-footer'));
+    const sections=Array.from(document.querySelectorAll<HTMLElement>('.discovery-hero,.pyblock-feature,.jump-back,.discovery-section,.teacher-overview,.analyser-preview,.how-it-works,.student-safety,.final-project-cta,.studio-footer'));
     return {
      overflow:document.documentElement.scrollWidth>innerWidth,
      opacity:sections.map(section=>getComputedStyle(section).opacity),
@@ -46,7 +47,7 @@ for(const viewport of viewports){
   await page.setViewportSize(viewport);
   await page.addInitScript(()=>localStorage.setItem('classcode-bandwidth','saver'));
   await page.goto('/');
-  await page.locator('.starter-python').click();
+  await page.getByRole('button',{name:/Python.*Open in editor/}).click();
   const editor=page.getByRole('textbox',{name:'Code editor'});
   await editor.fill('');
   await expect(page.getByLabel('Line numbers')).toHaveText('1');

@@ -16,15 +16,16 @@ import type {Metadata} from 'next';
 import {Atkinson_Hyperlegible_Mono,Lexend} from 'next/font/google';
 const ui=Lexend({subsets:['latin'],display:'swap',variable:'--font-lexend',weight:['400','500','600','700'],preload:true});
 const code=Atkinson_Hyperlegible_Mono({subsets:['latin'],display:'swap',variable:'--font-atkinson-mono',weight:['400','500','600'],preload:true});
-const promise='Students make. Teachers guide.';
+const promise='Students code. Teachers join live.';
+const description='A browser coding workspace where students build real projects and teachers join live to suggest fixes. Start with Python, Turtle, Web, Java, C++, C, PyBlock or Pygame Studio.';
 export const metadata:Metadata={
  metadataBase:new URL('https://classcode-sand.vercel.app'),
  title:{default:`ClassCode — ${promise}`,template:'%s | ClassCode'},
- description:`${promise} A browser-based coding workspace for Python, Turtle graphics, web projects, and classroom assignments.`,
+ description,
  alternates:{canonical:'/'},
  icons:{icon:'/classcode-mark.svg',shortcut:'/classcode-mark.svg'},
- openGraph:{type:'website',siteName:'ClassCode',title:`ClassCode — ${promise}`,description:`${promise} A browser-based coding workspace for students and teachers.`,url:'/',images:[{url:'/opengraph-image',width:1200,height:630,alt:'ClassCode: Students make. Teachers guide.'}]},
- twitter:{card:'summary_large_image',title:`ClassCode — ${promise}`,description:`${promise} A browser-based coding workspace for students and teachers.`,images:['/opengraph-image']}
+ openGraph:{type:'website',siteName:'ClassCode',title:`ClassCode — ${promise}`,description,url:'/'},
+ twitter:{card:'summary_large_image',title:`ClassCode — ${promise}`,description,images:['/opengraph-image']}
 };
 const softwareSchema={'@context':'https://schema.org','@type':'SoftwareApplication',name:'ClassCode',applicationCategory:'EducationalApplication',operatingSystem:'Web',url:'https://classcode-sand.vercel.app',description:promise};
 export default async function Layout({children}:{children:React.ReactNode}){await connection();return <html lang="en" data-scroll-behavior="smooth" className={`${ui.variable} ${code.variable}`}><body><ConnectionProvider>{children}<script type="application/ld+json" dangerouslySetInnerHTML={{__html:JSON.stringify(softwareSchema)}}/></ConnectionProvider></body></html>}
