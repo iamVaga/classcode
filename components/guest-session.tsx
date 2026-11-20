@@ -64,7 +64,7 @@ export default function GuestSession({code}:{code:string}){
   },'local');
  },[]);
  return <div className="guest-room">
-  <div className="guest-room-bar"><strong>Session {code}</strong><button onClick={()=>void navigator.clipboard.writeText(window.location.href).then(()=>setCopied(true)).catch(()=>setError('Copy the link from your address bar.'))}>{copied?'Link copied':'Copy invite link'}</button><span role="status">{error||'Anyone with this link can edit · expires in 24 hours'}</span><Link href="/">Leave session</Link></div>
+  <div className="guest-room-bar"><strong>Session code <code>{code}</code></strong><button onClick={()=>void navigator.clipboard.writeText(code).then(()=>setCopied(true)).catch(()=>setError('Select and copy the session code.'))}>Copy code</button><button onClick={()=>void navigator.clipboard.writeText(window.location.href).then(()=>setCopied(true)).catch(()=>setError('Copy the link from your address bar.'))}>Copy invite link</button><span role="status">{error||(copied?'Copied':'Everyone with this code can edit · expires in 24 hours')}</span><Link href="/">Leave session</Link></div>
   {project?<IDE initial={project} onBack={()=>window.location.assign('/')} onSave={async()=>{}} avatar={0} color="#dce9d5" userId="" onAvatar={()=>{}} guestSync={apply} guestOnFiles={syncFiles}/>:<p role="status" style={{padding:24}}>{error||'Joining session…'}</p>}
  </div>;
 }

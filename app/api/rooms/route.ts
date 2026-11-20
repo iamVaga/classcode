@@ -22,5 +22,8 @@ export async function POST(request:Request){
   await rooms.createIndex({expiresAt:1},{expireAfterSeconds:0});
   await rooms.insertOne({_id:code as never,name:project.name,type:project.type,state,version:0,expiresAt:new Date(Date.now()+86400000)});
   return Response.json({code},{headers:{'Cache-Control':'no-store'}});
- }catch{return Response.json({error:'Could not create a room. Please retry.'},{status:503})}
+ }catch(error){
+  console.error('Guest room creation failed',{name:error instanceof Error?error.name:'UnknownError',code:typeof error==='object'&&error!==null&&'code' in error?error.code:undefined});
+  return Response.json({error:'Sharing is temporarily unavailable. Your project is still saved. Please try again.'},{status:503});
+ }
 }

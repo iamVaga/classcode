@@ -14,3 +14,14 @@
 .live-panel input{display:block;width:100%;padding:10px;margin-block:10px;border:1px solid var(--border);border-radius:8px;color:var(--ink);background:var(--surface)}
 .live-panel form{margin-block:16px}
 @media(max-width:760px){.guest-room-bar{gap:6px;font-size:11px;min-height:100px}.guest-room .spacious-ide{top:110px;height:calc(100dvh - 110px)}}
+.room-share-backdrop{position:fixed;inset:0;z-index:200;background:#0008;display:grid;place-items:center;padding:16px}
+.room-share-dialog{width:min(100%,480px);max-height:90dvh;overflow:auto;padding:24px;border:1px solid var(--border);border-radius:16px;background:var(--surface);color:var(--ink);box-shadow:0 12px 40px #0003}
+.room-share-dialog header{display:flex;align-items:center;justify-content:space-between;gap:12px}
+.room-share-dialog h2{margin:0;font-size:24px}
+.room-share-dialog p{margin-block:16px;color:var(--ink-muted)}
+.room-share-dialog header button{min-width:44px;min-height:44px}
+.room-share-dialog input{display:block;width:100%;padding:12px;margin-block:8px;border:1px solid var(--border);border-radius:8px;color:var(--ink);background:var(--surface-2);font:inherit}
+.room-share-dialog form{margin-block:24px}
+.room-share-dialog small{display:block;margin-top:16px;color:var(--ink-muted)}
+.room-share-invite{display:grid;gap:8px;padding:16px;border:1px solid var(--border);border-radius:12px}
+.guest-room-bar code{display:inline-block;padding:6px 10px;border-radius:6px;background:var(--primary-soft);color:var(--ink);user-select:all;font-family:var(--font-atkinson-mono),monospace}
