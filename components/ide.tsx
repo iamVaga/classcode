@@ -18,7 +18,7 @@ import type {HintLevel,PythonAnalysis} from '@/lib/analyser';
 import {inputPrompts} from '@/lib/python-input';
 import {isCompiledLanguage,runCompiledCode} from '@/lib/compiled-runner';
 function persistWorkspaceTheme(next:'light'|'dark'){document.documentElement.dataset.theme=next;try{localStorage.setItem('classcode-theme',next)}catch{}}
-export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar}:{onAvatar:()=>void;initial:Project;onBack:()=>void;onSave:(p:Project)=>Promise<void>;avatar:number;color:string;userId:string}){
+export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar,guestSync,guestOnFiles}:{guestSync?:React.RefObject<((files:Record<string,string>)=>void)|null>;guestOnFiles?:(files:Record<string,string>)=>void;onAvatar:()=>void;initial:Project;onBack:()=>void;onSave:(p:Project)=>Promise<void>;avatar:number;color:string;userId:string}){
  const {conserve,online}=useConnection();
  const observer=observerFor(initial,userId);
  const [teacherEditing,setTeacherEditing]=useState(false);
@@ -33,6 +33,18 @@ export default function IDE({initial,onBack,onSave,avatar,color,userId,onAvatar}
  const workspace=useRef<HTMLDivElement>(null);
  const [drawing,setDrawing]=useState<TurtleCommand[]>([]);
  const worker=useRef<Worker|null>(null),timer=useRef<ReturnType<typeof setTimeout>|null>(null),successTimer=useRef<ReturnType<typeof setTimeout>|null>(null),successSeen=useRef(false),latest=useRef(project),saved=useRef(initial),saving=useRef(false),token=useRef('');
+ useEffect(()=>{
+  if(!guestSync)return;
+  guestSync.current=(files)=>{
+   if(JSON.stringify(latest.current.files)===JSON.stringify(files))return;
+   const next={...latest.current,files};
+   latest.current=next;
+   setProject(next);
+   if(!Object.hasOwn(files,file))setFile(Object.keys(files)[0]);
+  };
+  return()=>{guestSync.current=null};
+ },[guestSync,file]);
+ useEffect(()=>{guestOnFiles?.(project.files)},[project.files,guestOnFiles]);
  const [lastSuccessfulRun,setLastSuccessfulRun]=useState<Record<string,string>|null>(null);
  const [firstRunSuccess,setFirstRunSuccess]=useState(false);
  useEffect(()=>{token.current=crypto.randomUUID();return()=>{compiledRequest.current?.abort();compiledRequest.current=null;worker.current?.terminate();if(timer.current)clearTimeout(timer.current);if(successTimer.current)clearTimeout(successTimer.current)}},[]);

@@ -8,3 +8,9 @@
 @media(max-width:600px){.file-dialog{padding:25px}.file-dialog h2{font-size:21px}.file-dialog-actions button{padding:10px 14px}}
 @media(pointer:fine){.avatar-pointer-on .pane-divider{cursor:col-resize!important}}
 .empty-drawing-output{display:none}.python-drawing-output{display:flex;flex:3 1 0;min-height:0;overflow:auto}.python-drawing-output+.expanded-console{flex:1 1 0;min-height:65px}.python-drawing-output .turtle-stage canvas{min-height:0;max-height:100%;object-fit:contain}
+.guest-room-bar{position:relative;z-index:60;min-height:48px;padding:8px 16px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;background:var(--surface);border-bottom:1px solid var(--border);font-size:13px}
+.guest-room .spacious-ide{top:72px;height:calc(100dvh - 72px)}
+.guest-room-bar button,.guest-room-bar a{min-height:36px;color:var(--primary)}
+.live-panel input{display:block;width:100%;padding:10px;margin-block:10px;border:1px solid var(--border);border-radius:8px;color:var(--ink);background:var(--surface)}
+.live-panel form{margin-block:16px}
+@media(max-width:760px){.guest-room-bar{gap:6px;font-size:11px;min-height:100px}.guest-room .spacious-ide{top:110px;height:calc(100dvh - 110px)}}

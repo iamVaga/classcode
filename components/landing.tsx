@@ -73,7 +73,7 @@ export default function Landing({fontClass, ready, user, dark, onTheme, onModal,
         <div className="lp-nav-actions">
           <AccessibilityMenu/>
           <button className="lp-icon-button" aria-label={dark ? 'Use light theme' : 'Use dark theme'} onClick={onTheme}>{dark ? <Sun size={18}/> : <Moon size={18}/>}</button>
-          <button className="lp-button lp-quiet" onClick={() => onModal('account')}>{user ? 'Account' : 'Sign in'}</button>
+          <a className="lp-button lp-quiet" href="/session">Join session</a><button className="lp-button lp-quiet" onClick={() => onModal('account')}>{user ? 'Account' : 'Sign in'}</button>
           <button className="lp-button lp-nav-workspace" onClick={() => onPage('Overview')}>Workspace <ArrowRight size={17}/></button>
         </div>
       </div>

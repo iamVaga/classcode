@@ -37,7 +37,7 @@ export default function WorkspaceHome({page,onPage,projects,onOpen,onTemplate,on
  return <div className="learning-workspace">
   <header className="studio-header" ref={header}>
    <button className="studio-logo" onClick={()=>onPage('Overview')} aria-label="ClassCode home"><span><BrandMark size={31}/></span>classcode<span className="logo-period">.</span></button>
-   <nav aria-label="Main navigation">{navItems.map(([key,title,description])=><button title={description} aria-label={`${key==='My students'&&!user?'For teachers':title}: ${description}`} className={page===key?'active':''} key={key} onClick={()=>{if(key==='My students'&&!user){onModal('teacher-signup');return}onPage(key);setQuery('')}}>{key==='My students'&&!user?'For teachers':title}{key==='Projects'&&user&&<small aria-label={`${projects.length} projects`}>{projects.length}</small>}</button>)}</nav>
+   <Link className="studio-secondary" href="/session">Join session</Link><nav aria-label="Main navigation">{navItems.map(([key,title,description])=><button title={description} aria-label={`${key==='My students'&&!user?'For teachers':title}: ${description}`} className={page===key?'active':''} key={key} onClick={()=>{if(key==='My students'&&!user){onModal('teacher-signup');return}onPage(key);setQuery('')}}>{key==='My students'&&!user?'For teachers':title}{key==='Projects'&&user&&<small aria-label={`${projects.length} projects`}>{projects.length}</small>}</button>)}</nav>
    <div className="studio-header-actions">
     <AccessibilityMenu/>
     <button className="studio-icon" aria-label={`Switch to ${dark?'light':'dark'} theme`} title={`Switch to ${dark?'light':'dark'} theme`} onClick={onTheme}>{dark?<Sun size={18}/>:<Moon size={18}/>}</button>

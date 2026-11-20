@@ -3,6 +3,11 @@ import {MongoClient} from 'mongodb';
 import type {Project} from '@/lib/model';
 export type Revision=Project&{project_id:string;captured_at:Date};
 const state=globalThis as typeof globalThis&{classcodeMongo?:Promise<MongoClient>};
+export async function liveDatabase(){
+ if(!process.env.MONGODB_URI)throw Error('Live sessions are not configured');
+ if(!state.classcodeMongo){const client=new MongoClient(process.env.MONGODB_URI,{maxPoolSize:5,serverSelectionTimeoutMS:5000});state.classcodeMongo=client.connect().catch(async error=>{state.classcodeMongo=undefined;await client.close();throw error})}
+ return (await state.classcodeMongo).db(process.env.MONGODB_DB||'classcode');
+}
 let collectionPromise:Promise<import('mongodb').Collection<Revision>>|undefined;
 export function revisionCollection(){
  if(!process.env.MONGODB_URI)throw Error('MongoDB is not configured');
