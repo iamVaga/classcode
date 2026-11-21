@@ -10,7 +10,7 @@ for(const path of paths){
  const result=await fetch(new URL(path,origin));
  if(!result.ok)throw new Error(`${path} returned HTTP ${result.status}`);
  const body=await result.text();
- if(path==='/'&&!body.includes('Students make.'))throw new Error('The home page is missing the product promise.');
+ if(path==='/'&&!body.includes('Code right in your browser'))throw new Error('The home page is missing the product promise.');
  if(path==='/robots.txt'&&!body.includes('/sitemap.xml'))throw new Error('robots.txt does not advertise the sitemap.');
  if(path==='/sitemap.xml'&&!body.includes('https://classcode-sand.vercel.app/'))throw new Error('The sitemap is missing its canonical home URL.');
  if(path==='/'){

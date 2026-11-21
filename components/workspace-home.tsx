@@ -1,115 +1,154 @@
 'use client';
 
-import {useDeferredValue,useEffect,useRef,useState} from 'react';
-import {ArrowRight,BookOpen,Check,Clock,Code2,FolderCode,Globe,GraduationCap,Moon,Plus,Search,Sun,Terminal,Users,X,ShieldCheck,FilePlus2,Play,UserRound,Mail} from 'lucide-react';
+import {useDeferredValue, useEffect, useState} from 'react';
+import {ArrowRight, BookOpen, Code2, FolderCode, Globe, Moon, Plus, Search, Sun} from 'lucide-react';
 import Link from 'next/link';
-import Avatar from './avatar';
+import type {Project} from '@/lib/model';
+import AccessibilityMenu from './accessibility-menu';
+import Avatar, {buddyNames} from './avatar';
 import BrandMark from './brand-mark';
 import ClassroomPanel from './classroom-panel';
-import SnippetPlayground from './snippet-playground';
-import CodePreview from './code-preview';
-import AccessibilityMenu from './accessibility-menu';
-import {Project} from '@/lib/model';
-import {Starter,starters} from '@/lib/starters';
 
-type Props={page:string;onPage:(v:string)=>void;projects:Project[];onOpen:(p:Project)=>void;onTemplate:(s:Starter)=>void;onModal:(v:string)=>void;avatar:number;color:string;user:string;dark:boolean;onTheme:()=>void};
-const navItems=[
- ['Overview','Discover','Fresh coding ideas and starter projects.'],
- ['Projects','My projects','Open projects saved on this device or account.'],
- ['My students','Classroom','Manage invitations, assignments, and student work.'],
- ['Lesson notes','Lesson notes','Private lesson notes saved in this browser.']
-];
-const categories=['All projects','Python','Java','C++','C','Web development','Turtle graphics'];
+const workspacePages = {
+  Projects: 'My projects',
+  'My students': 'Classroom',
+  'Lesson notes': 'Lesson notes',
+} as const;
+export type WorkspacePage = keyof typeof workspacePages;
 
-export default function WorkspaceHome({page,onPage,projects,onOpen,onTemplate,onModal,avatar,color,user,dark,onTheme}:Props){
- const [query,setQuery]=useState(''),[category,setCategory]=useState('All projects'),[sort,setSort]=useState('Recent first'),[showAllIdeas,setShowAllIdeas]=useState(false),[ageBand,setAgeBand]=useState<'junior'|'teen'|'adult-teacher'>('teen');
- const searchInput=useRef<HTMLInputElement>(null),header=useRef<HTMLElement>(null);
- useEffect(()=>{const scroll=()=>header.current?.classList.toggle('is-scrolled',window.scrollY>8);scroll();window.addEventListener('scroll',scroll,{passive:true});return()=>window.removeEventListener('scroll',scroll)},[]);
- useEffect(()=>{const shortcut=(e:KeyboardEvent)=>{if(e.key==='/'&&!(e.target as HTMLElement).closest('input,textarea,[contenteditable]')){e.preventDefault();searchInput.current?.focus()}};window.addEventListener('keydown',shortcut);return()=>window.removeEventListener('keydown',shortcut)},[]);
- useEffect(()=>{const update=(event?:Event)=>{try{const stored=event?(event as CustomEvent<{age?:string}>).detail?.age:JSON.parse(localStorage.getItem('classcode-accessibility')||'{}').age;if(stored==='junior'||stored==='teen'||stored==='adult-teacher')setAgeBand(stored)}catch{}};update();window.addEventListener('classcode-preferences-change',update);return()=>window.removeEventListener('classcode-preferences-change',update)},[]);
- const search=useDeferredValue(query.toLowerCase());
- const matchCategory=(type:string,files:Record<string,string>)=>category==='All projects'||category===type||(category==='Web development'&&type==='web')||(category==='Turtle graphics'&&Object.values(files).some(code=>/\b(import turtle|from turtle import)\b/.test(code)));
- const matches=(p:Project)=>p.name.toLowerCase().includes(search)&&matchCategory(p.type,p.files);
- const sorted=projects.filter(matches).toSorted((a,b)=>sort==='A–Z'?a.name.localeCompare(b.name):Date.parse(b.updated)-Date.parse(a.updated));
- const recent=projects.toSorted((a,b)=>Date.parse(b.updated)-Date.parse(a.updated))[0];
- const templates=starters.filter(s=>(showAllIdeas||Boolean(search)||category!=='All projects'||!['game','planet'].includes(s.id))&&(s.name+' '+s.category+' '+s.description).toLowerCase().includes(search)&&(category==='All projects'||category===s.category));
+type Props = {
+  page: WorkspacePage;
+  onPage: (page: WorkspacePage) => void;
+  onHome: () => void;
+  projects: Project[];
+  onOpen: (project: Project) => void;
+  onModal: (mode: string) => void;
+  avatar: number;
+  color: string;
+  user: string;
+  dark: boolean;
+  onTheme: () => void;
+};
 
- return <div className="learning-workspace">
-  <header className="studio-header" ref={header}>
-   <button className="studio-logo" onClick={()=>onPage('Overview')} aria-label="ClassCode home"><span><BrandMark size={31}/></span>classcode<span className="logo-period">.</span></button>
-   <Link className="studio-secondary" href="/session">Join session</Link><nav aria-label="Main navigation">{navItems.map(([key,title,description])=><button title={description} aria-label={`${key==='My students'&&!user?'For teachers':title}: ${description}`} className={page===key?'active':''} key={key} onClick={()=>{if(key==='My students'&&!user){onModal('teacher-signup');return}onPage(key);setQuery('')}}>{key==='My students'&&!user?'For teachers':title}{key==='Projects'&&user&&<small aria-label={`${projects.length} projects`}>{projects.length}</small>}</button>)}</nav>
-   <div className="studio-header-actions">
-    <AccessibilityMenu/>
-    <button className="studio-icon" aria-label={`Switch to ${dark?'light':'dark'} theme`} title={`Switch to ${dark?'light':'dark'} theme`} onClick={onTheme}>{dark?<Sun size={18}/>:<Moon size={18}/>}</button>
-    <button className="account-link" onClick={()=>onModal('account')}>{user?user.split('@')[0]:'Sign in'}<ArrowRight size={14}/></button>
-    {!user&&<button className="studio-primary header-get-started" onClick={()=>onModal('create')}>Get started <ArrowRight size={16}/></button>}
-    <button className="profile-avatar" aria-label="Choose your avatar" onClick={()=>onModal('avatar')}><Avatar kind={avatar} color={color} size={38}/></button>
-   </div>
-  </header>
-  <main className="studio-main">
-   {page==='Overview'?<>
-    <section className="discovery-hero"><div className="hero-copy"><span className="studio-kicker"><span aria-hidden="true"/> Students make. Teachers guide.</span><h1>{ageBand==='junior'?<>Make a fun<br/><span>project today.</span></>:ageBand==='adult-teacher'?<>Help students<br/><span>make it real.</span></>:<>Make an idea<br/><span>come to life.</span></>}</h1><p>{ageBand==='junior'?'Pick a project and try it. Your teacher can join, spot a mistake, and give you a small clue.':ageBand==='adult-teacher'?'Join a student’s live workspace, spot mistakes, suggest a fix, and review automatic code feedback.':'Build with Python, Turtle, or the web. A teacher can join live, spot mistakes, suggest fixes, and review automatic code feedback.'}</p><div className="hero-buttons"><button className="studio-primary" onClick={()=>onModal('create')}>Start a project <ArrowRight size={17}/></button><button className="studio-secondary teacher-hero-cta" onClick={()=>user?onPage('My students'):onModal('teacher-signup')}>Create a class <Users size={16}/></button></div><a className="hero-secondary-link" href="#pyblock">Explore PyBlock <ArrowRight size={16}/></a><div className="hero-capabilities"><span><Check size={16}/>Runs in your browser</span><span><Check size={16}/>Guest projects need no account</span></div></div><div className="hero-visual"><div className="hero-disc" aria-hidden="true"/><SnippetPlayground onOpen={onTemplate}/><div className="hero-character" aria-hidden="true"><Avatar kind={avatar} color={color} size={105}/><span>Ready when you are.</span></div></div></section>
-    <section className="pyblock-feature" aria-labelledby="pygame-title">
-     <div>
-      <h2 id="pygame-title">Pygame Studio</h2>
-      <p>Write a Python game, upload your own sprites, and play it in the browser.</p>
-      <Link className="studio-primary" href="/pygame">Open Pygame Studio <ArrowRight size={16}/></Link>
-     </div>
-    </section>
-    <section id="pyblock" className="pyblock-feature" aria-labelledby="pyblock-title">
-     <div>
-      <h2 id="pyblock-title">PyBlock</h2>
-      <p>Snap blocks together to write Python. Run the starter to draw a Turtle square, then change the blocks to make it your own.</p>
-      <Link className="studio-primary" href="/blocks">Open PyBlock <ArrowRight size={16}/></Link>
-     </div>
-     <div className="pyblock-example" aria-label="Example: repeat four times, move forward 100 steps, and turn right 90 degrees">
-      <span aria-hidden="true">Repeat <b>4</b> times</span>
-      <span aria-hidden="true">Move forward <b>100</b> steps</span>
-      <span aria-hidden="true">Turn right <b>90</b> degrees</span>
-     </div>
-    </section>
-    <section className="jump-back"><div><span className="mini-label">Pick up where you left off</span><h2>{recent?'Back to your next big thing.':user?'Your next project starts here.':'Try ClassCode as a guest or sign in to sync.'}</h2><p>{recent?'Your latest project is right where you left it.':user?'Start a project and it will appear here.':'Guest projects stay in this browser. Sign in when you want account-based cloud storage.'}</p></div>{recent?<button className="continue-card" onClick={()=>onOpen(recent)}><span className={'project-symbol '+recent.type}>{recent.type==='web'?<Globe size={23}/>:<Terminal size={23}/>}</span><span><strong>{recent.name}</strong><small>{projectLanguage(recent)} · {relativeTime(recent.updated)}</small></span><ArrowRight size={20}/></button>:user?<button className="continue-card empty" onClick={()=>onModal('create')}><span className="project-symbol"><Plus size={23}/></span><span><strong>Create a project</strong><small>Choose a language and make a first draft.</small></span><ArrowRight size={20}/></button>:<div className="guest-actions"><button className="studio-secondary" onClick={()=>onModal('account')}>Sign in to sync <ArrowRight size={15}/></button><span>Your work stays editable without signing in.</span></div>}</section>
-   </>:<div className="inner-page-heading"><span className="studio-kicker">YOUR CLASSCODE WORKSPACE</span><h1>{page==='Projects'?'A home for every idea.':page==='My students'?'Good teaching starts with connection.':'The notes behind the breakthroughs.'}</h1><p>{page==='Projects'?'All your experiments, saved in one place.':page==='My students'?'Create a class, assign a challenge, and review student work.':'A little space to plan, reflect, and remember what worked.'}</p></div>}
-   {(page==='Overview'||page==='Projects')&&<>
-    <section id={page==='Overview'?'tracks':undefined} data-reveal className="discovery-section"><div className="discovery-heading"><div><span className="mini-label">{page==='Overview'?'Pick a track':'Made by you'}</span><h2>{page==='Overview'?'What will you make?':'Your projects'}</h2></div><label className="studio-search"><Search size={18}/><input ref={searchInput} aria-label="Search projects and starters" value={query} onChange={e=>setQuery(e.target.value)} placeholder={page==='Overview'?'Find a coding idea…':'Search your projects…'}/>{query&&<button type="button" aria-label="Clear search" onClick={()=>setQuery('')}><X size={14}/></button>}<kbd aria-hidden="true">/</kbd></label></div><div className="discovery-controls"><div className="category-tabs" aria-label="Project categories">{categories.map(c=><button type="button" aria-pressed={category===c} className={category===c?'active':''} onClick={()=>setCategory(c)} key={c}>{c==='All projects'?<FolderCode size={14}/>:c==='Web development'?<Globe size={14}/>:<Code2 size={14}/>}<span>{c}</span></button>)}</div>{page==='Overview'?<span className="results-label" aria-live="polite">{templates.length} {templates.length===1?'idea':'ideas'}</span>:<select aria-label="Sort projects" value={sort} onChange={e=>setSort(e.target.value)}><option>Recent first</option><option>A–Z</option></select>}</div>
-     {page==='Overview'?<><div className="starter-grid">{templates.map((s,index)=><button className={'starter-card starter-'+s.id} style={{animationDelay:`${Math.min(index,7)*40}ms`}} key={s.id} onClick={()=>onTemplate(s)}><StarterArt starter={s}/><div className="starter-info"><div className="starter-meta"><span className="starter-category">{s.category}</span></div><h3>{s.name}</h3><p>{s.description}</p><div className="starter-bottom"><span><span className="level-dot"/>{s.level}</span><span><Clock size={13}/>{s.time}</span><span className="starter-action">Open <ArrowRight size={15}/></span></div></div></button>)}</div>{starters.length>6&&category==='All projects'&&!search&&<button className="more-ideas-link" aria-expanded={showAllIdeas} onClick={()=>setShowAllIdeas(value=>!value)}>{showAllIdeas?'Show fewer ideas':'Show two more ideas'} <ArrowRight size={15}/></button>}</>:<div className="studio-projects">{sorted.map(p=><button className="saved-project-card" key={p.id} onClick={()=>onOpen(p)}><div className="saved-project-top"><span className={'project-symbol '+p.type}>{p.type==='web'?<Globe size={25}/>:<Terminal size={25}/>}</span><ArrowRight size={19}/></div><h3>{p.name}</h3><span className="saved-language">{projectLanguage(p)}</span><div className="saved-project-bottom"><span><Check size={12}/> Saved</span><span>{relativeTime(p.updated)}</span></div></button>)}<button className="new-project-card" onClick={()=>onModal('create')}><Plus size={26}/><strong>Make something new</strong><span>There’s always room for another idea.</span></button></div>}
-     {page==='Overview'&&!templates.length&&<div className="studio-empty"><Search size={28}/><h3>No ideas match those filters yet.</h3><p>Try another language or clear your search to see all {starters.length} starting points.</p><button className="studio-link" onClick={()=>{setQuery('');setCategory('All projects')}}>Show all ideas <ArrowRight size={15}/></button></div>}
-     {page==='Projects'&&!sorted.length&&<div className="studio-empty"><FolderCode size={28}/><h3>{projects.length?'No projects match those filters.':'Your projects will appear here.'}</h3><p>{projects.length?'Try another language or clear your search.':'Start a project, or sign in to keep your work synced to your account.'}</p><button className="studio-link" onClick={()=>{if(projects.length){setQuery('');setCategory('All projects')}else onModal('create')}}>{projects.length?'Reset filters':'Start a project'} <ArrowRight size={15}/></button></div>}
-    </section>
-    {page==='Overview'&&<><TeacherOverview onOpen={()=>user?onPage('My students'):onModal('teacher-signup')}/><AutoAnalyserPreview/><HowItWorks/><StudentSafetyPreview/><FinalProjectCTA onStart={()=>onModal('create')} onTeacher={()=>user?onPage('My students'):onModal('teacher-signup')}/></>}
-   </>}
-   {page==='My students'&&<ClassroomPanel onOpen={onOpen} onSignIn={()=>onModal('account')}/>}
-   {page==='Lesson notes'&&<StudioNotebook/>}
-   <footer className="studio-footer"><button className="studio-logo" onClick={()=>onPage('Overview')}><span><BrandMark size={25}/></span>classcode<span className="logo-period">.</span></button><p>Students make. Teachers guide.</p><nav aria-label="Product and policy links"><a href="#tracks">Tracks</a><button onClick={()=>onPage('My students')}>For teachers</button><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/safety">Safety</a><a href="/about">About and contact</a><a href="/school-it">School IT</a><a href="/teacher-resources">Teacher resources</a></nav></footer>
-  </main>
- </div>
+const languages = {python: 'Python', java: 'Java', cpp: 'C++', c: 'C', web: 'Web development'} as const;
+const categories = ['All projects', 'Python', 'Turtle graphics', 'Web development', 'Java', 'C++', 'C'];
+
+function projectLanguage(project: Project) {
+  if (project.type === 'python' && Object.values(project.files).some(code => /\b(?:import turtle|from turtle import)\b/.test(code))) {
+    return 'Turtle graphics';
+  }
+  return languages[project.type];
 }
 
-function projectLanguage(project:Project){return project.type==='python'?'Python':project.type==='java'?'Java':project.type==='cpp'?'C++':project.type==='c'?'C':'Web development'}
-function relativeTime(date:string){const minutes=Math.max(0,Math.floor((Date.now()-Date.parse(date))/60000));if(minutes<1)return 'just now';if(minutes<60)return `${minutes}m ago`;if(minutes<1440)return `${Math.floor(minutes/60)}h ago`;return new Date(date).toLocaleDateString('en',{month:'short',day:'numeric'})}
-function StarterArt({starter}:{starter:Starter}){const samples:Record<string,{file:string;code:string}>={
- turtle:{file:'main.py',code:'pen.color("coral")\nfor side in range(5):\n    pen.forward(100)\n    pen.right(144)'},
- web:{file:'index.html',code:'<h1>Hello, curious world.</h1>\n<p>Big ideas start small.</p>'},
- python:{file:'main.py',code:'name = "curious coder"\nprint(f"Hello, {name}!")\nfor step in range(1, 6):\n    print("*" * step)'},
- game:{file:'main.py',code:'if guess == secret:\n    print("You got it!")\nelif guess < secret:\n    print("Try higher")'},
- java:{file:'Main.java',code:'class Greeter {\n  String message(String name) {\n    return "Hello, " + name;\n  }\n}'},
- cpp:{file:'main.cpp',code:'for (int step = 1; step <= 5; ++step) {\n  std::cout << step << "\\n";\n}'},
- c:{file:'main.c',code:'const char *name = "coder";\nprintf("Hello, %s!\\n", name);'},
- planet:{file:'index.html',code:'<h1>Welcome to Moonberry</h1>\n<p>A tiny planet with a very big sky.</p>'}
- };const example=samples[starter.id]||{file:Object.keys(starter.files)[0],code:Object.values(starter.files)[0]};return <div className={'starter-art art-'+starter.id} aria-hidden="true"><div className="starter-code-window"><span className="starter-code-file"><i/>{example.file}</span><pre><CodePreview code={example.code}/></pre><span className="starter-code-foot">{starter.tagline}</span></div></div>}
+export default function WorkspaceHome({page, onPage, onHome, projects, onOpen, onModal, avatar, color, user, dark, onTheme}: Props) {
+  return <div className="lp workspace-library">
+    <header className="lp-nav workspace-nav">
+      <div className="lp-wrap lp-nav-inner">
+        <button type="button" className="lp-logo" aria-label="ClassCode home" onClick={onHome}><BrandMark size={31}/>ClassCode</button>
+        <nav aria-label="Workspace navigation">
+          {(Object.keys(workspacePages) as WorkspacePage[]).map(key =>
+            <button key={key} aria-current={page === key ? 'page' : undefined} onClick={() => onPage(key)}>{workspacePages[key]}</button>
+          )}
+        </nav>
+        <div className="lp-nav-actions">
+          <Link className="lp-button lp-quiet" href="/session">Join session</Link>
+          <AccessibilityMenu/>
+          <button className="lp-button lp-theme-toggle" aria-label={dark ? 'Light mode' : 'Dark mode'} onClick={onTheme}>{dark ? <Sun size={17}/> : <Moon size={17}/>}<span>{dark ? 'Light mode' : 'Dark mode'}</span></button>
+          <button className="lp-button" onClick={() => onModal('account')}>{user ? 'Account' : 'Sign in'}</button>
+        </div>
+      </div>
+    </header>
 
-function TeacherOverview({onOpen}:{onOpen:()=>void}){return <section className="teacher-overview teacher-live-demo" data-reveal><div className="teacher-intro"><span className="mini-label">For teachers</span><h2>Join the moment a student gets stuck.</h2><p>Open a student’s shared workspace, follow their code as it changes, and leave a clear suggestion they can try.</p><button className="studio-secondary" onClick={onOpen}>Create a class <ArrowRight size={16}/></button></div><div className="live-demo-window" aria-label="Illustration of a teacher joining a student coding session"><header><span className="demo-dot"/><strong>Live classroom</strong><span className="demo-presence"><i/>Teacher joined</span></header><div className="live-demo-main"><aside><span className="demo-label">Student</span><strong>Sam’s project</strong><small>Python · sharing with teacher</small><span className="demo-join-state"><Users size={14}/>Live session</span></aside><div className="demo-editor"><div className="demo-file"><Code2 size={13}/> main.py <span>Python</span></div><pre aria-label="Example student code"><code><span className="demo-comment"># Draw a square</span>{'\n'}<span className="demo-keyword">for</span> side <span className="demo-keyword">in</span> range(<span className="demo-number">4</span>):{'\n'}    turtle.forward(<span className="demo-number">100</span>){'\n'}    <span className="demo-suggestion">turtle.left(90)</span></code></pre><div className="demo-teacher-note"><span><GraduationCap size={14}/> Teacher suggestion</span><p>Try turning left after each side.</p><small>Student can accept or dismiss</small></div></div></div><footer><Check size={14}/> Student stays in control of their code</footer></div></section>}
+    <main className="lp-wrap workspace-main">
+      {page === 'Projects' ? <Projects projects={projects} onOpen={onOpen} onCreate={() => onModal('create')} avatar={avatar} color={color} onBuddy={() => onModal('avatar')}/> :
+        <>
+          <h1>{workspacePages[page]}</h1>
+          {page === 'My students' ? <ClassroomPanel onOpen={onOpen} onSignIn={() => onModal('account')}/> : <StudioNotebook/>}
+        </>}
+    </main>
 
-function AutoAnalyserPreview(){return <section className="analyser-preview" data-reveal><div><span className="mini-label">Friendly code feedback</span><h2>Small clues. One step at a time.</h2><p>When code does not work yet, students get a gentle next step and can open the original error whenever they need it.</p></div><div className="analyser-example"><div className="analyser-code"><span className="demo-label">Before · Python</span><pre><code>total = <span className="demo-number">0</span>{'\n'}<span className="demo-keyword">for</span> number <span className="demo-keyword">in</span> range(<span className="demo-number">5</span>){'\n'}    total += number{'\n'}print(totla)</code></pre><span className="analyser-error"><X size={14}/> NameError: name &apos;totla&apos; is not defined</span></div><div className="analyser-hints"><span className="demo-label">A hint ladder</span><article><b>1</b><span><strong>Want a nudge?</strong><small>Python found a name here it has not seen before.</small></span></article><article><b>2</b><span><strong>Look closer</strong><small>Check the name you typed in the last line.</small></span></article><article className="analyser-fix"><b><Check size={14}/></b><span><strong>Try this fix</strong><small>Change <code>totla</code> to <code>total</code>, then run it again.</small></span></article></div></div></section>}
+    <footer className="lp-footer">
+      <button className="lp-logo" onClick={onHome}>ClassCode</button>
+      <nav aria-label="Product and policy links">
+        <Link href="/safety">Safety</Link><Link href="/privacy">Privacy</Link><Link href="/terms">Terms</Link><Link href="/about">About and contact</Link>
+      </nav>
+    </footer>
+  </div>;
+}
 
-function StudentSafetyPreview(){return <section className="student-safety"><div><span className="mini-label">Student privacy</span><h2>Clear boundaries for sharing and learning.</h2><p>Students choose when to share a draft. Student projects are not publicly published in this version.</p></div><ul><li><Check size={16}/><span><strong>Private by default.</strong> No public project gallery is enabled.</span></li><li><Check size={16}/><span><strong>Student starts live sharing.</strong> A teacher joins after the student shares a draft.</span></li><li><Check size={16}/><span><strong>Keep personal details out.</strong> Avoid personal information in project names, source code, and output.</span></li></ul><a href="/safety">Read the safety information <ArrowRight size={15}/></a></section>}
+function Projects({projects, onOpen, onCreate, avatar, color, onBuddy}: Pick<Props, 'projects' | 'onOpen' | 'avatar' | 'color'> & {
+  onCreate: () => void;
+  onBuddy: () => void;
+}) {
+  const [query, setQuery] = useState('');
+  const [category, setCategory] = useState('All projects');
+  const [sort, setSort] = useState('recent');
+  const search = useDeferredValue(query.trim().toLowerCase());
+  const displayed = projects
+    .filter(project => project.name.toLowerCase().includes(search) && (
+      category === 'All projects' || category === languages[project.type] || category === projectLanguage(project)
+    ))
+    .toSorted((a, b) => sort === 'name' ? a.name.localeCompare(b.name) : Date.parse(b.updated) - Date.parse(a.updated));
 
-function HowItWorks(){return <section className="how-it-works" data-reveal><div className="how-heading"><span className="mini-label">A good place to begin</span><h2>Three steps. Your idea.</h2><p>Each step ends with something you can see, change, or share.</p></div><div className="how-steps">
- <article className="how-step"><div className="how-art how-art-file" aria-hidden="true"><div className="how-file-shape"><FilePlus2 size={31}/><span/></div></div><span className="guide-badge">01 · Start</span><h3>Choose a starting point</h3><p>Open a small Python, Turtle, web, game, or language example.</p></article>
- <article className="how-step"><div className="how-art how-art-run" aria-hidden="true"><div className="how-code-lines"><i/><i/><i/><span><Play size={13} fill="currentColor"/></span></div></div><span className="guide-badge">02 · Explore</span><h3>Change it and run it</h3><p>Make a small edit, run your code, and see what changed.</p></article>
- <article className="how-step"><div className="how-art how-art-share" aria-hidden="true"><div><UserRound size={24}/><ArrowRight size={17}/><Users size={25}/></div><i/></div><span className="guide-badge">03 · Share</span><h3>Invite a teacher in</h3><p>Start a live session when you want your teacher to look or edit alongside you.</p></article>
- </div></section>}
+  return <>
+    <div className="workspace-title">
+      <h1>My projects</h1>
+      <button className="lp-button lp-primary" onClick={onCreate}><Plus size={18}/>Start a project</button>
+    </div>
+    <div className="workspace-layout">
+      <section aria-label="Saved projects">
+        {projects.length > 0 && <div className="workspace-filters">
+          <label className="workspace-search"><Search size={17} aria-hidden="true"/><input type="search" aria-label="Search projects" placeholder="Search projects" value={query} onChange={event => setQuery(event.target.value)}/></label>
+          <select aria-label="Project language" value={category} onChange={event => setCategory(event.target.value)}>
+            {categories.map(item => <option key={item}>{item}</option>)}
+          </select>
+          <select aria-label="Sort projects" value={sort} onChange={event => setSort(event.target.value)}>
+            <option value="recent">Recent first</option><option value="name">A to Z</option>
+          </select>
+        </div>}
+        {displayed.length > 0 ? <ul className="workspace-projects">
+          {displayed.map(project => <li key={project.id}>
+            <button className="workspace-project" onClick={() => onOpen(project)}>
+              <span className="workspace-project-icon">{project.type === 'web' ? <Globe size={20}/> : <Code2 size={20}/>}</span>
+              <span><strong>{project.name}</strong><small>{projectLanguage(project)}</small></span>
+              <ArrowRight size={17}/>
+            </button>
+          </li>)}
+        </ul> : <div className="workspace-empty">
+          <FolderCode size={28} aria-hidden="true"/>
+          <h2>{projects.length ? 'No matching projects' : 'No projects yet'}</h2>
+          <p>{projects.length ? 'Try another name or language.' : 'Projects you create will show up here.'}</p>
+          {projects.length > 0 && <button className="lp-button" onClick={() => {setQuery('');setCategory('All projects')}}>Clear filters</button>}
+        </div>}
+      </section>
+      <section className="workspace-buddy" aria-labelledby="workspace-buddy-title">
+        <h2 id="workspace-buddy-title">Coding buddy</h2>
+        <Avatar kind={avatar} color={color} size={100}/>
+        <strong>{buddyNames[avatar] ?? 'Your avatar'}</strong>
+        <button className="lp-button" onClick={onBuddy}>Customize avatar</button>
+      </section>
+    </div>
+  </>;
+}
 
-function FinalProjectCTA({onStart,onTeacher}:{onStart:()=>void;onTeacher:()=>void}){return <section className="final-project-cta" data-reveal><div><span className="mini-label">Your next small step</span><h2>Make something you can call your own.</h2><p>Start from a working example. Change one thing. Keep going from there.</p></div><div><button className="studio-primary" onClick={onStart}>Start a project <ArrowRight size={17}/></button><button className="cta-teacher-link" onClick={onTeacher}>I’m a teacher <ArrowRight size={15}/></button></div></section>}
-
-function StudioNotebook(){const [value,setValue]=useState(''),[status,setStatus]=useState('');useEffect(()=>{try{setValue(localStorage.getItem('classcode-notes')||'')}catch{setStatus('Notes are unavailable in this browser.')}},[]);return <section className="studio-notebook"><div><BookOpen size={21}/><strong>Your teaching notebook</strong><span>{status||'Saved in this browser'}</span></div><textarea aria-label="Lesson notes" placeholder="What are we exploring today?\n\nCapture a lesson idea, a tricky question, or a small win worth remembering." value={value} onChange={e=>{setValue(e.target.value);try{localStorage.setItem('classcode-notes',e.target.value);setStatus('Saved in this browser')}catch{setStatus('Could not save. Copy your notes before leaving.')}}}/></section>}
+function StudioNotebook() {
+  const [value, setValue] = useState('');
+  const [status, setStatus] = useState('Saved in this browser');
+  useEffect(() => {
+    try { setValue(localStorage.getItem('classcode-notes') || ''); }
+    catch { setStatus('Notes are unavailable in this browser.'); }
+  }, []);
+  return <section className="studio-notebook">
+    <div><BookOpen size={21}/><strong>Your teaching notebook</strong><span role="status">{status}</span></div>
+    <textarea aria-label="Lesson notes" placeholder="Capture a lesson idea, a tricky question, or a small win worth remembering." value={value} onChange={event => {
+      const notes = event.target.value;
+      setValue(notes);
+      try {
+        localStorage.setItem('classcode-notes', notes);
+        setStatus('Saved in this browser');
+      } catch {
+        setStatus('Could not save. Copy your notes before leaving.');
+      }
+    }}/>
+  </section>;
+}

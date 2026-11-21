@@ -15,7 +15,7 @@ type Props = {
   dark: boolean;
   onTheme: () => void;
   onModal: (mode: string) => void;
-  onPage: (page: string) => void;
+  onOpenWorkspace: () => void;
   onTemplate: (starter: Starter) => void;
 };
 
@@ -30,7 +30,7 @@ const tracks = [
   {name:'C', id:'c', file:'main.c', code:'printf("%d", score);', note:'Practice functions, arrays and I/O.'},
 ] as const;
 
-export default function Landing({fontClass, ready, user, dark, onTheme, onModal, onPage, onTemplate}: Props) {
+export default function Landing({fontClass, ready, user, dark, onTheme, onModal, onOpenWorkspace, onTemplate}: Props) {
   const root = useRef<HTMLDivElement>(null);
   const header = useRef<HTMLElement>(null);
   useEffect(() => {
@@ -64,7 +64,7 @@ export default function Landing({fontClass, ready, user, dark, onTheme, onModal,
         <div className="lp-nav-actions">
           <Link className="lp-button lp-quiet" href="/session">Join session</Link>
           <button className="lp-button lp-theme-toggle" aria-label={dark?'Light mode':'Dark mode'} onClick={onTheme}>{dark?<Sun size={17}/>:<Moon size={17}/>}<span>{dark?'Light mode':'Dark mode'}</span></button>
-          <button className="lp-button lp-nav-workspace" onClick={() => onPage('Overview')}>Open workspace</button>
+          <button className="lp-button lp-nav-workspace" onClick={onOpenWorkspace}>Open workspace</button>
         </div>
       </div>
     </header>

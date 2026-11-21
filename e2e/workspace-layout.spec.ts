@@ -8,39 +8,27 @@ const viewports = [
 ];
 
 for(const viewport of viewports){
- test(`home stays visible and compact at ${viewport.width}px`,async({page})=>{
+ test(`workspace opens the project library at ${viewport.width}px`,async({page})=>{
   await page.setViewportSize(viewport);
   await page.addInitScript(()=>{
-   window.IntersectionObserver=class {
-    observe() {}
-    unobserve() {}
-    disconnect() {}
-   } as unknown as typeof IntersectionObserver;
+   localStorage.setItem('classcode-projects',JSON.stringify([{
+    id:'demo-saved-project',name:'Saved test project',type:'python',
+    files:{'main.py':'print(1)'},version:1,updated:new Date().toISOString(),
+   }]));
   });
-  for(const saved of [false,true]){
-   await page.goto('/');
-   if(saved){
-    await page.evaluate(()=>localStorage.setItem('classcode-projects',JSON.stringify([{
-     id:'demo-saved-project',name:'Saved test project',type:'python',
-     files:{'main.py':'print(1)'},version:1,updated:new Date().toISOString(),
-    }])));
-    await page.reload();
-   }
-   await page.getByRole('button',{name:'Workspace',exact:true}).click();
-   if(saved)await expect(page.getByText('Your latest project is right where you left it.')).toBeVisible();
-   await page.locator('footer.studio-footer').scrollIntoViewIfNeeded();
-   const measurements=await page.evaluate(()=>{
-    const sections=Array.from(document.querySelectorAll<HTMLElement>('.discovery-hero,.pyblock-feature,.jump-back,.discovery-section,.teacher-overview,.analyser-preview,.how-it-works,.student-safety,.final-project-cta,.studio-footer'));
-    return {
-     overflow:document.documentElement.scrollWidth>innerWidth,
-     opacity:sections.map(section=>getComputedStyle(section).opacity),
-     gaps:sections.slice(1).map((section,index)=>section.getBoundingClientRect().top-sections[index].getBoundingClientRect().bottom),
-    };
-   });
-   expect(measurements.overflow).toBe(false);
-   expect(measurements.opacity.every(opacity=>opacity==='1')).toBe(true);
-   expect(Math.max(...measurements.gaps)).toBeLessThanOrEqual(120);
-  }
+  await page.goto('/');
+  await page.getByRole('button',{name:'Open workspace',exact:true}).click();
+  await expect(page.getByRole('heading',{name:'My projects',exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:/Saved test project/})).toBeVisible();
+  await expect(page.getByRole('navigation',{name:'Workspace navigation'}).getByText('Discover',{exact:true})).toHaveCount(0);
+  expect(await page.evaluate(()=>document.documentElement.scrollWidth)).toBeLessThanOrEqual(viewport.width);
+  await page.getByRole('button',{name:'Customize avatar',exact:true}).click();
+  const picker=page.getByRole('dialog',{name:'Build a buddy to code with.'});
+  await expect(picker).toBeVisible();
+  await picker.getByRole('button',{name:'Use this buddy',exact:true}).click();
+  await expect(picker).toHaveCount(0);
+  await page.getByRole('button',{name:'ClassCode home',exact:true}).click();
+  await expect(page.getByRole('heading',{name:/Make real projects/})).toBeVisible();
  });
 
  test(`editor fits the viewport and renders line numbers at ${viewport.width}px`,async({page})=>{
@@ -59,7 +47,7 @@ for(const viewport of viewports){
   });
   expect(Math.max(...dimensions)).toBeLessThanOrEqual(viewport.width);
   await expect(page.getByRole('button',{name:'Run',exact:true})).toBeVisible();
-  await expect(page.getByRole('button',{name:'Live session',exact:true})).toBeVisible();
+  await expect(page.getByRole('button',{name:'Share with my teacher',exact:true})).toBeVisible();
   await page.getByRole('button',{name:'New file',exact:true}).click();
   await expect(page.getByRole('heading',{name:'New file',exact:true})).toBeVisible();
   await page.keyboard.press('Escape');

@@ -22,16 +22,16 @@ test('starter list has a real entry and a unique outcome tagline for each card',
 });
 
 test('the landing page includes teacher workflows and leaves the native cursor alone',()=>{
- const home=source('../components/workspace-home.tsx');
- assert.match(home,/Students make\. Teachers guide\./);
- assert.match(home,/A teacher can join live|Your teacher can join/i);
- assert.match(home,/teacher-signup/);
- assert.match(home,/teacher-live-demo/);
- assert.match(home,/AutoAnalyserPreview/);
- assert.match(home,/Create a class/);
- assert.match(home,/Teacher suggestion/);
+ const home=source('../components/landing.tsx');
+ const workspace=source('../components/workspace-home.tsx');
+ assert.match(home,/Make real/);
+ assert.match(home,/teacher can watch it change live and suggest a fix/i);
+ assert.match(home,/id="hint-ladder"/);
+ assert.match(workspace,/<ClassroomPanel\s/);
+ assert.match(source('../components/classroom-panel.tsx'),/Create invitation/);
+ assert.match(source('../components/live-session.tsx'),/Share with my teacher/);
  assert.doesNotMatch(home,/what still needs an owner decision/i);
- assert.match(home,/Lesson notes/);
+ assert.match(workspace,/Lesson notes/);
  assert.doesNotMatch(home,/game-inspiration|fan-made|Build a world from your favorite kinds of games/i);
  assert.doesNotMatch(source('../app/layout.tsx'),/<AvatarPointer/);
 });

@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 
 test('the experiment tabs work with arrow keys and update the result',async({page})=>{
  await page.goto('/');
- await expect(page.getByRole('heading',{name:'Students build real projects with live help from teachers.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/Make real projects/})).toBeVisible();
  const hello=page.getByRole('tab',{name:'Say hello'});
  await hello.focus();
  await page.keyboard.press('ArrowRight');
@@ -20,6 +20,7 @@ test('the experiment tabs work with arrow keys and update the result',async({pag
 
 test('sign-in presents email and Google choices without implying the provider is configured',async({page})=>{
  await page.goto('/');
+ await page.getByRole('button',{name:'Open workspace',exact:true}).click();
  await page.getByRole('button',{name:'Sign in',exact:true}).click();
  await expect(page.getByRole('dialog')).toBeVisible();
  await expect(page.getByLabel('Email address')).toBeVisible();
@@ -37,7 +38,7 @@ test('the landing page has no serious axe violations',async({page})=>{
 test('layout fits a 320px viewport without horizontal overflow',async({page})=>{
  await page.setViewportSize({width:320,height:740});
  await page.goto('/');
- await expect(page.getByRole('heading',{name:'Students build real projects with live help from teachers.'})).toBeVisible();
+ await expect(page.getByRole('heading',{name:/Make real projects/})).toBeVisible();
  const layout=await page.evaluate(()=>({viewport:window.innerWidth,document:document.documentElement.scrollWidth}));
  expect(layout.document<=layout.viewport,JSON.stringify(layout)).toBe(true);
 });
@@ -55,7 +56,7 @@ test('a successful Python run can be restored after editing', async ({page}) => 
  await page.getByRole('button', {name:'Run', exact:true}).click();
  await expect(page.getByText('Execution finished.')).toBeVisible();
  await editor.fill('print("Changed")');
- await page.getByText('More',{exact:true}).click();
+ await page.getByLabel('More workspace options').click();
  await page.getByRole('button', {name:'Project revision history'}).click();
  await page.getByRole('button', {name:'Restore last successful run'}).click();
  await page.getByRole('button', {name:'Replace files'}).click();
@@ -102,34 +103,24 @@ test('a student can open a Python project, run it, and stop a loop',async({page}
  await expect(page.getByRole('button',{name:'Run',exact:true})).toBeEnabled();
 });
 
-test('the live teaching example lets a student dismiss or accept a fix', async ({page}) => {
+test('the live help link takes students to the teacher and hint example', async ({page}) => {
  await page.goto('/');
- const demo = page.locator('#live-join');
- const join = demo.getByRole('button',{name:'Join as teacher'});
- const reset = demo.getByRole('button',{name:'Reset teacher demo'});
- await join.click();
- const accept = demo.getByRole('button',{name:'Accept'});
- await expect(accept).toBeFocused();
- await demo.getByRole('button',{name:'Dismiss'}).click();
- await expect(demo.getByRole('status')).toContainText('dismissed');
- await expect(demo.locator('pre')).toContainText('turtle.left(45)');
- await expect(reset).toBeFocused();
- await reset.click();
- await join.click();
- await accept.press('Enter');
- await expect(demo.getByRole('status')).toContainText('accepted');
- await expect(demo.locator('pre')).toContainText('turtle.left(90)');
+ await page.getByRole('link',{name:'See live help',exact:true}).click();
+ await expect(page).toHaveURL(/#hint-ladder$/);
+ const demo = page.locator('#hint-ladder');
+ await expect(demo.getByText('Your teacher is watching')).toBeVisible();
+ await expect(demo.getByRole('status')).toContainText('Python got stuck on line 4');
 });
 
 test('the hint demo exposes one clue at a time, then replaces the typo', async ({page}) => {
  await page.goto('/');
  const demo = page.locator('#hint-ladder');
- await demo.getByRole('button',{name:'Show a hint'}).click();
+ await demo.getByRole('button',{name:'A nudge',exact:true}).click();
  await expect(demo.getByRole('status')).toContainText('Hint 1 of 3');
- await demo.getByRole('button',{name:'Show next clue'}).click();
+ await demo.getByRole('button',{name:'Zoom in',exact:true}).click();
  await expect(demo.getByRole('status')).toContainText('Hint 2 of 3');
  await expect(demo.locator('pre')).toContainText('print(totla)');
- await demo.getByRole('button',{name:'Reveal the fix'}).click();
+ await demo.getByRole('button',{name:'Try a fix',exact:true}).click();
  await expect(demo.getByRole('status')).toContainText('Hint 3 of 3');
  await expect(demo.locator('pre')).toContainText('print(total)');
 });
