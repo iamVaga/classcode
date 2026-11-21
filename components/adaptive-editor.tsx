@@ -108,7 +108,30 @@ export default function AdaptiveEditor({errorLine,...props}:EditorProps & {error
   c:[['main function','int main(void) {\n    $0\n    return 0;\n}','Start a C program'],['printf','printf("$1\\n");','Print text'],['scanf','scanf("%d", &${1:number});','Read a number'],['for loop','for (int ${1:i} = 0; ${1:i} < ${2:5}; ${1:i}++) {\n    $0\n}','Repeat an action'],['if statement','if (${1:condition}) {\n    $0\n}','Check a condition'],['function','${1:void} ${2:name}(${3}) {\n    $0\n}','Create a reusable function'],['array','int ${1:numbers}[${2:5}] = {$3};','Create a fixed-size list']].map(([label,insertText,documentation])=>({label,insertText,documentation}))
  };
  return <Monaco {...props} options={{...props.options,placeholder:editorLanguage==='python'?'# Type your code here':'Type your code here'}} theme={props.theme==='vs-dark'?'classcode-night':'classcode-day'} beforeMount={monaco=>{
-  for(const dark of [false,true]) monaco.editor.defineTheme(dark?'classcode-night':'classcode-day',{base:dark?'vs-dark':'vs',inherit:true,rules:[{token:'keyword',foreground:dark?'3CC4C6':'0B7A7C'},{token:'string',foreground:dark?'FF8A6B':'B84F32'},{token:'number',foreground:dark?'FFC857':'805700'},{token:'comment',foreground:dark?'9AA5B4':'5B6472',fontStyle:'italic'},{token:'type',foreground:dark?'EEF1F5':'0B7A7C'},{token:'function',foreground:dark?'EEF1F5':'1D3440'},{token:'tag',foreground:dark?'A7BED8':'805700'},{token:'attribute.name',foreground:dark?'D8E0E9':'5B6472'}],colors:{'editor.background':dark?'#161C24':'#FFFFFF','editor.foreground':dark?'#EEF1F5':'#14181F','editorLineNumber.foreground':dark?'#9AA5B4':'#5B6472','editor.lineHighlightBackground':dark?'#1E2630':'#F3F0EA','editorCursor.foreground':dark?'#3CC4C6':'#0B7A7C','editor.selectionBackground':dark?'#12363A':'#D0E9E7'}});
+  for (const dark of [false, true]) {
+   monaco.editor.defineTheme(dark ? 'classcode-night' : 'classcode-day', {
+    base: dark ? 'vs-dark' : 'vs',
+    inherit: true,
+    rules: [
+     {token: 'keyword', foreground: dark ? 'FF9DB4' : '086467'},
+     {token: 'string', foreground: dark ? 'FFD667' : '9E3B26'},
+     {token: 'number', foreground: dark ? 'C4B4FF' : '754900'},
+     {token: 'comment', foreground: dark ? 'B2BDDF' : '4E5870'},
+     {token: 'type', foreground: dark ? 'F5F3FF' : '172342'},
+     {token: 'function', foreground: dark ? '8AE0EF' : '164F84'},
+     {token: 'tag', foreground: dark ? 'A7CBFF' : '244F87'},
+     {token: 'attribute.name', foreground: dark ? 'D8E0F9' : '33476D'},
+    ],
+    colors: {
+     'editor.background': dark ? '#1C2744' : '#FFFEFD',
+     'editor.foreground': dark ? '#F5F3FF' : '#172342',
+     'editorLineNumber.foreground': dark ? '#B2BDDF' : '#4E5870',
+     'editor.lineHighlightBackground': dark ? '#273454' : '#F3F0EA',
+     'editorCursor.foreground': dark ? '#89DCD8' : '#086467',
+     'editor.selectionBackground': dark ? '#3D4D79' : '#D0E9E7',
+    },
+   });
+  }
   for(const language of ['python','java','cpp','c'])monaco.languages.registerCompletionItemProvider(language,{triggerCharacters:['.','('],provideCompletionItems:()=>{const base=completions[language]||[],extra=language==='python'?lightweightSuggestions.python.filter(item=>!base.some(current=>current.label===item.label)).map(item=>({...item,documentation:item.detail})):[];return{suggestions:[...base,...extra].map(item=>({...item,kind:monaco.languages.CompletionItemKind.Function,insertTextRules:monaco.languages.CompletionItemInsertTextRule.InsertAsSnippet}))}}});
   props.beforeMount?.(monaco)
  }} key={attempt} onMount={(editor,monaco)=>{decorations.current=editor.createDecorationsCollection();setLoaded(true);props.onMount?.(editor,monaco)}} loading={<div className="editor-loading"><span className="loading-orbit"/><strong>Opening your editor…</strong><small>On a slow connection, a lightweight editor will appear automatically.</small><button onClick={()=>setFallback(true)}>Start typing now</button></div>}/>;

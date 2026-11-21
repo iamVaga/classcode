@@ -1,6 +1,33 @@
-export const buddyNames=['Orbit the robot','Nova the astronaut','Pixel the cat','Ember the fox','Echo the owl','Bao the panda','Spark the dragon','Lumi the wizard','Bolt the knight','Pip the bunny','Mochi the bear','Ziggy the alien'];
-export default function Avatar({kind=0,color='#c4b5fd',size=48}:{kind?:number;color?:string;size?:number}){
+import Image from 'next/image';
+import {Glasses, Headphones} from 'lucide-react';
+import type {CSSProperties} from 'react';
+
+export const buddyNames=['Bolt the Robot','Nova the Astronaut','Pixel the cat','Fizz the Fox','Hoot the Owl','Bao the panda','Dash the Dragon','Lumi the wizard','Bolt the knight','Pip the Penguin','Mochi the bear','Ziggy the alien'];
+export const referenceBuddies = [3, 0, 6, 1, 4, 9];
+export const buddyOrange = '#ff9c4b';
+const buddyArt: Partial<Record<number, [string, number, number]>> = {
+  3: ['fizz', 300, 480],
+  0: ['bolt', 122, 190],
+  6: ['dash', 155, 177],
+  1: ['nova', 109, 188],
+  4: ['hoot', 234, 462],
+  9: ['pip', 290, 359],
+};
+
+export default function Avatar({kind=0,color=buddyOrange,size=48,gear}:{kind?:number;color?:string;size?:number;gear?:string}){
  const k=((kind%12)+12)%12;
+ const art=buddyArt[k];
+ if(art) {
+   const [name,width,height]=art;
+   const ratio=width/height;
+   return <span className={`character-avatar reference-avatar reference-avatar-${name}`} data-buddy-gear={gear} style={{width:size*Math.min(ratio,1), height:size, '--buddy-color':color} as CSSProperties}>
+     <Image src={`/buddies/${name}.webp`} width={width} height={height} alt={buddyNames[k]} unoptimized/>
+     {color!==buddyOrange&&<span className="reference-avatar-tint" aria-hidden="true" style={{maskImage:`url(/buddies/${name}-color.webp)`}}/>}
+     <Headphones className="buddy-headphones" aria-hidden="true"/>
+     <Glasses className="buddy-shades" aria-hidden="true"/>
+     <span className="buddy-bow" aria-hidden="true"/>
+   </span>;
+ }
  return <svg className="character-avatar" width={size} height={size} viewBox="0 0 80 80" data-buddy-gear={typeof document==="undefined"?"none":document.documentElement.dataset.buddyGear||"none"} role="img" aria-label={buddyNames[k]} style={{flexShrink:0,overflow:'visible'}}>
   <ellipse cx="40" cy="71" rx="22" ry="4" fill="#101327" opacity=".15"/>
   <g className="character-body" stroke="#282444" strokeWidth="2.2" strokeLinejoin="round">

@@ -61,7 +61,6 @@
 }
 .lp h1 { font-size: clamp(36px, 4.8vw, 74px); }
 .lp h1 span { display: block; }
-.lp h1 span:nth-child(n + 3) { color: var(--lp-accent); }
 .lp h2 { font-size: clamp(30px, 3.5vw, 51px); }
 .lp h3 { font-size: clamp(20px, 2.2vw, 24px); letter-spacing: -.025em; }
 .lp p { margin: 16px 0 0; max-width: 65ch; line-height: 1.6; color: var(--lp-muted); }

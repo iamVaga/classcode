@@ -4,6 +4,7 @@ import {useEffect,useRef,useState} from 'react';
 import Link from 'next/link';
 import {ArrowRight,BookOpen,Check,ChevronDown,ExternalLink,Eye,FolderCode,Info,LoaderCircle,Moon,Play,Plus,Search,ShieldCheck,Sun,Terminal,X} from 'lucide-react';
 import CodePreview from './code-preview';
+import {useTheme} from './theme-provider';
 
 type GuideTab='buttons'|'cards'|'editor';
 
@@ -15,7 +16,7 @@ function Spark({state='idle'}:{state?:'idle'|'thinking'|'celebrate'}){
 }
 
 export default function StyleGuide(){
- const [theme,setTheme]=useState<'light'|'dark'>(()=>typeof document!=='undefined'&&document.documentElement.dataset.theme==='dark'?'dark':'light');
+ const {theme,toggleTheme}=useTheme();
  const [tab,setTab]=useState<GuideTab>('buttons');
  const [filter,setFilter]=useState('All tracks');
  const [progress,setProgress]=useState(62);
@@ -25,7 +26,6 @@ export default function StyleGuide(){
  const toastRemaining=useRef(4000);
  const toastStarted=useRef(0);
  const dialog=useRef<HTMLDialogElement>(null);
- function toggleTheme(){const next=theme==='dark'?'light':'dark';setTheme(next);document.documentElement.dataset.theme=next;try{localStorage.setItem('classcode-theme',next)}catch{}}
  function dismissToast(){setToast(false);if(toastTimer.current)clearTimeout(toastTimer.current);toastTimer.current=null;toastRemaining.current=4000}
  function startToastTimer(){if(toastTimer.current)clearTimeout(toastTimer.current);toastStarted.current=Date.now();toastTimer.current=window.setTimeout(dismissToast,toastRemaining.current)}
  function showToast(){dismissToast();setToast(true);toastRemaining.current=4000;startToastTimer()}

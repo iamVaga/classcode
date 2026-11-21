@@ -39,7 +39,7 @@ export default function SnippetPlayground({onOpen,landing=false,disabled=false}:
   }
 
   return <div className="snippet-playground">
-    <div className="snippet-playground-top"><span>{landing?'Browser playground':'TRY A TINY EXPERIMENT'}</span><span className="snippet-lab-dot" aria-hidden="true"/></div>
+    {!landing&&<div className="snippet-playground-top"><span>TRY A TINY EXPERIMENT</span><span className="snippet-lab-dot" aria-hidden="true"/></div>}
     <div className="snippet-language-tabs" role="tablist" aria-label="Choose an experiment" style={landing?{'--experiment-tab':active} as React.CSSProperties:undefined}>
       {activities.map((item,index)=><button type="button" role="tab" id={`experiment-tab-${item.id}`} aria-controls="experiment-panel" aria-selected={active===index} tabIndex={active===index?0:-1} key={item.id} onKeyDown={event=>moveTab(event,index)} onClick={()=>setActive(index)}>{item.label}</button>)}
     </div>
@@ -52,10 +52,10 @@ export default function SnippetPlayground({onOpen,landing=false,disabled=false}:
       <div className="snippet-lines" aria-hidden="true">{code.split('\n').map((_,i)=><span key={i}>{i+1}</span>)}</div>
       <pre>{landing?<span key={activity.id} className="snippet-frame-change">{code.split('\n').map((line,index)=><span className="snippet-code-line" key={index}><CodePreview code={line}/></span>)}</span>:<CodePreview code={code}/>}</pre>
     </div>
-    <div className="snippet-example-output" aria-live="polite"><span>Live preview</span>{!landing&&<span className="snippet-live-indicator"><i/>Updates as you explore</span>}
+    <div className="snippet-example-output" aria-live="polite"><span>{landing?'What you see':'Live preview'}</span>{!landing&&<span className="snippet-live-indicator"><i/>Updates as you explore</span>}
       {activity.id==='turtle'?<svg key={landing?choice:undefined} className={landing?'snippet-star-reveal':undefined} width="66" height="52" viewBox="0 0 105 95" role="img" aria-label={choice+' star'}><path d="M3 36 H101 L21 94 L52 1 L83 94 Z" fill="none" stroke={choice} strokeWidth="3"/></svg>
         :<strong key={landing?activity.id+choice:undefined} className={landing?'snippet-frame-change':undefined}>{activity.id==='python'?`Hello, ${choice}!`:`Planet ${choice} · Welcome, explorer!`}</strong>}
     </div>
-    <button className="snippet-open" disabled={disabled} onClick={openEditor}>{landing?'Open in editor':'Open my code'} <ArrowRight size={14}/></button>
+    {!landing&&<button className="snippet-open" disabled={disabled} onClick={openEditor}>Open my code <ArrowRight size={14}/></button>}
   </div>;
 }

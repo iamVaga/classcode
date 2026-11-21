@@ -272,13 +272,6 @@ a:hover { color: var(--primary-hover); text-decoration: underline; text-decorati
 .guide-badge.error { color: var(--error); }
 .guide-badge.info { color: var(--info); }
 :root[data-contrast="high"] .student-safety a,:root[data-contrast="high"] .hero-copy .studio-kicker { color: var(--accent-ink); }
-.color-code { color: #EAF0F4; }
-.syntax-keyword { color: #50CFCC; }
-.syntax-string { color: #FF9A7E; }
-.syntax-number { color: #F4C460; }
-.syntax-comment { color: #B1BEC9; }
-.syntax-function { color: #EEF1F5; }
-.syntax-tag { color: #A7BED8; }
 .art-python .starter-category { color: var(--track-python); }
 .art-turtle .starter-category { color: var(--track-turtle); }
 .art-web .starter-category { color: var(--track-web); }
@@ -627,8 +620,6 @@ a:hover { color: var(--primary-hover); text-decoration: underline; text-decorati
 .spacious-ide .run-button { color: var(--surface); }
 .spacious-ide .coding-toolbar { background: var(--surface-2); gap: 8px; }
 .spacious-ide .ide-work:not(.explorer-open)>.file-sidebar { display: none; }
-.spacious-ide .layout-split .code-pane { flex: 0 0 clamp(360px,var(--code-share),calc(100% - 270px)); }
-.spacious-ide .layout-split.explorer-open .code-pane { flex-basis: clamp(360px,var(--code-share),calc(100% - 426px)); }
 .spacious-ide .result-pane { display: flex; flex-direction: column; }
 .spacious-ide .result-grid { grid-template-columns: minmax(0,1fr); }
 .spacious-ide .preview-only .console-pane { display: none; }

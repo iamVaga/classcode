@@ -2,18 +2,20 @@
 import {useEffect,useRef,useState} from 'react';
 import dynamic from 'next/dynamic';
 import {ArrowRight,Check,FolderCode,Globe,Mail,Terminal,X,Code2} from 'lucide-react';
-import Avatar from './avatar';
+import Avatar,{buddyOrange} from './avatar';
 import Landing from './landing';
 import AuthForm from './auth-form';
 import {Starter} from '@/lib/starters';
 import BuddyPicker from './buddy-picker';
+import {useTheme} from './theme-provider';
 import {createProject,Project} from '@/lib/model';
 import {db} from '@/lib/supabase';
 const IDE=dynamic(()=>import('./ide'),{loading:()=> <div className="loading">Opening your workspace…</div>,ssr:false});
 const WorkspaceHome=dynamic(()=>import('./workspace-home'),{loading:()=> <div className="loading">Opening your workspace…</div>});
 export default function Classroom({landingFont}:{landingFont:string}){
- const [page,setPage]=useState('Landing'),[projects,setProjects]=useState<Project[]>([]),[active,setActive]=useState<Project|null>(null),[modal,setModal]=useState(''),[name,setName]=useState(''),[type,setType]=useState<Project['type']>('web'),[avatar,setAvatar]=useState(0),[color,setColor]=useState('#dce9d5'),[dark,setDark]=useState(false),[notice,setNotice]=useState(''),[user,setUser]=useState(''),[userId,setUserId]=useState(''),[ready,setReady]=useState(false),[recovery,setRecovery]=useState(false);
- const themePreference=useRef('');
+ const [page,setPage]=useState('Landing'),[projects,setProjects]=useState<Project[]>([]),[active,setActive]=useState<Project|null>(null),[modal,setModal]=useState(''),[name,setName]=useState('My first project'),[type,setType]=useState<Project['type']>('web'),[avatar,setAvatar]=useState(3),[color,setColor]=useState(buddyOrange),[notice,setNotice]=useState(''),[user,setUser]=useState(''),[userId,setUserId]=useState(''),[ready,setReady]=useState(false),[recovery,setRecovery]=useState(false);
+ const {theme,toggleTheme}=useTheme();
+ const dark=theme==='dark';
  const [authLinkError,setAuthLinkError]=useState('');
  useEffect(()=>{
   const url=new URL(window.location.href);
@@ -46,10 +48,7 @@ export default function Classroom({landingFont}:{landingFont:string}){
   panel?.addEventListener('keydown',handleKey);
   return()=>{panel?.removeEventListener('keydown',handleKey);if(previous?.isConnected)previous.focus({preventScroll:true})};
  },[modal]);
- useEffect(()=>{try{const cached:Project[]=JSON.parse(localStorage.getItem('classcode-projects')||'[]');const guest=cached.filter(item=>!item.owner_id);if(guest.length!==cached.length)localStorage.setItem('classcode-projects',JSON.stringify(guest));setProjects(guest);const a=JSON.parse(localStorage.getItem('classcode-avatar')||'{"kind":0,"color":"#dce9d5"}');setAvatar(a.kind);setColor(a.color);document.documentElement.dataset.buddyGear=a.gear||"none"}catch{setNotice('Local data could not be read. Export any open work before clearing storage.')}setReady(true);db?.auth.getUser().then(async({data})=>{if(data.user){setUser(data.user.email||'');setUserId(data.user.id);setProjects([]);const r=await db!.from('projects').select('*').eq('owner_id',data.user.id);if(r.error)setNotice(r.error.message);else setProjects(r.data||[])}})},[]);
- useEffect(()=>{try{themePreference.current=localStorage.getItem('classcode-theme')||''}catch{}const media=matchMedia('(prefers-color-scheme: dark)');const apply=()=>{if(!themePreference.current){const next=media.matches;setDark(next);document.documentElement.dataset.theme=next?'dark':'light'}};if(themePreference.current==='dark'||themePreference.current==='light'){setDark(themePreference.current==='dark');document.documentElement.dataset.theme=themePreference.current}else{apply();media.addEventListener('change',apply)}return()=>media.removeEventListener('change',apply)},[]);
- useEffect(()=>{document.documentElement.dataset.theme=dark?'dark':'light'},[dark]);
- function toggleTheme(){setDark(current=>{const next=!current;themePreference.current=next?'dark':'light';try{localStorage.setItem('classcode-theme',themePreference.current)}catch{}return next})}
+ useEffect(()=>{try{const cached:Project[]=JSON.parse(localStorage.getItem('classcode-projects')||'[]');const guest=cached.filter(item=>!item.owner_id);if(guest.length!==cached.length)localStorage.setItem('classcode-projects',JSON.stringify(guest));setProjects(guest);const a=JSON.parse(localStorage.getItem('classcode-avatar')||'null');if(a){setAvatar(a.kind);setColor(a.color);document.documentElement.dataset.buddyGear=a.gear||'none'}}catch{setNotice('Local data could not be read. Export any open work before clearing storage.')}setReady(true);db?.auth.getUser().then(async({data})=>{if(data.user){setUser(data.user.email||'');setUserId(data.user.id);setProjects([]);const r=await db!.from('projects').select('*').eq('owner_id',data.user.id);if(r.error)setNotice(r.error.message);else setProjects(r.data||[])}})},[]);
  useEffect(()=>{if(!db)return;const {data:{subscription}}=db.auth.onAuthStateChange(event=>{if(event==='PASSWORD_RECOVERY'){setAuthLinkError('');setRecovery(true);setModal('account')}});return()=>subscription.unsubscribe()},[]);
  useEffect(()=>{if(!notice)return;const id=setTimeout(()=>setNotice(''),6000);return()=>clearTimeout(id)},[notice]);
  async function save(p:Project){if(user&&db){if(!navigator.onLine)throw Error('Offline. Reconnect to save, or download your changes.');const {data,error}=await db.from('projects').update({name:p.name,files:p.files,updated:p.updated,version:p.version}).eq('id',p.id).eq('version',p.version-1).select();if(error)throw error;if(!data?.length)throw Error('A newer version exists. Reopen the project before saving.');setProjects(list=>list.map(v=>v.id===p.id?p:v));return;}const stored:Project[]=JSON.parse(localStorage.getItem('classcode-projects')||'[]');if(!user){const previous=stored.find(v=>v.id===p.id);if(previous&&previous.version!==p.version-1)throw Error('This project changed in another tab. Export your work before reopening it.')}const next=(user?projects:stored).map(v=>v.id===p.id?p:v);localStorage.setItem('classcode-projects',JSON.stringify(next));setProjects(next)}
