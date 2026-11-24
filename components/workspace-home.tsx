@@ -49,6 +49,7 @@ export default function WorkspaceHome({page, onPage, onHome, projects, onOpen, o
           {(Object.keys(workspacePages) as WorkspacePage[]).map(key =>
             <button key={key} aria-current={page === key ? 'page' : undefined} onClick={() => onPage(key)}>{workspacePages[key]}</button>
           )}
+          <Link href="/learn">Learn</Link>
         </nav>
         <div className="lp-nav-actions">
           <Link className="lp-button lp-quiet" href="/session">Join session</Link>

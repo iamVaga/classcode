@@ -3,6 +3,7 @@ import {Geist} from 'next/font/google';
 
 const body = Geist({subsets:['latin'], display:'swap', variable:'--font-landing-body', preload:true});
 
-export default function Page() {
- return <Classroom landingFont={body.variable}/>;
+export default async function Page({searchParams}: {searchParams: Promise<{workspace?: string | string[]}>}) {
+ const {workspace} = await searchParams;
+ return <Classroom landingFont={body.variable} startInWorkspace={workspace === '1'}/>;
 }

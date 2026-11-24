@@ -58,6 +58,7 @@ export default function Landing({fontClass, ready, user, dark, onTheme, onModal,
         <a className="lp-logo" href="#classcode"><BrandMark size={31}/>ClassCode</a>
         <nav aria-label="Main navigation">
           <a href="#tracks">What can I make?</a>
+          <Link href="/learn">Learn</Link>
           <a href="#hint-ladder">Live help</a>
           <a href="#for-schools">For schools</a>
         </nav>

@@ -13,8 +13,8 @@ import {createProject,Project} from '@/lib/model';
 import {db} from '@/lib/supabase';
 const IDE=dynamic(()=>import('./ide'),{loading:()=> <div className="loading">Opening your workspace…</div>,ssr:false});
 const WorkspaceHome=dynamic(()=>import('./workspace-home'),{loading:()=> <div className="loading">Opening your workspace…</div>});
-export default function Classroom({landingFont}:{landingFont:string}){
- const [page,setPage]=useState<WorkspacePage|'Landing'>('Landing'),[projects,setProjects]=useState<Project[]>([]),[active,setActive]=useState<Project|null>(null),[modal,setModal]=useState(''),[name,setName]=useState('My first project'),[type,setType]=useState<Project['type']>('web'),[avatar,setAvatar]=useState(3),[color,setColor]=useState(buddyOrange),[notice,setNotice]=useState(''),[user,setUser]=useState(''),[userId,setUserId]=useState(''),[ready,setReady]=useState(false),[recovery,setRecovery]=useState(false);
+export default function Classroom({landingFont,startInWorkspace=false}:{landingFont:string;startInWorkspace?:boolean}){
+ const [page,setPage]=useState<WorkspacePage|'Landing'>(startInWorkspace?'Projects':'Landing'),[projects,setProjects]=useState<Project[]>([]),[active,setActive]=useState<Project|null>(null),[modal,setModal]=useState(''),[name,setName]=useState('My first project'),[type,setType]=useState<Project['type']>('web'),[avatar,setAvatar]=useState(3),[color,setColor]=useState(buddyOrange),[notice,setNotice]=useState(''),[user,setUser]=useState(''),[userId,setUserId]=useState(''),[ready,setReady]=useState(false),[recovery,setRecovery]=useState(false);
  const {theme,toggleTheme}=useTheme();
  const dark=theme==='dark';
  const [authLinkError,setAuthLinkError]=useState('');
