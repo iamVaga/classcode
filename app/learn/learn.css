@@ -1,3 +1,5 @@
+.learn-fonts { --font-code: var(--font-learn-mono), var(--font-atkinson-mono), monospace; }
+
 .learn {
   --learn-bg: #fff8eb;
   --learn-panel: #fffefd;
@@ -21,7 +23,7 @@
   min-height: 100dvh;
   background: var(--learn-bg);
   color: var(--learn-ink);
-  font-family: var(--font-lexend), system-ui, sans-serif;
+  font-family: var(--font-learn-ui), var(--font-lexend), system-ui, sans-serif;
   font-size: 15px;
   line-height: 1.6;
 }
@@ -250,6 +252,73 @@ body:has(.learn) .connection-control { display: none; }
 .learn-footer a:hover { text-decoration: underline; }
 .learn :is(#labs, #challenge, #quests, #recall) { scroll-margin-top: 16px; }
 
+.learn-visual-hero { padding-block: clamp(32px, 5vw, 60px) 22px; }
+.learn-visual-hero p { margin-top: 8px; color: var(--learn-muted); font-size: 1.12rem; }
+.learn-visual-topics { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 10px; margin-bottom: 24px; }
+.learn-visual-topics a { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 2px 8px; align-items: center; padding: 10px 14px; border: 2px solid var(--learn-line); border-radius: 15px; background: var(--learn-panel); color: var(--learn-ink); }
+.learn-visual-topics a:hover { background: var(--learn-board); }
+.learn-visual-topics a[aria-current="page"] { background: var(--learn-lilac); color: var(--learn-fixed-ink); box-shadow: 0 3px 0 var(--learn-shadow); }
+.learn-visual-topics small { grid-column: 1 / -1; }
+.learn-visual-topics strong { font-size: 1.02rem; }
+
+.learn-engine-board { min-height: 178px; align-content: start; }
+.learn-bindings { display: flex; align-items: start; flex-wrap: wrap; gap: 8px; margin: 0; }
+.learn-bindings > div { min-width: 86px; padding: 6px 10px; border: 1px solid var(--learn-line); border-radius: 10px; background: var(--learn-panel); }
+.learn-bindings > div[data-active] { background: var(--learn-sun); color: var(--learn-fixed-ink); box-shadow: 0 2px 0 var(--learn-fixed-ink); }
+.learn-bindings dt { display: flex; flex-wrap: wrap; gap: 2px 8px; font-size: .87rem; }
+.learn-bindings dt span { font-weight: 700; }
+.learn-bindings dd { margin: 0; font-size: 1.35rem; font-weight: 800; }
+.learn-stack { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+.learn-stack > li { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: 8px; padding: 8px 10px; border: 1px solid var(--learn-line); border-radius: 10px; }
+.learn-stack > li:first-child { border: 2px solid var(--learn-line); background: var(--learn-blue-note); }
+.learn-stack > li > :is(dl, p) { grid-column: 1 / -1; }
+.learn-stack > li > span { color: var(--learn-muted); font-size: .8rem; }
+.learn-engine-bars { display: grid; grid-template-columns: repeat(var(--bar-count), minmax(0, 1fr)); gap: 6px; margin: 0; padding: 0; list-style: none; }
+.learn-engine-bars li { position: relative; display: grid; grid-template-rows: 108px auto auto; justify-items: center; align-items: center; border: 1px solid transparent; border-radius: 8px; font-variant-numeric: tabular-nums; }
+.learn-engine-bars li::before { position: absolute; top: 54px; left: 0; right: 0; border-top: 1px solid var(--learn-line); content: ""; }
+.learn-engine-bars li[data-active] { border-color: var(--learn-accent); background: var(--learn-blue-note); }
+.learn-engine-bar { align-self: start; width: min(70%, 42px); height: 54px; border-radius: 3px 3px 0 0; background: var(--learn-accent); transform-origin: bottom; transform: scaleY(var(--bar-scale)); transition: transform 160ms ease; }
+.learn-engine-bars [data-sign="negative"] .learn-engine-bar { margin-top: 54px; border-radius: 0 0 3px 3px; transform-origin: top; }
+.learn-engine-bars small { color: var(--learn-muted); font-size: .8rem; }
+.learn-engine-bars [data-active] strong { text-decoration: underline; text-underline-offset: 3px; }
+
+.learn-timeline { display: grid; gap: 6px; padding: 12px; border: 1px solid var(--learn-hairline); border-radius: 16px; background: var(--learn-board); }
+.learn-scrubber { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; font-size: .9rem; }
+.learn-scrubber input { grid-column: 1 / -1; height: 44px; min-width: 0; margin: 0; accent-color: var(--learn-accent); cursor: pointer; }
+.learn-timeline-settings { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 8px; }
+.learn-timeline-settings label { display: flex; align-items: center; gap: 6px; min-height: 44px; font-weight: 700; }
+.learn-timeline-settings select, .learn-editor-inputs input, .learn-blank input { min-height: 44px; min-width: 0; padding: 6px 9px; border: 1px solid var(--learn-line); border-radius: 8px; background: var(--learn-panel); color: var(--learn-ink); }
+.learn-timeline-settings input, .learn-prediction-options input { width: 18px; height: 18px; margin: 0; accent-color: #6243cd; flex: 0 0 auto; }
+.learn-editor-inputs fieldset, .learn-exercise fieldset { display: grid; min-width: 0; gap: 8px; margin: 0; padding: 0; border: 0; }
+.learn-editor-inputs legend, .learn-exercise legend { padding: 0; font-weight: 800; }
+.learn-editor-inputs p { color: var(--learn-muted); font-size: .9rem; }
+.learn-editor-inputs p[role="alert"] { padding: 6px 8px; border-radius: 8px; background: var(--learn-red-note); color: var(--learn-ink); }
+.learn-editor-inputs fieldset > div:first-of-type { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 130px), 1fr)); gap: 8px; }
+.learn-editor-inputs label, .learn-blank { display: grid; gap: 5px; min-width: 0; font-weight: 700; }
+.learn-editor-inputs input, .learn-blank input { width: 100%; font-family: var(--font-code); font-size: 1rem; }
+.learn input:focus-visible { outline: 3px solid var(--learn-accent); outline-offset: 3px; box-shadow: none; }
+.learn-lab-heading .learn-analogy { margin-top: 8px; color: var(--learn-ink); font-size: .94rem; }
+.learn-workshop-buddy > div { display: grid; gap: 5px; justify-items: start; }
+.learn-workshop-buddy[data-mood="finished"] { background: var(--learn-green-note); }
+.learn-workshop-buddy p svg { vertical-align: middle; }
+.learn-prediction { display: grid; gap: 9px; min-width: 0; margin: 0; padding: 9px 12px 12px; border: 2px solid var(--learn-line); border-radius: 14px; background: var(--learn-warm-note); }
+.learn-prediction legend { max-width: 100%; padding-inline: 5px; font-weight: 800; }
+.learn-prediction-options { display: grid; gap: 6px; }
+.learn-prediction-options label { display: flex; align-items: center; min-height: 44px; gap: 8px; padding: 6px 9px; border: 1px solid var(--learn-line); border-radius: 9px; overflow-wrap: anywhere; cursor: pointer; }
+.learn-prediction-options label:has(input:checked) { box-shadow: inset 0 0 0 1px var(--learn-line); font-weight: 700; }
+.learn-workshop-practice { align-items: start; }
+.learn-workshop-practice .learn-challenge { margin: 0; }
+.learn-exercise { display: grid; gap: 8px; }
+.learn-exercise :is(.learn-order button, .learn-prediction-options label) { background: #fff9e3; color: var(--learn-fixed-ink); }
+.learn-order { display: grid; gap: 9px; }
+.learn-order [role="group"] { display: flex; flex-wrap: wrap; gap: 5px; }
+.learn-order ol { margin: 4px 0 8px; padding-inline-start: 22px; }
+.learn-inline-hint summary, .learn-workshop-recall summary { min-height: 44px; align-content: center; cursor: pointer; font-weight: 700; }
+.learn-workshop-recall { display: grid; gap: 8px; margin-top: 12px; }
+.learn-workshop-recall .learn-note { padding-block: 2px; }
+.learn-workshop-recall .learn-note[open] { padding-bottom: 8px; }
+.learn-blank input { background: #fff9e3; color: var(--learn-fixed-ink); }
+
 @media (max-width: 850px) {
   .learn-nav nav { order: 3; width: 100%; }
   .learn-lab-cards { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -270,6 +339,7 @@ body:has(.learn) .connection-control { display: none; }
   .learn-topic-grid, .learn-answers { grid-template-columns: minmax(0, 1fr); }
   .learn-topic { padding: 10px; }
   .learn-topic h3 { margin-bottom: 1px; }
+  .learn-visual-topics { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
   .learn *, .learn *::before, .learn *::after { animation: none !important; transition: none !important; }

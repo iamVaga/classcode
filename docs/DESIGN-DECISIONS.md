@@ -1,5 +1,11 @@
 # ClassCode design decisions
 
+## Visual Lab engine
+
+- **Pure steps and a shared timeline.** Generators produce ordered records of visual state, highlighted source lines, a plain-language note, and metadata. The timeline controls playback and pauses before a prediction. Renderers display the current state, so the same sequence works for scrubbing, keyboard control, and test fixtures.
+- **Validated lesson files.** The server loads the JSON catalog, checks IDs and prerequisites, and sends the selected lesson to the client. A new lesson can reuse a generator with different defaults and explanations. CI runs the same validation as the route.
+- **A route for incremental review.** `/learn/visuals` hosts the first three lessons while the Concept Studio and Revision Arena lessons are ported in Phase 2. It uses the existing mode and buddy preferences. Python tracing, SQL execution, review scheduling, and account progress have their own later phases.
+
 ## Direction
 
 The interface uses a warm paper foundation, quiet surfaces, deep teal actions, and restrained coral accents. The student’s code and its result stay visually dominant. The landing experience explains the product through a real interactive coding example and starter projects, then gives teachers concrete classroom workflows.

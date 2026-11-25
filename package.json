@@ -9,6 +9,7 @@
     "typecheck": "tsc --noEmit",
     "lint": "eslint .",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
+    "test:learn": "vitest run",
     "eval:hints": "node --experimental-strip-types scripts/evaluate-hints.mjs",
     "test:e2e": "playwright test",
     "lighthouse": "lighthouse http://127.0.0.1:3011 --output=json --output-path=artifacts/lighthouse-mobile.json --only-categories=performance,accessibility,best-practices,seo --chrome-flags=\"--headless --no-sandbox\" && node scripts/check-lighthouse.mjs"
@@ -33,7 +34,8 @@
     "server-only": "^0.0.1",
     "tailwindcss": "^4.3.3",
     "typescript": "^6.0.3",
-    "yjs": "^13.6.33"
+    "yjs": "^13.6.33",
+    "zod": "4.6.7"
   },
   "overrides": {
     "dompurify": "$dompurify"
@@ -41,6 +43,7 @@
   "devDependencies": {
     "@axe-core/playwright": "4.14.0",
     "@playwright/test": "1.64.1",
-    "lighthouse": "13.6.0"
+    "lighthouse": "13.6.0",
+    "vitest": "5.1.1"
   }
 }

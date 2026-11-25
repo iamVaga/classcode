@@ -1,0 +1,32 @@
+{
+  "id": "function-frames",
+  "track": "python",
+  "title": "Inside a function call",
+  "summary": "Watch parameters arrive and a result return.",
+  "prerequisites": ["copying-a-value"],
+  "analogy": "A recipe card tells someone what to do. They use their own workbench, then hand you the finished result.",
+  "explanations": {
+    "explorer": "Calling a function opens a small workspace. The input numbers go in. When it is done, the answer comes back and its workspace closes.",
+    "builder": "Python creates a frame for each call. The frame holds parameters and local names. return sends a value to the caller, which can store it under a new name.",
+    "pro": "Each invocation has its own frame and local bindings. Highlighted lines can show both the return statement and the caller receiving its value. This example displays only frames in the learner program."
+  },
+  "visual": {"kind": "function-call", "first": 2, "second": 5},
+  "codeSamples": [
+    {"title": "Add two numbers", "language": "python", "source": "def add(a, b):\n    total = a + b\n    return total\n\nresult = add({{first}}, {{second}})\nprint(result)"}
+  ],
+  "remember": ["Each call has its own frame.", "Parameters receive the argument values.", "A caller can store the returned value."],
+  "commonMistake": "Expecting a local name like total to work in the main program. Save the returned value in a name the main program can use.",
+  "challenges": [
+    {"id": "sum", "kind": "predict", "mode": "explorer", "prompt": "What value does add(2, 5) send back?", "options": ["2", "5", "7"], "answer": 2, "hint": "Add the two numbers inside the function.", "explanation": "a is 2 and b is 5. Their sum is 7."},
+    {"id": "return", "kind": "blank", "mode": "explorer", "prompt": "Which word sends a value back from inside a Python function?", "answers": ["return"], "hint": "The word also means to go back.", "explanation": "return ends the function call and gives a value to its caller."},
+    {"id": "scope", "kind": "bug", "mode": "builder", "prompt": "add returns total into result. Which name should the main program print?", "options": ["a", "total", "result"], "answer": 2, "hint": "Use the name on the left of the function call assignment.", "explanation": "result is defined in the main program. a and total belong to the function call."},
+    {"id": "call-order", "kind": "parsons", "mode": "builder", "prompt": "Arrange the events in the order the call runs.", "lines": ["Call add and bind a and b", "Calculate total", "Return total and close the frame", "Store the returned value as result"], "hint": "Start with the function call and end in the caller.", "explanation": "The frame exists while add runs. The caller receives the value when that call returns."},
+    {"id": "separate-frames", "kind": "predict", "mode": "pro", "prompt": "Why can add(1, 2) and add(3, 4) use different values for a?", "options": ["Each call creates its own frame", "a is shared globally", "Python renames the function"], "answer": 0, "hint": "Compare the local workspace of each invocation.", "explanation": "A parameter is bound afresh in each call frame, so both calls can use the same parameter name with different values."}
+  ],
+  "flashcards": [
+    {"id": "frame", "front": "What is a call frame?", "back": "The workspace of an active invocation, including that call’s parameter and local bindings."},
+    {"id": "parameter", "front": "What is a parameter?", "back": "A name in a function definition that can receive a value when the function is called."},
+    {"id": "argument", "front": "What is an argument?", "back": "A value or expression supplied at a call site, such as 5 in add(2, 5)."},
+    {"id": "caller", "front": "Who receives a returned value?", "back": "The caller receives it and can use it in an expression or assign it to a name."}
+  ]
+}
