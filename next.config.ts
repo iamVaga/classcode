@@ -9,6 +9,8 @@ const securityHeaders=[
 
 const config:NextConfig={
  poweredByHeader:false,
+ outputFileTracingIncludes:{'/learn/visuals':['./content/learn/**/*.json']},
+ outputFileTracingExcludes:{'/learn/visuals':['./artifacts/**','./screenshots/**','./test-results/**','./tmp/**','./.env*']},
  async headers(){return [{source:'/:path*',headers:securityHeaders}]}
 };
 

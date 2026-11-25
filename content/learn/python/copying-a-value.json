@@ -1,0 +1,32 @@
+{
+  "id": "copying-a-value",
+  "track": "python",
+  "title": "Copying a value",
+  "summary": "Change one name and see what happens to the other.",
+  "prerequisites": [],
+  "analogy": "Write a number on two sticky notes. Replacing the number on one note leaves the other note as it was.",
+  "explanations": {
+    "explorer": "Python gives each name a value to point to. Make two names point to the same number. Then change the first name and check the second.",
+    "builder": "Assignment connects a name to an object. When you assign a new integer to original, Python updates that one name. copied still refers to the earlier integer.",
+    "pro": "The diagram shows name bindings, not integer object identity. Rebinding one name leaves the other binding intact. Mutable objects introduce a separate case: an in-place change can be visible through every alias."
+  },
+  "visual": {"kind": "copy-value", "start": 4, "replacement": 9},
+  "codeSamples": [
+    {"title": "Two names", "language": "python", "source": "original = {{start}}\ncopied = original\noriginal = {{replacement}}\nprint(copied)"}
+  ],
+  "remember": ["The right side is read first.", "Assignment sets the name on the left.", "Two names can refer to the same number."],
+  "commonMistake": "Reading copied = original as a rule that keeps the names in sync. It runs once, using the value original has at that moment.",
+  "challenges": [
+    {"id": "predict-copy", "kind": "predict", "mode": "explorer", "prompt": "A points to 7. B is assigned A. A is then assigned 2. What will print(B) show?", "options": ["2", "7", "Both numbers"], "answer": 1, "hint": "Trace B back to the moment when it was assigned.", "explanation": "B was assigned when A referred to 7, so B still refers to 7."},
+    {"id": "operator", "kind": "blank", "mode": "explorer", "prompt": "Fill the blank to assign the value 3 to score: score ___ 3.", "answers": ["="], "hint": "Use the single assignment symbol.", "explanation": "A single equals sign assigns the number on its right to the name on its left."},
+    {"id": "name-bug", "kind": "bug", "mode": "builder", "prompt": "You set score = 5. Which line prints that exact name?", "options": ["print(Score)", "print(scores)", "print(score)"], "answer": 2, "hint": "Capital letters and spelling matter.", "explanation": "Only score matches the name from the assignment."},
+    {"id": "order-check", "kind": "parsons", "mode": "builder", "prompt": "Arrange the lines so saved keeps 3 and score changes to 9 before the print.", "lines": ["score = 3", "saved = score", "score = 9", "print(saved)"], "hint": "Save the original value before changing score.", "explanation": "The copy uses the value of score at that moment. After score is rebound, saved still points to 3."},
+    {"id": "rebind", "kind": "predict", "mode": "pro", "prompt": "After a = 10 and b = a, which statement leaves b unchanged?", "options": ["b = 99", "a = 99", "b += 1"], "answer": 1, "hint": "Find the statement that assigns only a.", "explanation": "a = 99 rebinds a. Both other options assign a new integer to b."}
+  ],
+  "flashcards": [
+    {"id": "name-binding", "front": "What is a name binding?", "back": "A connection between a name and the object it currently refers to."},
+    {"id": "assignment", "front": "Which side of an assignment is evaluated first?", "back": "The right side is evaluated, and its result is assigned to the target on the left."},
+    {"id": "rebind-meaning", "front": "What does it mean to rebind a name?", "back": "It means assigning a new object to a name that already had a binding."},
+    {"id": "case", "front": "Are score and Score the same Python name?", "back": "They are different names. Python distinguishes uppercase and lowercase letters."}
+  ]
+}

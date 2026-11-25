@@ -60,3 +60,11 @@ For Vercel, import this Next.js repository, configure the two environment variab
 ## Validation in this workspace
 
 Production build, TypeScript checking, ESLint, and all five automated tests passed. The local server returned HTTP 200. Live authentication, RLS and browser interaction tests have not been verified. Installed DOMPurify was patched to 3.4.17 and enforced for nested dependencies; the audit now reports 16 moderate advisories through minimatch in development tooling, with no high or critical installed-dependency advisories. The suggested forced ESLint downgrade is not compatible with this setup. Monaco's default CDN loader is independent of npm dependency overrides and needs production asset/version review. Do not treat the passing build as production security approval.
+
+## Visual Lab
+
+Open `/learn`, then choose **Visual Lab**, or go to `/learn/visuals`. Try copying a value, stepping through a function call, or sorting an array. Enable Predict First and move the timeline forward to pause at a prediction. Choose a different explanation level to see its practice questions. These lessons use browser-side simulations with Python examples.
+
+Each Visual Lab lesson lives at `content/learn/<track>/<id>.json`. Copy the closest example, give it a unique ID that matches the filename, and fill in the prerequisites, editable visual inputs, code sample, three explanations, five mixed challenges, and four recall cards. The code sample can reference inputs with placeholders such as `{{start}}`. Reuse an existing generator whenever it illustrates the concept.
+
+Run `npm run lint`, `npm run typecheck`, `npm test`, and `npm run test:learn`. The learning tests validate the entire catalog and check the generator and timeline sequences. After `npm run build`, run `npm run test:e2e -- e2e/learn.spec.ts` for the interactive and accessibility checks. On a Vercel preview, open `/learn/visuals` to check the same flow.

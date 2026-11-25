@@ -2,20 +2,15 @@
 
 import {useEffect, useState} from 'react';
 import Link from 'next/link';
-import {ArrowRight, BookOpen, Check, Code2, Compass, Database, Flame, Heart, Layers3, Moon, ScanLine, Sun, Zap} from 'lucide-react';
-import BrandMark from '@/components/brand-mark';
-import {useTheme} from '@/components/theme-provider';
+import {ArrowRight, BookOpen, Check, Code2, Database, Flame, Heart, Layers3, ScanLine, Zap} from 'lucide-react';
 import {learning, useLearningProgress} from '@/lib/learn/progress';
 import {lessons} from '@/lib/learn/lessons';
-import {tracks, type Lesson, type Mode, type Track} from '@/lib/learn/types';
+import {tracks, type Lesson, type Track} from '@/lib/learn/types';
 import Lab from './lab';
 import {Challenge, Quests, Recall} from './activities';
+import LearningModes from './modes';
+import LearningNavigation from './navigation';
 
-const modes = [
-  {id: 'explorer', title: 'Explorer', copy: 'See the idea in everyday words.', icon: Compass},
-  {id: 'builder', title: 'Builder', copy: 'Connect the idea to each line of code.', icon: Layers3},
-  {id: 'pro', title: 'Pro', copy: 'Dig into trade-offs and edge cases.', icon: Zap},
-] as const;
 const subjects = [
   {id: 'python', title: 'Python', icon: Code2},
   {id: 'dsa', title: 'Data structures & algorithms', icon: Layers3},
@@ -25,40 +20,6 @@ const featured = ['loops', 'stack-queue', 'bubble-sort', 'binary-search'];
 const labIcons = {loops: Code2, 'stack-queue': Layers3, 'bubble-sort': Layers3, 'binary-search': ScanLine};
 type View = 'studio' | 'arena';
 type Filter = Track | 'featured';
-
-function LearningNav({view, topic}: {view: View; topic: string}) {
-  const {theme, toggleTheme} = useTheme();
-  const dark = theme === 'dark';
-  return <header className="learn-header">
-    <div className="learn-wrap learn-nav">
-      <Link href="/" className="learn-logo"><BrandMark size={30}/> ClassCode</Link>
-      <nav aria-label="Learning navigation">
-        {view === 'arena' ? <>
-          <Link href={`/learn?topic=${topic}`}>Concept Studio</Link>
-          <a href="#labs">Labs</a><a href="#quests">Quests</a><a href="#recall">Recall</a>
-        </> : <Link href={`/learn/arena?topic=${topic}`}>Revision Arena</Link>}
-      </nav>
-      <div className="learn-nav-actions">
-        <button type="button" className="learn-button" onClick={toggleTheme} aria-label={dark ? 'Light mode' : 'Dark mode'}>
-          {dark ? <Sun size={17}/> : <Moon size={17}/>}<span>{dark ? 'Light mode' : 'Dark mode'}</span>
-        </button>
-        <Link className="learn-button learn-violet" href="/?workspace=1">Open workspace <ArrowRight size={17}/></Link>
-      </div>
-    </div>
-  </header>;
-}
-
-function Modes({mode}: {mode: Mode}) {
-  return <fieldset className="learn-modes">
-    <legend>Choose how you learn</legend>
-    <div>{modes.map(({id, title, copy, icon: Icon}) =>
-      <button type="button" aria-pressed={mode === id} data-mode={id} key={id} onClick={() => learning.mode(id)}>
-        <Icon size={22} aria-hidden="true"/><strong>{title}</strong><span>{copy}</span>
-        {mode === id && <Check size={16} className="learn-mode-check" aria-hidden="true"/>}
-      </button>
-    )}</div>
-  </fieldset>;
-}
 
 function Topics({active, onChoose, explored}: {active: string; onChoose: (id: string) => void; explored: string[]}) {
   return <section className="learn-topics" aria-labelledby="learn-topics-title">
@@ -127,7 +88,12 @@ export default function LearningHub({view, initialTopic}: {view: View; initialTo
   const level = Math.floor(progress.xp / 100) + 1;
   return <div className="learn">
     <a href="#learn-main" className="learn-button learn-skip">Skip to content</a>
-    <LearningNav view={view} topic={active.id}/>
+    <LearningNavigation>
+      {arena ? <>
+        <Link href={`/learn?topic=${active.id}`}>Concept Studio</Link>
+        <a href="#labs">Labs</a><a href="#quests">Quests</a><a href="#recall">Recall</a>
+      </> : <><Link href={`/learn/arena?topic=${active.id}`}>Revision Arena</Link><Link href="/learn/visuals">Visual Lab</Link></>}
+    </LearningNavigation>
     <main id="learn-main" className="learn-wrap">
       <section className="learn-hero" aria-labelledby="learn-title">
         <div>
@@ -152,7 +118,7 @@ export default function LearningHub({view, initialTopic}: {view: View; initialTo
           <p>Try a visual example in each subject and come back for a quick review.</p>
         </div>}
       </section>
-      <Modes mode={progress.mode}/>
+      <LearningModes mode={progress.mode}/>
       {arena ? <Labs filter={filter} onFilter={changeFilter} current={active} onChoose={choose} completed={progress.labs}/> :
         <Topics active={active.id} onChoose={choose} explored={progress.explored}/>}
       <Lab key={`lab-${active.id}`} lesson={active} mode={progress.mode} arena={arena} completed={progress.labs.includes(active.id)}/>

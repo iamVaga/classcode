@@ -1,0 +1,32 @@
+{
+  "id": "insertion-sort",
+  "track": "dsa",
+  "title": "Insertion sort",
+  "summary": "Grow a sorted group by sliding each new value into place.",
+  "prerequisites": ["copying-a-value"],
+  "analogy": "When you pick up a new playing card, slide it left past any larger cards until it fits in your hand.",
+  "explanations": {
+    "explorer": "Start with one card. Pick the next one and compare it with the card to its left. If that card is bigger, swap them. Keep going until the new card fits.",
+    "builder": "The prefix before index i is already sorted. Move values[i] left through that prefix by swapping it with larger neighbors. Once it reaches a smaller or equal value, the prefix has grown by one.",
+    "pro": "Adjacent-swap insertion sort is stable with a strict comparison. On sorted input it makes n − 1 value comparisons. Reverse-sorted distinct values maximize comparisons and swaps, giving quadratic worst-case time and constant auxiliary space."
+  },
+  "visual": {"kind": "insertion-sort", "values": [4, 1, 3, 1]},
+  "codeSamples": [
+    {"title": "Sort with neighboring swaps", "language": "python", "source": "values = [{{values}}]\nfor i in range(1, len(values)):\n    j = i\n    while j > 0 and values[j] < values[j - 1]:\n        values[j - 1], values[j] = values[j], values[j - 1]\n        j -= 1\nprint(values)"}
+  ],
+  "remember": ["The sorted prefix grows one value at a time.", "Swap a smaller right value with its larger neighbor.", "Keep equal values in their original order."],
+  "commonMistake": "Moving the current value only one place left per pass. It may need more than one swap to reach its position.",
+  "challenges": [
+    {"id": "next-swap", "kind": "predict", "mode": "explorer", "prompt": "The two neighbors are 4 on the left and 1 on the right. Which order comes after the swap?", "options": ["4, 1", "1, 4", "1, 1"], "answer": 1, "hint": "The smaller number slides to the left.", "explanation": "Swap 4 and 1 so the values are in ascending order."},
+    {"id": "boundary", "kind": "blank", "mode": "builder", "prompt": "At which index must the value stop moving farther left?", "answers": ["0"], "hint": "Think of the first index in a Python list.", "explanation": "Index 0 has no neighbor to its left, so j > 0 prevents another move."},
+    {"id": "equal-order", "kind": "bug", "mode": "builder", "prompt": "Which comparison keeps equal values in their original order?", "options": ["values[j] <= values[j - 1]", "values[j] < values[j - 1]", "values[j] > values[j - 1]"], "answer": 1, "hint": "Swap only if the right number is strictly smaller.", "explanation": "The strict less-than comparison leaves equal neighbors in place."},
+    {"id": "pass-order", "kind": "parsons", "mode": "builder", "prompt": "Arrange one insertion pass in order.", "lines": ["Start at the next unsorted position", "Compare with the neighbor on the left", "Swap and repeat while the left neighbor is larger", "Finish when the new value is in place"], "hint": "Pick the next value before comparing.", "explanation": "The next value moves left until it fits, then the sorted prefix is one item longer."},
+    {"id": "worst-case", "kind": "complexity", "mode": "pro", "prompt": "How does the number of value comparisons grow on reverse-sorted distinct input?", "options": ["Linear, O(n)", "Quadratic, Θ(n²)", "Logarithmic, O(log n)"], "answer": 1, "hint": "The next value can travel through the entire growing prefix on each pass.", "explanation": "The passes require 1 + 2 + … + (n − 1) comparisons, which grows quadratically."}
+  ],
+  "flashcards": [
+    {"id": "prefix", "front": "What is the sorted prefix?", "back": "The consecutive part at the beginning of the array that is already in order."},
+    {"id": "swap", "front": "When does this version swap?", "back": "It swaps when the current value is smaller than the value just to its left."},
+    {"id": "stable", "front": "What does stable sorting preserve?", "back": "The original relative order of items with equal sort keys."},
+    {"id": "worst", "front": "What input shows the worst case for insertion sort?", "back": "Distinct values in reverse order. Each new value must travel through all the earlier values."}
+  ]
+}
